@@ -1,0 +1,11 @@
+* {
+  text-decoration: none;
+}
+
+.active {
+  color: tomato;
+}
+
+.link {
+  text-decoration: none;
+}

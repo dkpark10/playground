@@ -18,3 +18,22 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+h1 {
+  text-align:center;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #111d30;
+  color: #111d30;
+  border-radius: 8px;
+  min-width: 220px;
+  padding: 8px;
+}

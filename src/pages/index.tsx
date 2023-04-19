@@ -1,13 +1,23 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
+import { useMutation } from "@tanstack/react-query";
 import { fetchClient } from "@/utils";
 
-interface Props {
-  content: string;
+interface NextNextProps {
+  todoList: Array<{ title: string; isCompleted: boolean; id: number }>;
 }
 
-export default function Home({ content }: Props) {
+export default function NextNext({ todoList }: NextNextProps) {
+  // const { data, isLoading, mutate } = useMutation(() => fetchClient.post());
+
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    await fetchClient
+      .post("/todo", 123)
+      .then((res) => console.log)
+      .catch((error) => console.error);
+  };
+
   return (
     <>
       <Head>
@@ -16,19 +26,29 @@ export default function Home({ content }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <div>{content}</div>
-      </main>
+      <div>
+        <h1>next next</h1>
+        <main>
+          <div className="container">
+            {todoList.map((todo) => (
+              <div className="todo-item" key={todo.id}>
+                {todo.title}
+                <input type="checkbox" onChange={onChange} name={String(todo.id)} checked={todo.isCompleted} />
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await fetchClient.get<Props>("/test");
+  const { data } = await fetchClient.get<NextNextProps>("/todo");
 
   return {
     props: {
-      content: data.content,
+      todoList: data.todoList,
     },
   };
 };

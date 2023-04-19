@@ -13,11 +13,6 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "ignorePatterns": [
-    "*.config.js",
-    "jest.*",
-    "scripts/*"
-  ],
   "extends": [
     "next",
     "next/core-web-vitals",
@@ -43,7 +38,8 @@
         "tsx": "never",
         "ts": "never",
         "js": "never",
-        "jsx": "never"
+        "jsx": "never",
+        "json": "never"
       }
     ],
     "react/react-in-jsx-scope": "off",

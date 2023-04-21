@@ -1,21 +1,28 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { fetchClient } from "@/utils";
+import { Todo } from "global-type";
 
 interface NextNextProps {
-  todoList: Array<{ title: string; isCompleted: boolean; id: number }>;
+  todoList: Array<Todo>;
 }
 
 export default function NextNext({ todoList }: NextNextProps) {
   // const { data, isLoading, mutate } = useMutation(() => fetchClient.post());
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await fetchClient
-      .post("/todo", 123)
-      .then((res) => console.log)
-      .catch((error) => console.error);
+  const onClick = async () => {
+    const id = todoList.length + 1;
+
+    const { data } = await fetchClient.post<Todo, Todo>("/todo", {
+      title: inputRef.current?.value as string,
+      isCompleted: false,
+      id,
+    });
+
+    console.log(data);
   };
 
   return (
@@ -30,10 +37,16 @@ export default function NextNext({ todoList }: NextNextProps) {
         <h1>next next</h1>
         <main>
           <div className="container">
+            <div className="input-container">
+              <input type="text" ref={inputRef} />
+              <button type="button" onClick={onClick}>
+                추가
+              </button>
+            </div>
             {todoList.map((todo) => (
               <div className="todo-item" key={todo.id}>
                 {todo.title}
-                <input type="checkbox" onChange={onChange} name={String(todo.id)} checked={todo.isCompleted} />
+                <input type="checkbox" name={String(todo.id)} checked={todo.isCompleted} />
               </div>
             ))}
           </div>

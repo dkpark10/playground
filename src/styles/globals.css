@@ -37,3 +37,24 @@ main {
   min-width: 220px;
   padding: 8px;
 }
+
+.input-container {
+  padding: 12px 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.input-container button {
+  width: 40px;
+  margin-left: 6px;
+  background-color: #4112ff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+input[type=text] {
+  height: 26px;
+  width: 100%;
+}

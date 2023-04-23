@@ -5,26 +5,24 @@ import { useMutation, dehydrate, QueryClient, useQuery } from "@tanstack/react-q
 import { getTodo, updateTodo } from "@/services";
 import { Todo } from "global-type";
 
-export default function NextNext() {
-  const queryClient = new QueryClient();
+interface NextNextProps {
+  todoList: Todo[];
+}
 
+export default function NextNext({ todoList }: NextNextProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data, refetch } = useQuery(["todo"], getTodo);
-
-  const { mutate, isLoading } = useMutation((newTodo: Todo) => updateTodo(newTodo), {
+  const { mutate } = useMutation((newTodo: Todo) => updateTodo(newTodo), {
     onError: (err, variables, context) => {
       console.log("error", err, variables, context);
     },
-    onSuccess: async () => {
+    onSuccess: () => {
       (inputRef.current as HTMLInputElement).value = " ";
-      await queryClient.invalidateQueries(["todos"]);
-      await refetch();
     },
   });
 
   const onClick = () => {
-    const id = (data?.todoList.length as number) + 1;
+    const id = todoList.length + 1;
 
     mutate({
       title: inputRef.current?.value as string,
@@ -38,10 +36,6 @@ export default function NextNext() {
   };
 
   const deleteTodo = () => {};
-
-  if (isLoading) {
-    return <div>로딩중..</div>;
-  }
 
   return (
     <>
@@ -63,7 +57,7 @@ export default function NextNext() {
                 </button>
               </div>
             </form>
-            {data?.todoList.map((todo) => (
+            {todoList.map((todo) => (
               <div className="todo-item" key={todo.id}>
                 {todo.title}
                 <div className="todo-controller">
@@ -82,13 +76,11 @@ export default function NextNext() {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(["todo"], getTodo);
+  const { todoList } = await getTodo();
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      todoList,
     },
   };
 };

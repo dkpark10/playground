@@ -52,9 +52,27 @@ main {
   border: none;
   color: white;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 input[type=text] {
   height: 26px;
   width: 100%;
+}
+
+.todo-controller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 47px;
+}
+
+.todo-controller button {
+  width: 30px;
+  padding: 2px;
+  color: #c41a30;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #e6e4e1;
 }

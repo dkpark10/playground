@@ -1,16 +1,14 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-type Response<T> = Promise<AxiosResponse<T>>;
-
 export type RequestConfig = AxiosRequestConfig;
 
 export interface HttpClient {
   instance: AxiosInstance;
-  get: <T>(url: string, config?: RequestConfig) => Response<T>;
-  post: <T, D>(url: string, data?: D, config?: RequestConfig) => Response<T>;
-  patch: <T, D>(url: string, data?: D, config?: RequestConfig) => Response<T>;
-  delete: <T>(url: string, config?: RequestConfig) => Response<T>;
-  put: <T, D>(url: string, data?: D, config?: RequestConfig) => Response<T>;
+  get: <T>(url: string, config?: RequestConfig) => Promise<AxiosResponse<T>>;
+  post: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
+  patch: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
+  delete: <T>(url: string, config?: RequestConfig) => Promise<AxiosResponse<T>>;
+  put: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
 }
 
 export const fetchClient: HttpClient = {

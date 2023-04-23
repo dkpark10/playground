@@ -39,6 +39,6 @@ export const handlers = [
     const body = await req.json<Todo>();
 
     todoList.push(body);
-    return res(ctx.status(201), ctx.json({ todoList }));
+    return res(ctx.status(201), ctx.json(todoList));
   }),
 ];

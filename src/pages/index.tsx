@@ -2,30 +2,27 @@ import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useRef } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { fetchClient } from "@/utils";
+import { getTodo, updateTodo } from "@/services";
 import { Todo } from "global-type";
 
 export default function NextNext() {
+  const queryClient = new QueryClient();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data } = useQuery(["todo"], () => fetchClient.get<{ todoList: Todo[] }>("/todo"));
+  const { data } = useQuery(["todo"], getTodo);
 
-  const { mutate } = useMutation(
-    (newTodo: Todo) => {
-      return fetchClient.post<Todo, Todo>("/todo", newTodo);
+  const { mutate } = useMutation((newTodo: Todo) => updateTodo(newTodo), {
+    onError: (err, variables, context) => {
+      console.log("error", err, variables, context);
     },
-    {
-      onError: (err, variables, context) => {
-        console.log("error", err, variables, context);
-      },
-      onSuccess: (d, variables, context) => {
-        console.log("success", d, variables, context);
-      },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(["todos"]);
     },
-  );
+  });
 
   const onClick = () => {
-    const id = (data?.data.todoList.length as number) + 1;
+    const id = (data?.todoList.length as number) + 1;
 
     mutate({
       title: inputRef.current?.value as string,
@@ -60,7 +57,7 @@ export default function NextNext() {
                 </button>
               </div>
             </form>
-            {data?.data.todoList.map((todo) => (
+            {data?.todoList.map((todo) => (
               <div className="todo-item" key={todo.id}>
                 {todo.title}
                 <div className="todo-controller">
@@ -80,11 +77,6 @@ export default function NextNext() {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
-
-  const getTodo = async () => {
-    const { data } = await fetchClient.get<{ todoList: Todo[] }>("/todo");
-    return data;
-  };
 
   await queryClient.prefetchQuery(["todo"], getTodo);
 

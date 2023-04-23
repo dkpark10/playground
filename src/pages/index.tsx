@@ -1,18 +1,16 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useRef } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { fetchClient } from "@/utils";
 import { Todo } from "global-type";
 
-interface NextNextProps {
-  todoList: Array<Todo>;
-}
-
-export default function NextNext({ todoList }: NextNextProps) {
+export default function NextNext() {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { mutate, isLoading, isError, error, isSuccess, data } = useMutation(
+  const { data } = useQuery(["todo"], () => fetchClient.get<{ todoList: Todo[] }>("/todo"));
+
+  const { mutate } = useMutation(
     (newTodo: Todo) => {
       return fetchClient.post<Todo, Todo>("/todo", newTodo);
     },
@@ -27,7 +25,7 @@ export default function NextNext({ todoList }: NextNextProps) {
   );
 
   const onClick = () => {
-    const id = todoList.length + 1;
+    const id = (data?.data.todoList.length as number) + 1;
 
     mutate({
       title: inputRef.current?.value as string,
@@ -62,7 +60,7 @@ export default function NextNext({ todoList }: NextNextProps) {
                 </button>
               </div>
             </form>
-            {todoList.map((todo) => (
+            {data?.data.todoList.map((todo) => (
               <div className="todo-item" key={todo.id}>
                 {todo.title}
                 <div className="todo-controller">
@@ -81,11 +79,20 @@ export default function NextNext({ todoList }: NextNextProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await fetchClient.get<NextNextProps>("/todo");
+  const queryClient = new QueryClient();
+
+  const getTodo = async () => {
+    const { data } = await fetchClient.get<{ todoList: Todo[] }>("/todo");
+    return data;
+  };
+
+  await queryClient.prefetchQuery(["todo"], getTodo);
 
   return {
     props: {
-      todoList: data.todoList,
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
     },
   };
 };

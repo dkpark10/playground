@@ -1,12 +1,12 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useRef } from "react";
-import { useMutation, dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTodo, updateTodo } from "@/services";
 import { Todo } from "global-type";
 
 export default function NextNext() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,10 +38,6 @@ export default function NextNext() {
   };
 
   const deleteTodo = () => {};
-
-  if (isLoading) {
-    return <div>로딩중..</div>;
-  }
 
   return (
     <>

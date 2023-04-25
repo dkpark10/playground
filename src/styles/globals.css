@@ -28,16 +28,6 @@ main {
   justify-content: center;
 }
 
-.todo-item {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #111d30;
-  color: #111d30;
-  border-radius: 8px;
-  min-width: 220px;
-  padding: 8px;
-}
-
 .input-container {
   padding: 12px 0;
   display: flex;
@@ -60,19 +50,46 @@ input[type=text] {
   width: 100%;
 }
 
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #111d30;
+  color: #111d30;
+  border-radius: 8px;
+  min-width: 220px;
+  padding: 8px 12px;
+}
+
+.todo-title {
+  margin-right: 8px;
+}
+
+.todo-title input[type=text] {
+  width: 260px;
+  border:none;
+}
+
 .todo-controller {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  min-width: 47px;
+  width: 62px;
 }
 
 .todo-controller button {
   width: 30px;
   padding: 2px;
-  color: #c41a30;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.todo-controller .update {
+  color: white;
+  background-color: #1be0d7;
+}
+
+.todo-controller .delete {
+  color: #c41a30;
   background-color: #e6e4e1;
 }

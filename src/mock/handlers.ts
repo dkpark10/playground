@@ -6,29 +6,29 @@ const todoList = [
   {
     title: "next 공부하기",
     isCompleted: false,
-    id: 1,
+    id: "todo-1",
   },
   {
     title: "react query 공부하기",
     isCompleted: true,
-    id: 2,
+    id: "todo-1",
   },
   {
     title: "성공하기",
     isCompleted: true,
-    id: 3,
+    id: "todo-3",
   },
   {
     title: "부동산, 주식, 현금 다합쳐서 500억 이상 벌기",
     isCompleted: false,
-    id: 4,
+    id: "todo-4",
   },
   {
     title: "불로 불사 하기",
     isCompleted: true,
-    id: 5,
+    id: "todo-5",
   },
-] as Todo[];
+];
 
 export const handlers = [
   rest.get(`${process.env.NEXT_PUBLIC_BASE_URL as string}/todo`, (_, res, ctx) => {

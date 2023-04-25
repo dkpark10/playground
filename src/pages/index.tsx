@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useRef } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTodo, updateTodo } from "@/services";
+import { getTodo, createTodo } from "@/services";
 import { Todo } from "global-type";
 
 export default function NextNext() {
@@ -12,7 +12,9 @@ export default function NextNext() {
 
   const { data, refetch } = useQuery(["todo"], getTodo);
 
-  const { mutate, isLoading } = useMutation((newTodo: Todo) => updateTodo(newTodo), {
+  const todoInputRef = useRef<HTMLInputElement[]>([]);
+
+  const { mutate, isLoading } = useMutation((newTodo: Todo) => createTodo(newTodo), {
     onError: (err, variables, context) => {
       console.log("error", err, variables, context);
     },
@@ -29,12 +31,16 @@ export default function NextNext() {
     mutate({
       title: inputRef.current?.value as string,
       isCompleted: false,
-      id,
+      id: `todo-${id}`,
     });
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  };
+
+  const editTodo = (todoId: Todo["id"], idx: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    
   };
 
   const deleteTodo = () => {};
@@ -59,12 +65,26 @@ export default function NextNext() {
                 </button>
               </div>
             </form>
-            {data?.todoList.map((todo) => (
+            {data?.todoList.map((todo, idx) => (
               <div className="todo-item" key={todo.id}>
-                {todo.title}
-                <div className="todo-controller">
+                <div className="todo-title">
                   <input type="checkbox" />
-                  <button type="button" onClick={deleteTodo}>
+                  <input
+                    type="text"
+                    ref={(el) => {
+                      if (el !== null) {
+                        todoInputRef.current[idx] = el;
+                        todoInputRef.current[idx].value = todo.title;
+                      }
+                    }}
+                    name={todo.id}
+                  />
+                </div>
+                <div className="todo-controller">
+                  <button type="button" className="update" onClick={editTodo(todo.id, idx)}>
+                    수정
+                  </button>
+                  <button type="button" className="delete" onClick={deleteTodo}>
                     삭제
                   </button>
                 </div>

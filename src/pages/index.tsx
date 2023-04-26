@@ -14,7 +14,7 @@ export default function NextNext() {
 
   const todoInputRef = useRef<HTMLInputElement[]>([]);
 
-  const { mutate, isLoading } = useMutation((newTodo: Todo) => createTodo(newTodo), {
+  const { mutate } = useMutation((newTodo: Todo) => createTodo(newTodo), {
     onError: (err, variables, context) => {
       console.log("error", err, variables, context);
     },
@@ -40,7 +40,9 @@ export default function NextNext() {
   };
 
   const editTodo = (todoId: Todo["id"], idx: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    
+    /**
+     * empty
+     */
   };
 
   const deleteTodo = () => {};

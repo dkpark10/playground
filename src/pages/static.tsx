@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import Head from "next/head";
 import React, { useState } from "react";
 import axios from "axios";
@@ -20,8 +20,8 @@ export default function NextNext({ name }: NextNextProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>next test page</h1>
-        <main>server side: {name}</main>
+        <h1>next static page</h1>
+        <main>static side: {name}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
         </button>
@@ -31,20 +31,19 @@ export default function NextNext({ name }: NextNextProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  // const { todoList } = await getTodo();
+export async function fetchApiHello() {
   const url = "http://localhost:3000/api/hello";
-  const {
-    data: { name },
-  } = await axios.get<{ name: string }>(url);
-  /**
-   * @desc next에서 문서 리소스는 no-store로 아예 안함~
-   */
-  res.setHeader("Cache-Control", "public, max-age=5000");
+  const { data } = await axios.get<{ name: string }>(url);
+
+  return data;
+}
+
+export const getStaticProps: GetStaticProps = () => {
+  const random = Math.floor(Math.random() * 100);
 
   return {
     props: {
-      name,
+      name: `king ${random}`,
     },
   };
 };

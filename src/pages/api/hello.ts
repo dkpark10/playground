@@ -8,7 +8,7 @@ type Data = {
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const random = Math.floor(Math.random() * 100);
   return res
-    .setHeader("Cache-Control", "public, max-age=5")
+    .setHeader("Cache-Control", "public, max-age=10")
     .status(200)
     .send({ name: `John Doe ${random}` });
 }

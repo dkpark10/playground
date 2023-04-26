@@ -42,6 +42,7 @@
         "json": "never"
       }
     ],
+    "@typescript-eslint/no-floating-promises": "off",
     "import/no-extraneous-dependencies": [
       "off",
       {

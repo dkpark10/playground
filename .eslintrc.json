@@ -42,6 +42,14 @@
         "json": "never"
       }
     ],
+    "import/no-extraneous-dependencies": [
+      "off",
+      {
+        "packageDir": [
+          "@tanstack/react-query-devtools"
+        ]
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-unsafe-call": "off",

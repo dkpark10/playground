@@ -11,7 +11,7 @@ const todoList = [
   {
     title: "react query 공부하기",
     isCompleted: true,
-    id: "todo-1",
+    id: "todo-2",
   },
   {
     title: "성공하기",
@@ -40,5 +40,10 @@ export const handlers = [
 
     todoList.push(body);
     return res(ctx.status(201), ctx.delay(1000), ctx.json(todoList));
+  }),
+
+  rest.get(`${process.env.NEXT_PUBLIC_BASE_URL as string}/random`, async (req, res, ctx) => {
+    const random = Math.floor(Math.random() * 100);
+    return res(ctx.status(200), ctx.json({ random }));
   }),
 ];

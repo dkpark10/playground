@@ -6,5 +6,9 @@ type Data = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  res.status(200).json({ name: "John Doe" });
+  const random = Math.floor(Math.random() * 100);
+  return res
+    .setHeader("Cache-Control", "public, max-age=5")
+    .status(200)
+    .send({ name: `John Doe ${random}` });
 }

@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
  */
 
 export default function Tiny() {
-  const { data } = useQuery(["random"], () => fetchClient.get<{ random: number }>("api/random"), {
+  const { data } = useQuery(["random"], () => fetchClient.get<{ name: string }>("api/random"), {
     staleTime: 5 * SECOND,
   });
 
@@ -42,7 +42,7 @@ export default function Tiny() {
 
   return (
     <>
-      <div>테스트 타이니: {data?.data.random}</div>
+      <div>테스트 타이니: {data?.data.name}</div>
       <div>api handler: {v}</div>
       <div>const handler: {v2}</div>
       <button type="button" onClick={() => changeV()}>

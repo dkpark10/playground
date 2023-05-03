@@ -20,7 +20,7 @@ export default function NextNext({ name }: NextNextProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>next test page</h1>
+        <h1>next dynamic page</h1>
         <main>server side: {name}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
@@ -36,12 +36,13 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
   /**
    * @desc next에서 문서 리소스는 no-store로 아예 안함~
+   * 환경변수에 따라 다른듯..
    */
   res.setHeader("Cache-Control", "public, max-age=5000");
 
   return {
     props: {
-      name: `king ${data.name}`,
+      name: `dynamic king ${data.name}`,
     },
   };
 };

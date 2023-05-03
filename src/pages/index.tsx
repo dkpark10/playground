@@ -57,6 +57,7 @@ export default function NextNext() {
       </Head>
       <div>
         <h1>next next</h1>
+        <div>{process.env.NEXT_PUBLIC_BASE_URL}</div>
         <main>
           <div className="container">
             <form onSubmit={onSubmit}>

@@ -6,7 +6,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import type { AppProps } from "next/app";
 
-import("../mock");
+// 임시주석
+// if (process.env.NODE_ENV === "development") {
+//   import("../mock");
+// }
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());

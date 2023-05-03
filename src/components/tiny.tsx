@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchClient } from "@/utils";
 import { SECOND } from "@/constants";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 /**
  * @description reactquery가 리페치 되는 조건
@@ -16,19 +15,25 @@ import axios from "axios";
  */
 
 export default function Tiny() {
-  const { data } = useQuery(["random"], () => fetchClient.get<{ random: number }>("/random"), {
+  const { data } = useQuery(["random"], () => fetchClient.get<{ random: number }>("api/random"), {
     staleTime: 5 * SECOND,
   });
 
   const [v, sv] = useState("");
+  const [v2, sv2] = useState("");
 
   const changeV = async () => {
-    const url = "http://localhost:3000/api/hello";
     const {
       data: { name },
-    } = await axios.get<{ name: string }>(url);
+    } = await fetchClient.get<{ name: string }>("api/random");
 
     sv(name);
+
+    const {
+      data: { constt },
+    } = await fetchClient.get<{ constt: string }>("api/constants");
+
+    sv2(constt);
   };
 
   useEffect(() => {
@@ -39,6 +44,7 @@ export default function Tiny() {
     <>
       <div>테스트 타이니: {data?.data.random}</div>
       <div>api handler: {v}</div>
+      <div>const handler: {v2}</div>
       <button type="button" onClick={() => changeV()}>
         click jacking
       </button>

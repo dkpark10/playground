@@ -1,7 +1,7 @@
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import React, { useState } from "react";
-import axios from "axios";
+import { fetchClient } from "@/utils";
 import Tiny from "@/components/tiny";
 
 interface NextNextProps {
@@ -31,19 +31,12 @@ export default function NextNext({ name }: NextNextProps) {
   );
 }
 
-export async function fetchApiHello() {
-  const url = "http://localhost:3000/api/hello";
-  const { data } = await axios.get<{ name: string }>(url);
-
-  return data;
-}
-
-export const getStaticProps: GetStaticProps = () => {
-  const random = Math.floor(Math.random() * 100);
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await fetchClient.get<{ name: string }>("api/random");
 
   return {
     props: {
-      name: `king ${random}`,
+      name: `king ${data.name}`,
     },
   };
 };

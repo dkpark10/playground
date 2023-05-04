@@ -20,7 +20,8 @@ export default function NextNext({ name }: NextNextProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>next dynamic page (캐시를 하지 않는 페이지)</h1>
+        <h1>next dynamic page</h1>
+        <h6>(캐시를 하지 않는 ssr 페이지)</h6>
         <main>server side: {name}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
@@ -33,10 +34,11 @@ export default function NextNext({ name }: NextNextProps) {
 
 export const getServerSideProps: GetServerSideProps<NextNextProps> = async ({ res }) => {
   const { data } = await fetchClient.get<{ name: string }>("api/random");
+  const random = Math.floor(Math.random() * 100);
 
   return {
     props: {
-      name: `dynamic2 king ${data.name}`,
+      name: `dynamic2 king ${data.name} - ${random}`,
     },
   };
 };

@@ -35,7 +35,6 @@ export default function NextNext({ name }: NextNextProps) {
 export const getStaticProps: GetStaticProps<NextNextProps> = async () => {
   const { data } = await fetchClient.get<{ name: string }>("api/random");
   const random = Math.floor(Math.random() * 100);
-  console.log(`server static side ${data.name}`);
 
   return {
     props: {

@@ -20,7 +20,7 @@ export default function NextNext({ name }: NextNextProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>next dynamic page (캐시 100초 설정되있는 페이지)</h1>
+        <h1>next dynamic page (캐시를 하지 않는 페이지)</h1>
         <main>server side: {name}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
@@ -34,15 +34,9 @@ export default function NextNext({ name }: NextNextProps) {
 export const getServerSideProps: GetServerSideProps<NextNextProps> = async ({ res }) => {
   const { data } = await fetchClient.get<{ name: string }>("api/random");
 
-  /**
-   * @desc next에서 문서 리소스는 no-store로 아예 안함~
-   * 환경변수에 따라 다른듯.. 프로덕션모드에서 캐시 가능
-   */
-  res.setHeader("Cache-Control", "public, max-age=100");
-
   return {
     props: {
-      name: `dynamic king ${data.name}`,
+      name: `dynamic2 king ${data.name}`,
     },
   };
 };

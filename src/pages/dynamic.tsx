@@ -31,14 +31,14 @@ export default function NextNext({ name }: NextNextProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps<NextNextProps> = async ({ res }) => {
   const { data } = await fetchClient.get<{ name: string }>("api/random");
 
   /**
    * @desc next에서 문서 리소스는 no-store로 아예 안함~
    * 환경변수에 따라 다른듯..
    */
-  res.setHeader("Cache-Control", "public, max-age=5000");
+  res.setHeader("Cache-Control", "public, max-age=100");
 
   return {
     props: {

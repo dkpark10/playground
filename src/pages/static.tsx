@@ -8,9 +8,9 @@ interface NextNextProps {
   name: string;
 }
 
-export default function NextNext(props: NextNextProps) {
+export default function NextNext({ name }: NextNextProps) {
   const [toggle, setToggle] = useState(false);
-  console.log(`static side${props.name}`);
+  console.log(`static side${name}`);
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function NextNext(props: NextNextProps) {
       </Head>
       <div>
         <h1>next static page</h1>
-        <main>static side: {props.name || 234}</main>
+        <main>static side: {name || 234}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
         </button>
@@ -34,13 +34,13 @@ export default function NextNext(props: NextNextProps) {
 
 export const getStaticProps: GetStaticProps<NextNextProps> = async () => {
   const { data } = await fetchClient.get<{ name: string }>("api/random");
+  const random = Math.floor(Math.random() * 100);
   console.log(`server static side ${data.name}`);
 
-  const props = {
+  return {
     props: {
-      name: `static king ${data.name}`,
+      name: `static king ${data.name} - ${random}`,
+      a: 12,
     },
   };
-
-  return props;
 };

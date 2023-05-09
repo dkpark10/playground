@@ -12,7 +12,16 @@ import type { AppProps } from "next/app";
 // }
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: process.env.NODE_ENV === "development" ? 0 : 1,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>

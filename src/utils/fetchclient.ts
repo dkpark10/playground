@@ -1,6 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 export type RequestConfig = AxiosRequestConfig;
+
+export type Error = AxiosError;
 
 export interface HttpClient {
   instance: AxiosInstance;
@@ -11,15 +13,24 @@ export interface HttpClient {
   put: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
 }
 
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    "Content-type": "application/json",
+    Accept: "application/json",
+  },
+  withCredentials: true,
+});
+
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export const fetchClient: HttpClient = {
-  instance: axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-    headers: {
-      "Content-type": "application/json",
-      Accept: "application/json",
-    },
-    withCredentials: true,
-  }),
+  instance,
 
   get<T>(url: string, config?: RequestConfig) {
     return this.instance.get<T>(url, config);

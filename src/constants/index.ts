@@ -1,1 +1,2 @@
-export const SECOND = 1000;
+export * from "./time";
+export * from "./day";

@@ -3,6 +3,9 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { fetchClient } from "@/utils";
 import Tiny from "@/components/tiny";
+import Image from "next/image";
+import { SECOND } from "@/constants";
+import weatherSrc from "public/weather.png";
 
 interface NextNextProps {
   name: string;
@@ -19,15 +22,17 @@ export default function NextNext({ name }: NextNextProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <main>
         <h1>next dynamic page</h1>
         <h6>(캐시 10초 설정되있는 ssr 페이지)</h6>
         <main>server side: {name}</main>
         <button type="button" onClick={() => setToggle((prev) => !prev)}>
           show
         </button>
+        <Image src={weatherSrc} alt="날씨" placeholder="blur" priority />
+        <h1>1분은 {SECOND * 60}밀리초 1월은</h1>
         {toggle && <Tiny />}
-      </div>
+      </main>
     </>
   );
 }

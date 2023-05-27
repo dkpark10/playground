@@ -3,6 +3,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { fetchClient } from "@/utils";
 import Tiny from "@/components/tiny";
+import HeapQueue from "heapq-ts";
 
 interface NextNextProps {
   name: string;

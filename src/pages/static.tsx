@@ -3,7 +3,6 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { fetchClient } from "@/utils";
 import Tiny from "@/components/tiny";
-import HeapQueue from "heapq-ts";
 
 interface NextNextProps {
   name: string;
@@ -34,13 +33,21 @@ export default function NextNext({ name }: NextNextProps) {
 }
 
 export const getStaticProps: GetStaticProps<NextNextProps> = async () => {
-  const { data } = await fetchClient.get<{ name: string }>("api/random");
-  const random = Math.floor(Math.random() * 100);
+  try {
+    const { data } = await fetchClient.get<{ name: string }>("api/random");
+    const random = Math.floor(Math.random() * 100);
 
-  return {
-    props: {
-      name: `static king ${data.name} - ${random}`,
-      a: 12,
-    },
-  };
+    return {
+      props: {
+        name: `static king ${data.name} - ${random}`,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        name: "",
+      },
+    };
+  }
 };

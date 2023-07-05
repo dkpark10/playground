@@ -1,12 +1,15 @@
 const isRunBundleAnalyze = process.env.ANALYZE === "true";
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: isRunBundleAnalyze,
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: process.env.NODE_ENV === "development",
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  output: 'standalone',
+  images: {
+    domains: ['shop.zumst.com', 'localhost'],
+  },
 };
 
-module.exports = isRunBundleAnalyze ? withBundleAnalyzer(nextConfig) : nextConfig;
+module.exports = isRunBundleAnalyze ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;

@@ -1,4 +1,5 @@
 import type { GetServerSideProps } from "next";
+import Image from "next/image";
 import Head from "next/head";
 import React, { useRef } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -58,6 +59,24 @@ export default function NextNext() {
       <div>
         <h1>next next</h1>
         <div>{process.env.NEXT_PUBLIC_BASE_URL}</div>
+        <Image
+          alt="test"
+          src="https://shop.zumst.com/upload/banner/2023/06/28/sb_bottom132601.jpg"
+          width={390}
+          height={270}
+        />
+        {/* <img
+          alt="test"
+          src="https://shop.zumst.com/upload/banner/2023/06/28/sb_bottom132601.jpg"
+          width={390}
+          height={270}
+        /> */}
+        <img
+          alt="test"
+          src="https://shop.zumst.com/upload/banner/2023/06/28/sb_bottom132601.jpg"
+          width={190}
+          height={135}
+        />
         <main>
           <div className="container">
             <form onSubmit={onSubmit}>

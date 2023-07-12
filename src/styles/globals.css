@@ -23,11 +23,6 @@ h1 {
   text-align:center;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-}
-
 .input-container {
   padding: 12px 0;
   display: flex;

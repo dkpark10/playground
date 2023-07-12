@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Image from "next/image";
 import Head from "next/head";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTodo, createTodo } from "@/services";
 import { Todo } from "global-type";
@@ -59,12 +59,13 @@ export default function NextNext() {
       <div>
         <h1>next next</h1>
         <div>{process.env.NEXT_PUBLIC_BASE_URL}</div>
-        <Image
+        {/* <Image
           alt="test"
           src="https://shop.zumst.com/upload/banner/2023/06/28/sb_bottom132601.jpg"
           width={390}
           height={270}
-        />
+          priority
+        /> */}
         {/* <img
           alt="test"
           src="https://shop.zumst.com/upload/banner/2023/06/28/sb_bottom132601.jpg"

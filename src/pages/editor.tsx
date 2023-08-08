@@ -28,12 +28,12 @@ export default function Editor() {
   return (
     <main>
       <div
+        className="border-2 border-indigo-600"
         contentEditable
         role="textbox"
         onClick={() => {}}
         tabIndex={0}
         aria-label="text-editor"
-        style={{ border: "1px solid red" }}
         ref={editorRef}
         onKeyUp={onKeyUp}
       />

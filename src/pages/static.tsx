@@ -10,7 +10,6 @@ interface NextNextProps {
 
 export default function NextNext({ name }: NextNextProps) {
   const [toggle, setToggle] = useState(false);
-  console.log(`static side${name}`);
 
   return (
     <>
@@ -33,21 +32,12 @@ export default function NextNext({ name }: NextNextProps) {
 }
 
 export const getStaticProps: GetStaticProps<NextNextProps> = async () => {
-  try {
-    const { data } = await fetchClient.get<{ name: string }>("api/random");
-    const random = Math.floor(Math.random() * 100);
+  const { data } = await fetchClient.get<{ name: string }>("api/random");
+  const random = Math.floor(Math.random() * 100);
 
-    return {
-      props: {
-        name: `static king ${data.name} - ${random}`,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        name: "",
-      },
-    };
-  }
+  return {
+    props: {
+      name: `static king ${data.name} - ${random}`,
+    },
+  };
 };

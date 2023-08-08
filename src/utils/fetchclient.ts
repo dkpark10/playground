@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 export type RequestConfig = AxiosRequestConfig;
@@ -25,15 +26,20 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    return Promise.reject(error);
+    console.log(error.response.status);
+    return Promise.reject({ data: error.response.status });
   },
 );
 
 export const fetchClient: HttpClient = {
   instance,
 
-  get<T>(url: string, config?: RequestConfig) {
-    return this.instance.get<T>(url, config);
+  get<T>(url: string, config?: RequestConfig): Promise<any> {
+    try {
+      return this.instance.get<T>(url, config);
+    } catch (error: any) {
+      throw error;
+    }
   },
 
   post<T, D>(url: string, data?: D, config?: RequestConfig) {

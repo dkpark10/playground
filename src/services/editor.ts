@@ -16,6 +16,8 @@ export const getCaretPos = (element: HTMLElement | null) => {
   const initValue = {
     caretPos: 0,
     isFirstLine: true,
+    anchorNode: null,
+    isTextNode: false,
   };
   if (typeof window === "undefined" || !Object.prototype.hasOwnProperty.call(window, "getSelection") || !element) {
     return initValue;
@@ -30,11 +32,14 @@ export const getCaretPos = (element: HTMLElement | null) => {
 
   if (!selection?.rangeCount || !range) return initValue;
 
-  const { anchorOffset } = selection;
+  const { anchorOffset, anchorNode } = selection;
   const isFirstLine = selection.anchorNode === element.firstChild;
+  const isTextNode = element === anchorNode?.parentNode;
 
   return {
     caretPos: anchorOffset,
+    anchorNode,
+    isTextNode,
     isFirstLine,
   };
 };

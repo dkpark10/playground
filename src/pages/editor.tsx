@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getCaretPos, mockStock } from "@/services/editor";
+import { getCaretPos, mockStock, setLastPosCaret } from "@/services/editor";
 import { debounce } from "@/utils/debounce";
 
 interface CaretState {
@@ -19,7 +19,23 @@ const SPACE = " ";
 const SPACE2 = " ";
 const isKoreanOrEnglishOnly = (input: string) => /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]+$/.test(input);
 
+function setCaretPos(el: HTMLElement, pos: number) {
+  const range = document.createRange();
+  const sel = window.getSelection();
+  if (!sel) return;
+
+  console.log(el.childNodes);
+  console.log(el.firstChild);
+  range.setStart(el.childNodes[1].firstChild as Node, 3);
+  range.collapse(true);
+
+  sel.removeAllRanges();
+  sel.addRange(range);
+  el.focus();
+}
+
 export default function Editor() {
+  const [c, sc] = useState("");
   const editorRef = useRef<HTMLDivElement>(null);
   const stockSet = useRef<Set<string>>(new Set());
 
@@ -29,39 +45,71 @@ export default function Editor() {
     stockList: [],
   });
 
-  const onInput = debounce((e: React.FormEvent<HTMLDivElement>) => {
-    if (!stockSearchState.isSearching || !editorRef.current) return;
-    const beginIndex = stockSearchState.currentSharpIndex;
-    let flag = true;
-    let lastIndex = beginIndex;
-    let value = editorRef.current.innerText[lastIndex];
+  const onInput = (e: React.FormEvent<HTMLDivElement>) => {
+    // if (!stockSearchState.isSearching || !editorRef.current) return;
+    // const beginIndex = stockSearchState.currentSharpIndex;
+    // let flag = true;
+    // let lastIndex = beginIndex;
+    // let value = editorRef.current.innerText[lastIndex];
 
-    while (flag) {
-      if (value === " " || value === SPACE || value === SPACE2 || lastIndex >= editorRef.current.innerText.length) {
-        flag = false;
+    // while (flag) {
+    //   if (value === " " || value === SPACE || value === SPACE2 || lastIndex >= editorRef.current.innerText.length) {
+    //     flag = false;
+    //   }
+
+    //   lastIndex += 1;
+    //   value = editorRef.current.innerText[lastIndex];
+    // }
+
+    // const findStock = editorRef.current.innerText.slice(beginIndex, lastIndex);
+    // if (stockSet.current.has(findStock)) return;
+
+    // const result = mockStock.some((stock) => stock === findStock);
+    // if (result) {
+    //   stockSet.current.add(findStock);
+    //   setStockSearchState((prev) => ({
+    //     ...prev,
+    //     stockList: [...prev.stockList, findStock],
+    //   }));
+
+    debounce((value: string) => {
+      sc(value);
+      if (value === "카카오" && editorRef.current) {
+        // editorRef.current.innerHTML = editorRef.current.innerHTML.replace(
+        //   "카카오",
+        //   `<span class="text-rose-500">카카오</span>`,
+        // );
+
+        // editorRef.current.blur();
+        // editorRef.current.focus();
+
+        const colorElement = document.createElement("span");
+        colorElement.className = "text-rose-500";
+
+        const selection = window.getSelection();
+        if (!selection) return;
+
+        const selectedTextRange = selection.getRangeAt(0);
+
+        selectedTextRange.setStart(editorRef.current.firstChild as ChildNode, 0);
+        selectedTextRange.setEnd(editorRef.current.firstChild as ChildNode, 3);
+        selectedTextRange.surroundContents(colorElement);
+
+        selectedTextRange.collapse(true);
+        selection.removeAllRanges();
+
+        editorRef.current.blur();
+        setCaretPos(editorRef.current, 3);
       }
+    }, 250)(e.currentTarget.textContent);
+  };
 
-      lastIndex += 1;
-      value = editorRef.current.innerText[lastIndex];
-    }
-
-    const findStock = editorRef.current.innerText.slice(beginIndex, lastIndex);
-    if (stockSet.current.has(findStock)) return;
-
-    const result = mockStock.some((stock) => stock === findStock);
-    if (result) {
-      stockSet.current.add(findStock);
-      setStockSearchState((prev) => ({
-        ...prev,
-        stockList: [...prev.stockList, findStock],
-      }));
-
-      editorRef.current.innerHTML = editorRef.current.innerHTML.replace(
-        `${SHARP_MARK}${findStock}`,
-        `<span class="text-rose-500">${SHARP_MARK}${findStock}</span>`,
-      );
-    }
-  }, 350);
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // if (c) {
+    //   console.log('111');
+    //   e.preventDefault();
+    // }
+  };
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const { caretPos } = getCaretPos(editorRef.current);
@@ -114,6 +162,7 @@ export default function Editor() {
         tabIndex={0}
         aria-label="text-editor"
         ref={editorRef}
+        onKeyDown={onKeyDown}
         onInput={onInput}
         onKeyUp={onKeyUp}
       />

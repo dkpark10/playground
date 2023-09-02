@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 export type Response<T> = AxiosResponse<T>;

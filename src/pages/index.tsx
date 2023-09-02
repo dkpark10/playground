@@ -1,8 +1,10 @@
 import type { GetServerSideProps } from "next";
+import Error from "next/error";
 import Image from "next/image";
 import Head from "next/head";
 import React, { useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { logger } from "@/utils/logger";
 import { getTodo, createTodo } from "@/services";
 import { Todo } from "global-type";
 
@@ -11,14 +13,12 @@ export default function NextNext() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data, refetch } = useQuery(["todo"], getTodo);
+  const { data, isError, refetch } = useQuery(["todo"], getTodo);
 
   const todoInputRef = useRef<HTMLInputElement[]>([]);
 
   const { mutate } = useMutation((newTodo: Todo) => createTodo(newTodo), {
-    onError: (err, variables, context) => {
-      console.log("error", err, variables, context);
-    },
+    onError: (err, variables, context) => {},
     onSuccess: async () => {
       (inputRef.current as HTMLInputElement).value = " ";
       await queryClient.invalidateQueries(["todos"]);
@@ -57,7 +57,7 @@ export default function NextNext() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>next next</h1>
+        <h1>Next Next</h1>
         <div>{process.env.NEXT_PUBLIC_BASE_URL}</div>
         <main>
           <div className="container">
@@ -103,7 +103,6 @@ export default function NextNext() {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = new QueryClient();
-
   await queryClient.prefetchQuery(["todo"], getTodo);
 
   return {

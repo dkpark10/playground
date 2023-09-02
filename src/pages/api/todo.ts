@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
+import { logger } from "@/utils/logger";
 import fs from "fs/promises";
 import { Todo } from "global-type";
 
@@ -12,6 +13,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse<{ 
     const todoList = JSON.parse(data.toString()) as Array<Todo>;
     return res.status(200).send({ todoList });
   } catch (error) {
+    logger.error("[api error]: /todo");
     return res.status(500).end();
   }
 }

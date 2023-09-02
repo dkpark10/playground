@@ -11,7 +11,6 @@ const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, de
 // });
 
 function Loading() {
-  console.log("렌더는 되심???");
   return (
     <div style={{ border: "1px solid red" }}>
       <h1>loading...</h1>

@@ -1,17 +1,19 @@
 /* eslint-disable no-useless-catch */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
+export type Response<T> = AxiosResponse<T>;
+
 export type RequestConfig = AxiosRequestConfig;
 
 export type Error = AxiosError;
 
-export interface HttpClient {
+export interface FetchClient {
   instance: AxiosInstance;
-  get: <T>(url: string, config?: RequestConfig) => Promise<AxiosResponse<T>>;
-  post: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
-  patch: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
-  delete: <T>(url: string, config?: RequestConfig) => Promise<AxiosResponse<T>>;
-  put: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<AxiosResponse<T>>;
+  get: <T>(url: string, config?: RequestConfig) => Promise<Response<T>>;
+  post: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<Response<T>>;
+  patch: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<Response<T>>;
+  delete: <T>(url: string, config?: RequestConfig) => Promise<Response<T>>;
+  put: <T, D>(url: string, data?: D, config?: RequestConfig) => Promise<Response<T>>;
 }
 
 const instance = axios.create({
@@ -25,21 +27,16 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    console.log(error.response.status);
-    return Promise.reject({ data: error.response.status });
+  (error: Error) => {
+    return Promise.reject(error.response?.status);
   },
 );
 
-export const fetchClient: HttpClient = {
+export const fetchClient: FetchClient = {
   instance,
 
-  get<T>(url: string, config?: RequestConfig): Promise<any> {
-    try {
-      return this.instance.get<T>(url, config);
-    } catch (error: any) {
-      throw error;
-    }
+  get<T>(url: string, config?: RequestConfig) {
+    return this.instance.get<T>(url, config);
   },
 
   post<T, D>(url: string, data?: D, config?: RequestConfig) {

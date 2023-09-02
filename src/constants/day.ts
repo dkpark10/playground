@@ -1,5 +1,3 @@
-console.log("log module scope", typeof window);
-
 export const January = 1;
 
 export const February = 2;

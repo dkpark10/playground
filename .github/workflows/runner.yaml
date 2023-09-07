@@ -1,0 +1,24 @@
+name: 'action-test'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  file-check:
+    name: file Check 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: Set timezone
+      run: sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
+    - name: Set variable
+      run: |
+        variable=$(date '+%Y%m%d-%H%M%S')
+
+    - name: Generate variable text
+      run: |
+        echo "${{ env.variable }}" > container_image_tag.txt

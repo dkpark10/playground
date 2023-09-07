@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import Error from "next/error";
 import Image from "next/image";
 import Head from "next/head";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { logger } from "@/utils/logger";
 import { getTodo, createTodo } from "@/services";
@@ -47,6 +47,10 @@ export default function NextNext() {
 
   const deleteTodo = () => {};
 
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_BASE_URL);
+  }, []);
+
   return (
     <>
       <Head>
@@ -57,7 +61,6 @@ export default function NextNext() {
       </Head>
       <div>
         <h1>Next Next</h1>
-        <div>{process.env.NEXT_PUBLIC_BASE_URL}</div>
         <main>
           <div className="container">
             <form onSubmit={onSubmit}>

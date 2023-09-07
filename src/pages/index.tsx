@@ -22,7 +22,6 @@ export default function NextNext() {
     onSuccess: async () => {
       (inputRef.current as HTMLInputElement).value = " ";
       await queryClient.invalidateQueries(["todos"]);
-      await refetch();
     },
   });
 

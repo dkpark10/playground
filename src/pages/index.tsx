@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import EditModalContent from "@/components/edit-todo";
 import { useUpdateTodo } from "@/hooks/use-update-todo";
 import { Todo } from "global-type";
+import Link from "next/link";
 
 export default function NextNext() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,7 +70,9 @@ export default function NextNext() {
           </ModalContainer>
         )}
 
-        <header className="text-center text-2xl py-2">Next Next</header>
+        <Link href="/static">
+          <header className="text-center text-2xl py-2">Next Next</header>
+        </Link>
         <main>
           <form onSubmit={onSubmit}>
             <div className="flex justify-center p-4 gap-2 w-full">
@@ -86,7 +89,7 @@ export default function NextNext() {
           </form>
 
           {todoList?.map((todo) => (
-            <div className="flex justify-center p-2 gap-1 items-center shadow-md" key={todo.id}>
+            <div className="flex p-2 gap-1 items-center shadow-md" key={todo.id}>
               <input type="checkbox" />
               <div className="px-1">
                 <p className="flex items-center overflow-hidden text-ellipsis h-8 w-64 whitespace-nowrap">

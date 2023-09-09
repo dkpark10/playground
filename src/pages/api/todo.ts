@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { logger } from "@/utils/logger";
 import fs from "fs/promises";
+import { CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR } from "@/constants/header";
 import { Todo } from "global-type";
 
 let todoList = [
@@ -42,7 +43,7 @@ export default function TodoApiHandler(request: NextApiRequest, response: NextAp
 
   try {
     if (method === "GET") {
-      return response.status(200).send(todoList);
+      return response.status(200).setHeader(CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR).send(todoList);
     }
 
     if (method === "PUT") {

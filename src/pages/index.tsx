@@ -1,11 +1,9 @@
 import type { GetServerSideProps } from "next";
-import Error from "next/error";
-import Image from "next/image";
 import Head from "next/head";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { logger } from "@/utils/logger";
 import { getTodo, createTodo } from "@/services";
+import ModalContainer from "@/components/modal";
 import { Todo } from "global-type";
 
 export default function NextNext() {
@@ -60,6 +58,9 @@ export default function NextNext() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
+        {/* <ModalContainer>
+          <div>...테스트</div>
+        </ModalContainer> */}
         <header className="text-center text-2xl py-2">Next Next</header>
         <main>
           <form onSubmit={onSubmit}>

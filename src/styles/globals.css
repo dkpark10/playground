@@ -10,81 +10,9 @@
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-h1 {
-  text-align:center;
-}
-
-.input-container {
-  padding: 12px 0;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.input-container button {
-  width: 40px;
-  margin-left: 6px;
-  background-color: #4112ff;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-input[type=text] {
-  height: 26px;
-  width: 100%;
-}
-
-.todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #111d30;
-  color: #111d30;
-  border-radius: 8px;
-  min-width: 220px;
-  padding: 8px 12px;
-}
-
-.todo-title {
-  margin-right: 8px;
-}
-
-.todo-title input[type=text] {
-  width: 260px;
-  border:none;
-}
-
-.todo-controller {
-  display: flex;
-  justify-content: space-between;
-  width: 62px;
-}
-
-.todo-controller button {
-  width: 30px;
-  padding: 2px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.todo-controller .update {
-  color: white;
-  background-color: #1be0d7;
-}
-
-.todo-controller .delete {
-  color: #c41a30;
-  background-color: #e6e4e1;
 }

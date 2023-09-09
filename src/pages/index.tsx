@@ -60,43 +60,49 @@ export default function NextNext() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>Next Next</h1>
+        <header className="text-center text-2xl py-2">Next Next</header>
         <main>
-          <div className="container">
-            <form onSubmit={onSubmit}>
-              <div className="input-container">
-                <input type="text" ref={inputRef} />
-                <button type="button" onClick={onClick}>
-                  추가
-                </button>
-              </div>
-            </form>
+          <form onSubmit={onSubmit}>
+            <div className="flex justify-center p-4 gap-2 w-full">
+              <input
+                className="outline-none rounded px-0.5 shadow-md w-full h-8"
+                tabIndex={0}
+                type="text"
+                ref={inputRef}
+              />
+              <button className="bg-indigo-700 rounded-md w-12 shadow-lg text-white" type="button" onClick={onClick}>
+                추가
+              </button>
+            </div>
             {data?.todoList.map((todo, idx) => (
-              <div className="todo-item" key={todo.id}>
-                <div className="todo-title">
-                  <input type="checkbox" />
-                  <input
-                    type="text"
-                    ref={(el) => {
-                      if (el !== null) {
-                        todoInputRef.current[idx] = el;
-                        todoInputRef.current[idx].value = todo.title;
-                      }
-                    }}
-                    name={todo.id}
-                  />
-                </div>
-                <div className="todo-controller">
-                  <button type="button" className="update" onClick={editTodo(todo.id, idx)}>
+              <div className="flex justify-center p-2 gap-1 items-center" key={todo.id}>
+                <input type="checkbox" />
+                <input
+                  className="outline-none rounded px-0.5 shadow-md h-8 w-72"
+                  type="text"
+                  ref={(el) => {
+                    if (el !== null) {
+                      todoInputRef.current[idx] = el;
+                      todoInputRef.current[idx].value = todo.title;
+                    }
+                  }}
+                  name={todo.id}
+                />
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
+                    onClick={editTodo(todo.id, idx)}
+                  >
                     수정
                   </button>
-                  <button type="button" className="delete" onClick={deleteTodo}>
+                  <button type="button" className="bg-red-600 rounded-md w-9 shadow-lg text-white" onClick={deleteTodo}>
                     삭제
                   </button>
                 </div>
               </div>
             ))}
-          </div>
+          </form>
         </main>
       </div>
     </>

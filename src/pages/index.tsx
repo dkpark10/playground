@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTodo, updateTodo } from "@/services";
 import ModalContainer from "@/components/modal";
+import toast, { Toaster } from "react-hot-toast";
 import EditModalContent from "@/components/edit-todo";
 import { Todo } from "global-type";
 
@@ -30,8 +31,13 @@ export default function NextNext() {
       );
     },
 
+    onError: () => {
+      toast.error("게시글 업데이트 error");
+    },
+
     onSettled: () => {
       queryClient.invalidateQueries(["todo"]);
+      toast.success("게시글 업데이트 성공");
     },
   });
 
@@ -60,6 +66,7 @@ export default function NextNext() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
+        <Toaster />
         {showModal && (
           <ModalContainer>
             <EditModalContent

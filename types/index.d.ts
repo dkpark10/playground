@@ -8,6 +8,7 @@ declare namespace NodeJS {
 
 declare module "response-type" {
   export interface Response<T> {
+    statusCode: number;
     data: T;
     isSuccess: boolean;
     isError: boolean;

@@ -18,7 +18,9 @@ export default async function TodoApiHandler(request: NextApiRequest, response: 
     }
 
     if (method === "PUT") {
-      console.log(request.body);
+      const updatedTodo = request.body as Todo;
+      const updatedTodoList = todoList.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo));
+      await fs.writeFile(todoPath, JSON.stringify(updatedTodoList, null, 2));
       return response.status(201).end();
     }
   } catch (error) {

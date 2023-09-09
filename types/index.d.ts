@@ -6,6 +6,14 @@ declare namespace NodeJS {
   }
 }
 
+declare module "response-type" {
+  export interface Response<T> {
+    data: T;
+    isSuccess: boolean;
+    isError: boolean;
+  }
+}
+
 declare module "global-type" {
   export type Todo = { title: string; isCompleted: boolean; id: `todo-${string}` };
 }

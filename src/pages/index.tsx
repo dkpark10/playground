@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTodo, createTodo, updateTodo } from "@/services";
+import { getTodo, updateTodo } from "@/services";
 import ModalContainer from "@/components/modal";
 import EditModalContent from "@/components/edit-todo";
 import { Todo } from "global-type";
@@ -15,9 +15,25 @@ export default function NextNext() {
   const [inputValue, setInputValue] = useState("");
   const [currentTodoItem, setCurrentTodoItem] = useState<Todo["id"] | null>(null);
 
-  const { data: todoList, isError, isLoading } = useQuery(["todo"], getTodo);
+  const { data: todoList } = useQuery(["todo"], getTodo, {
+    staleTime: Infinity,
+  });
 
-  const { mutate: updateMutate } = useMutation((newTodo: Todo) => updateTodo(newTodo));
+  const { mutate: updateMutate } = useMutation((updatedTodo: Todo) => updateTodo(updatedTodo), {
+    onMutate: async (updatedTodo: Todo) => {
+      await queryClient.cancelQueries({ queryKey: ["todo"] });
+      const prevTodoList = queryClient.getQueryData<Array<Todo>>(["todo"]);
+
+      queryClient.setQueryData(
+        ["todo"],
+        prevTodoList?.map((todo) => (updatedTodo.id === todo.id ? updatedTodo : todo)),
+      );
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries(["todo"]);
+    },
+  });
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!todoList) return;

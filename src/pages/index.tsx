@@ -1,16 +1,15 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
-import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTodo, updateTodo } from "@/services";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { getTodo } from "@/services";
 import ModalContainer from "@/components/modal";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import EditModalContent from "@/components/edit-todo";
+import { useUpdateTodo } from "@/hooks/use-update-todo";
 import { Todo } from "global-type";
 
 export default function NextNext() {
-  const queryClient = useQueryClient();
-
   const inputRef = useRef<HTMLInputElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -20,26 +19,7 @@ export default function NextNext() {
     staleTime: Infinity,
   });
 
-  const { mutate: updateMutate } = useMutation((updatedTodo: Todo) => updateTodo(updatedTodo), {
-    onMutate: async (updatedTodo: Todo) => {
-      await queryClient.cancelQueries({ queryKey: ["todo"] });
-      const prevTodoList = queryClient.getQueryData<Array<Todo>>(["todo"]);
-
-      queryClient.setQueryData(
-        ["todo"],
-        prevTodoList?.map((todo) => (updatedTodo.id === todo.id ? updatedTodo : todo)),
-      );
-    },
-
-    onError: () => {
-      toast.error("게시글 업데이트 error");
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries(["todo"]);
-      toast.success("게시글 업데이트 성공");
-    },
-  });
+  const { mutate: updateMutate } = useUpdateTodo();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!todoList) return;
@@ -78,6 +58,7 @@ export default function NextNext() {
                 setShowModal(false);
                 setCurrentTodoItem(null);
                 setInputValue("");
+
                 updateMutate({
                   title: inputValue,
                   id: currentTodoItem as Todo["id"],

@@ -1,51 +1,37 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMutation, dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTodo, createTodo } from "@/services";
+import { getTodo, createTodo, updateTodo } from "@/services";
 import ModalContainer from "@/components/modal";
+import EditModalContent from "@/components/edit-todo";
 import { Todo } from "global-type";
 
 export default function NextNext() {
   const queryClient = useQueryClient();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [currentTodoItem, setCurrentTodoItem] = useState<Todo["id"] | null>(null);
 
-  const { data, isError, refetch } = useQuery(["todo"], getTodo);
+  const { data: todoList, isError, isLoading } = useQuery(["todo"], getTodo);
 
-  const todoInputRef = useRef<HTMLInputElement[]>([]);
-
-  const { mutate } = useMutation((newTodo: Todo) => createTodo(newTodo), {
-    onError: (err, variables, context) => {},
-    onSuccess: async () => {
-      (inputRef.current as HTMLInputElement).value = " ";
-      await queryClient.invalidateQueries(["todos"]);
-    },
-  });
-
-  const onClick = () => {
-    const id = (data?.todoList.length as number) + 1;
-
-    mutate({
-      title: inputRef.current?.value as string,
-      isCompleted: false,
-      id: `todo-${id}`,
-    });
-  };
+  const { mutate: updateMutate } = useMutation((newTodo: Todo) => updateTodo(newTodo));
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!todoList) return;
     e.preventDefault();
   };
 
-  const editTodo = (todoId: Todo["id"], idx: number) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    /**
-     * empty
-     */
+  const onClickEditShowModal = (todoId: Todo["id"]) => () => {
+    setShowModal(true);
+    setCurrentTodoItem(todoId);
+    setInputValue(todoList?.find((todoItem) => todoItem.id === todoId)?.title || "");
   };
 
-  const deleteTodo = () => {};
-
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log(process.env.NEXT_PUBLIC_BASE_URL);
   }, []);
 
@@ -58,9 +44,27 @@ export default function NextNext() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {/* <ModalContainer>
-          <div>...테스트</div>
-        </ModalContainer> */}
+        {showModal && (
+          <ModalContainer>
+            <EditModalContent
+              todoTitle={inputValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setInputValue(e.target.value);
+              }}
+              onCloseModal={() => {
+                setShowModal(false);
+                setCurrentTodoItem(null);
+                setInputValue("");
+                updateMutate({
+                  title: inputValue,
+                  id: currentTodoItem as Todo["id"],
+                  isCompleted: false,
+                });
+              }}
+            />
+          </ModalContainer>
+        )}
+
         <header className="text-center text-2xl py-2">Next Next</header>
         <main>
           <form onSubmit={onSubmit}>
@@ -71,39 +75,34 @@ export default function NextNext() {
                 type="text"
                 ref={inputRef}
               />
-              <button className="bg-indigo-700 rounded-md w-12 shadow-lg text-white" type="button" onClick={onClick}>
+              <button className="bg-indigo-700 rounded-md w-12 shadow-lg text-white" type="button">
                 추가
               </button>
             </div>
-            {data?.todoList.map((todo, idx) => (
-              <div className="flex justify-center p-2 gap-1 items-center" key={todo.id}>
-                <input type="checkbox" />
-                <input
-                  className="outline-none rounded px-0.5 shadow-md h-8 w-72"
-                  type="text"
-                  ref={(el) => {
-                    if (el !== null) {
-                      todoInputRef.current[idx] = el;
-                      todoInputRef.current[idx].value = todo.title;
-                    }
-                  }}
-                  name={todo.id}
-                />
-                <div className="flex gap-1">
-                  <button
-                    type="button"
-                    className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
-                    onClick={editTodo(todo.id, idx)}
-                  >
-                    수정
-                  </button>
-                  <button type="button" className="bg-red-600 rounded-md w-9 shadow-lg text-white" onClick={deleteTodo}>
-                    삭제
-                  </button>
-                </div>
-              </div>
-            ))}
           </form>
+
+          {todoList?.map((todo) => (
+            <div className="flex justify-center p-2 gap-1 items-center shadow-md" key={todo.id}>
+              <input type="checkbox" />
+              <div className="px-1">
+                <p className="flex items-center overflow-hidden text-ellipsis h-8 w-64 whitespace-nowrap">
+                  {todo.title}
+                </p>
+              </div>
+              <div className="flex gap-1">
+                <button
+                  type="button"
+                  className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
+                  onClick={onClickEditShowModal(todo?.id)}
+                >
+                  수정
+                </button>
+                <button type="button" className="bg-red-600 rounded-md w-9 shadow-lg text-white">
+                  삭제
+                </button>
+              </div>
+            </div>
+          ))}
         </main>
       </div>
     </>

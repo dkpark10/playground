@@ -15,7 +15,9 @@ export default function ModalContainer({ children }: PropsWithChildren) {
   if (portalElement.current && mounted) {
     return createPortal(
       <div className="bg-black w-screen h-screen bg-opacity-25 absolute z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-y-1/2	-translate-x-1/2">{children}</div>
+        <div className="absolute top-1/2 left-1/2 -translate-y-1/2	-translate-x-1/2">
+          <div className="bg-white rounded-md p-4 w-80">{children}</div>
+        </div>
       </div>,
       portalElement.current,
     );

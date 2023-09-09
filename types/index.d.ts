@@ -7,5 +7,5 @@ declare namespace NodeJS {
 }
 
 declare module "global-type" {
-  export type Todo = { title: string; isCompleted: boolean; id: `todo-${number}` };
+  export type Todo = { title: string; isCompleted: boolean; id: `todo-${string}` };
 }

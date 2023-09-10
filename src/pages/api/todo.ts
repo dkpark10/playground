@@ -52,6 +52,12 @@ export default function TodoApiHandler(request: NextApiRequest, response: NextAp
       // await fs.writeFile(todoPath, JSON.stringify(updatedTodoList, null, 2));
       return response.status(201).end();
     }
+
+    if (method === "DELETE") {
+      const deleteId = request.body as Todo["id"];
+      todoList = todoList.filter((todo) => todo.id !== deleteId);
+      return response.status(201).end();
+    }
   } catch (error) {
     logger.error(`[api error]: ${method || "GET"}/todo`);
     return response.status(500).end();

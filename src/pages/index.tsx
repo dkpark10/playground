@@ -6,7 +6,9 @@ import { getTodo } from "@/services";
 import ModalContainer from "@/components/modal";
 import { Toaster } from "react-hot-toast";
 import EditModalContent from "@/components/edit-todo";
+import DeleteModalContent from "@/components/delete-todo";
 import { useUpdateTodo } from "@/hooks/use-update-todo";
+import { useDeleteTodo } from "@/hooks/use-delete-todo";
 import { Todo } from "global-type";
 import Link from "next/link";
 
@@ -14,13 +16,17 @@ export default function NextNext() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [currentTodoItem, setCurrentTodoItem] = useState<Todo["id"] | null>(null);
+  const [currentTodoItem, setCurrentTodoItem] = useState<{
+    id: Todo["id"];
+    action: "delete" | "update";
+  } | null>(null);
 
   const { data: todoList } = useQuery(["todo"], getTodo, {
     staleTime: Infinity,
   });
 
   const { mutate: updateMutate } = useUpdateTodo();
+  const { mutate: deleteMutate } = useDeleteTodo();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!todoList) return;
@@ -29,8 +35,19 @@ export default function NextNext() {
 
   const onClickEditShowModal = (todoId: Todo["id"]) => () => {
     setShowModal(true);
-    setCurrentTodoItem(todoId);
+    setCurrentTodoItem({
+      id: todoId,
+      action: "update",
+    });
     setInputValue(todoList?.find((todoItem) => todoItem.id === todoId)?.title || "");
+  };
+
+  const onClickDeleteShowModal = (todoId: Todo["id"]) => () => {
+    setShowModal(true);
+    setCurrentTodoItem({
+      id: todoId,
+      action: "delete",
+    });
   };
 
   useEffect(() => {
@@ -48,7 +65,7 @@ export default function NextNext() {
       </Head>
       <div>
         <Toaster />
-        {showModal && (
+        {showModal && currentTodoItem?.action === "update" && (
           <ModalContainer>
             <EditModalContent
               todoTitle={inputValue}
@@ -62,9 +79,23 @@ export default function NextNext() {
 
                 updateMutate({
                   title: inputValue,
-                  id: currentTodoItem as Todo["id"],
+                  id: currentTodoItem?.id,
                   isCompleted: false,
                 });
+              }}
+            />
+          </ModalContainer>
+        )}
+
+        {showModal && currentTodoItem?.action === "delete" && (
+          <ModalContainer>
+            <DeleteModalContent
+              onCloseModal={() => {
+                setShowModal(false);
+                setCurrentTodoItem(null);
+                setInputValue("");
+
+                deleteMutate(currentTodoItem?.id);
               }}
             />
           </ModalContainer>
@@ -104,7 +135,11 @@ export default function NextNext() {
                 >
                   수정
                 </button>
-                <button type="button" className="bg-red-600 rounded-md w-9 shadow-lg text-white">
+                <button
+                  type="button"
+                  className="bg-red-600 rounded-md w-9 shadow-lg text-white"
+                  onClick={onClickDeleteShowModal(todo?.id)}
+                >
                   삭제
                 </button>
               </div>

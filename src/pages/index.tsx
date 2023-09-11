@@ -5,8 +5,8 @@ import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { getTodo } from "@/services";
 import ModalContainer from "@/components/modal";
 import { Toaster } from "react-hot-toast";
-import EditModalContent from "@/components/edit-todo";
-import DeleteModalContent from "@/components/delete-todo";
+import EditModalContent from "@/components/modal-content-update";
+import DeleteModalContent from "@/components/modal-content-delete";
 import { useUpdateTodo } from "@/hooks/use-update-todo";
 import { useDeleteTodo } from "@/hooks/use-delete-todo";
 import { Todo } from "global-type";
@@ -72,6 +72,11 @@ export default function NextNext() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setInputValue(e.target.value);
               }}
+              onCancel={() => {
+                setShowModal(false);
+                setCurrentTodoItem(null);
+                setInputValue("");
+              }}
               onCloseModal={() => {
                 setShowModal(false);
                 setCurrentTodoItem(null);
@@ -90,10 +95,13 @@ export default function NextNext() {
         {showModal && currentTodoItem?.action === "delete" && (
           <ModalContainer>
             <DeleteModalContent
+              onCancel={() => {
+                setShowModal(false);
+                setCurrentTodoItem(null);
+              }}
               onCloseModal={() => {
                 setShowModal(false);
                 setCurrentTodoItem(null);
-                setInputValue("");
 
                 deleteMutate(currentTodoItem?.id);
               }}

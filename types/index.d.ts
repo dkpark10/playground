@@ -16,5 +16,5 @@ declare module "response-type" {
 }
 
 declare module "global-type" {
-  export type Todo = { title: string; isCompleted: boolean; id: `todo-${string}` };
+  export type Todo = { title: string; isCompleted: boolean; id: string };
 }

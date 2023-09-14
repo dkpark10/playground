@@ -8,7 +8,9 @@ import { Toaster } from "react-hot-toast";
 import EditModalContent from "@/components/modal-content-update";
 import DeleteModalContent from "@/components/modal-content-delete";
 import { useUpdateTodo } from "@/hooks/use-update-todo";
+import { useCreateTodo } from "@/hooks/use-create-todo";
 import { useDeleteTodo } from "@/hooks/use-delete-todo";
+import { v4 as uuidv4 } from "uuid";
 import { Todo } from "global-type";
 import Link from "next/link";
 
@@ -25,12 +27,18 @@ export default function NextNext() {
     staleTime: Infinity,
   });
 
+  const { mutate: createMutate } = useCreateTodo();
   const { mutate: updateMutate } = useUpdateTodo();
   const { mutate: deleteMutate } = useDeleteTodo();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (!todoList) return;
     e.preventDefault();
+    if (!inputRef.current) return;
+    createMutate({
+      title: inputRef.current?.value,
+      isCompleted: false,
+      id: uuidv4(),
+    });
   };
 
   const onClickEditShowModal = (todoId: Todo["id"]) => () => {
@@ -121,7 +129,7 @@ export default function NextNext() {
                 type="text"
                 ref={inputRef}
               />
-              <button className="bg-indigo-700 rounded-md w-12 shadow-lg text-white" type="button">
+              <button type="submit" className="bg-indigo-700 rounded-md w-12 shadow-lg text-white">
                 추가
               </button>
             </div>

@@ -6,7 +6,7 @@ import fs from "fs/promises";
 import { CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR } from "@/constants/header";
 import { Todo } from "global-type";
 
-let todoList = [
+let todoList: Array<Todo> = [
   {
     title: "next 공부하기",
     isCompleted: false,
@@ -44,6 +44,12 @@ export default function TodoApiHandler(request: NextApiRequest, response: NextAp
   try {
     if (method === "GET") {
       return response.status(200).setHeader(CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR).send(todoList);
+    }
+
+    if (method === "POST") {
+      const newTodo = request.body as Todo;
+      todoList = [...todoList, newTodo];
+      return response.status(201).end();
     }
 
     if (method === "PUT") {

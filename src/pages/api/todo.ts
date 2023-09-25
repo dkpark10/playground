@@ -4,7 +4,7 @@ import path from "path";
 import { logger } from "@/utils/logger";
 import fs from "fs/promises";
 import { CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR } from "@/constants/header";
-import { Todo } from "global-type";
+import { Todo, TodoSchema } from "@/schema/todo";
 
 let todoList: Array<Todo> = [
   {
@@ -43,7 +43,7 @@ export default function TodoApiHandler(request: NextApiRequest, response: NextAp
 
   try {
     if (method === "GET") {
-      return response.status(200).setHeader(CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR).send(todoList);
+      return response.status(200).setHeader(CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR).send(TodoSchema.parse(todoList));
     }
 
     if (method === "POST") {
@@ -64,8 +64,9 @@ export default function TodoApiHandler(request: NextApiRequest, response: NextAp
       todoList = todoList.filter((todo) => todo.id !== deleteId);
       return response.status(201).end();
     }
-  } catch (error) {
-    logger.error(`[api error]: ${method || "GET"}/todo`);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    logger.error(`[api error]: ${method || "GET"}/todo - ${error}`);
     return response.status(500).end();
   }
 }

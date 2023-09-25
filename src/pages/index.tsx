@@ -33,7 +33,7 @@ export default function NextNext() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!inputRef.current) return;
+    if (!inputRef.current || !inputRef.current.value) return;
     createMutate({
       title: inputRef.current?.value,
       isCompleted: false,

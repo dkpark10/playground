@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { Todo } from "@/schema/todo";
+import { TodoSchema, Todo } from "@/schema/todo";
+import { logger } from "@/utils/logger";
 
-const todoList: Array<Todo> = [
+let todoList: Array<Todo> = [
   {
     title: "next 공부하기",
     isCompleted: false,
@@ -30,5 +31,29 @@ const todoList: Array<Todo> = [
 ];
 
 export function GET(_: Request) {
-  return NextResponse.json(todoList);
+  try {
+    return NextResponse.json(TodoSchema.parse(todoList));
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    logger.error(`[api error]: todo - ${error.message}`);
+    return NextResponse.json({ status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  const newTodo = await request.json();
+  todoList = [...todoList, newTodo];
+  return NextResponse.json({ status: 201 });
+}
+
+export async function PUT(request: Request) {
+  const updatedTodo = (await request.json()) as Todo;
+  todoList = todoList.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo));
+  return NextResponse.json({ status: 201 });
+}
+
+export async function DELETE(request: Request) {
+  const deleteId = (await request.json()) as Todo["id"];
+  todoList = todoList.filter((todo) => todo.id !== deleteId);
+  return NextResponse.json({ status: 201 });
 }

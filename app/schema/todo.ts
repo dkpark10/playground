@@ -1,9 +1,11 @@
 import { z } from "zod";
 
-export const TodoSchema = z.object({
-  title: z.string(),
+export const TodoItemSchema = z.object({
+  title: z.string().nonempty(),
   isCompleted: z.boolean(),
-  id: z.string(),
+  id: z.string().nonempty(),
 });
 
-export type Todo = z.infer<typeof TodoSchema>;
+export const TodoSchema = z.array(TodoItemSchema);
+
+export type Todo = z.infer<typeof TodoItemSchema>;

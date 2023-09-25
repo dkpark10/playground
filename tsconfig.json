@@ -21,15 +21,22 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./app/*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "@types", "graffiti.js",
+    "@types",
+    "graffiti.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

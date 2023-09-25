@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { logger } from "@/utils/logger";
-import fs from "fs/promises";
+// import fs from "fs/promises";
 import { CACHE_CONTROL, CACHE_PUBLIC_MAX_1YEAR } from "@/constants/header";
 import { Todo, TodoSchema } from "@/schema/todo";
 

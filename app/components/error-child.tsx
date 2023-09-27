@@ -8,7 +8,7 @@ const fetchError = async () => {
 
 export default function ErrorChild() {
   const { data } = useQuery(["error"], fetchError, {
-    useErrorBoundary: (error: Error) => (error.response?.status as number) >= 500,
+    useErrorBoundary: (error: Error) => (error.response?.status as number) >= 400,
   });
   return <div>{data?.result}</div>;
 }

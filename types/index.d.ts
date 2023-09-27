@@ -14,7 +14,3 @@ declare module "response-type" {
     isError: boolean;
   }
 }
-
-declare module "global-type" {
-  export type Todo = { title: string; isCompleted: boolean; id: string };
-}

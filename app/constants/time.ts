@@ -4,4 +4,4 @@ export const MINUTE = SECOND * 60;
 
 export const HOUR = MINUTE * 60;
 
-export const oneDaySecond = 86400;
+export const ONE_DAY_SECOND = 86400;

@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-import { createTodo } from "@/services";
-import { Todo } from "global-type";
+import { fetchClient } from "@/utils";
+import type { Todo } from "@/schema/todo";
+
+export const createTodo = async (newTodo: Todo) => {
+  const { data } = await fetchClient.post<Todo, Todo>("api/todo", newTodo);
+  return data;
+};
 
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();

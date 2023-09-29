@@ -7,7 +7,7 @@ import TodoInput from "@/components/todo/input";
 import TodoModal from "./components/todo/modal";
 
 const getTodoData = async () => {
-  const res = await fetch("http://localhost:3000/api/todo", {
+  const res = await fetch("/api/todo", {
     next: { tags: ["todo"] },
   });
   return res.json() as Promise<Array<Todo>>;

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
 import { TodoSchema, Todo } from "@/schema/todo";
 import { logger } from "@/utils/logger";
 

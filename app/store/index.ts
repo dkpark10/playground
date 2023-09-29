@@ -9,4 +9,8 @@ export type TodoItemAtom = {
   action: "delete" | "update";
 };
 
-export const currentTodoItemAtom = atom<TodoItemAtom | null>(null);
+export const currentTodoItemAtom = atom<TodoItemAtom>({
+  id: "",
+  title: "",
+  action: "delete",
+});

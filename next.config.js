@@ -13,9 +13,6 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
-    reactRoot: true,
-    runtime: "node",
-    serverComponents: true,
   },
   publicRuntimeConfig: {
     version,

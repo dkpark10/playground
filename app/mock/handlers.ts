@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { rest } from "msw";
-import { Todo } from "global-type";
+import { Todo } from "@/schema/todo";
 
 const todoList = [
   {

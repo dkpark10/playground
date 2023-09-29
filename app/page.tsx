@@ -1,8 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { QueryClient } from "@tanstack/react-query";
-import { Todo } from "@/schema/todo";
 import { nextFetchClient } from "@/utils/next-fetch-client";
+import { Todo } from "@/schema/todo";
 import TodoItem from "@/components/todo/item";
 import TodoInput from "@/components/todo/input";
 import TodoModal from "./components/todo/modal";

@@ -10,6 +10,9 @@ const nextConfig = {
   images: {
     domains: ['shop.zumst.com', 'localhost'],
   },
+  experimental: {
+    serverActions: true,
+  },
 };
 
 module.exports = isRunBundleAnalyze ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;

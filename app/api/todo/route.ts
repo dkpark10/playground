@@ -43,21 +43,18 @@ export function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const newTodo = await request.json();
-  revalidateTag("todo");
   todoList = [...todoList, newTodo];
   return NextResponse.json("", { status: 201 });
 }
 
 export async function PUT(request: NextRequest) {
   const updatedTodo = (await request.json()) as Todo;
-  revalidateTag("todo");
   todoList = todoList.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo));
   return NextResponse.json("", { status: 201 });
 }
 
 export async function DELETE(request: NextRequest) {
   const deleteId = (await request.json()) as Todo["id"];
-  revalidateTag("todo");
   todoList = todoList.filter((todo) => todo.id !== deleteId);
   return NextResponse.json("", { status: 201 });
 }

@@ -4,13 +4,9 @@ import React from "react";
 import { showModalAtom, currentTodoItemAtom } from "@/store";
 import { useAtom } from "jotai";
 import ModalContainer from "@/components/modal-container";
-import { useUpdateTodo } from "@/hooks/use-update-todo";
-import { useDeleteTodo } from "@/hooks/use-delete-todo";
-import { nextFetchClient } from "@/utils/next-fetch-client";
-import { useRouter } from "next/navigation";
+import { deleteTodo, updateTodo } from "@/actions/todo";
 
 export default function TodoModal() {
-  const router = useRouter();
   const [showModal, setShowModal] = useAtom(showModalAtom);
   const [currentTodoItem, setCurrentTodoItem] = useAtom(currentTodoItemAtom);
 
@@ -24,28 +20,17 @@ export default function TodoModal() {
   const onEditConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-
-    fetch("api/todo", {
-      method: "PUT",
-      body: JSON.stringify({
-        title: currentTodoItem?.title,
-        id: currentTodoItem.id,
-        isCompleted: false,
-      }),
-    }).then(() => {
-      router.refresh();
+    updateTodo({
+      title: currentTodoItem?.title,
+      id: currentTodoItem.id,
+      isCompleted: false,
     });
   };
 
   const onDeleteConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    fetch("api/todo", {
-      method: "DELETE",
-      body: JSON.stringify(currentTodoItem.id),
-    }).then(() => {
-      router.refresh();
-    });
+    deleteTodo(currentTodoItem.id);
   };
 
   const onCancel = () => {

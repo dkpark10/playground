@@ -7,14 +7,12 @@ import ModalContainer from "@/components/modal-container";
 import { useUpdateTodo } from "@/hooks/use-update-todo";
 import { useDeleteTodo } from "@/hooks/use-delete-todo";
 import { nextFetchClient } from "@/utils/next-fetch-client";
-import { revalidateTag } from "next/cache";
+import { useRouter } from "next/navigation";
 
 export default function TodoModal() {
+  const router = useRouter();
   const [showModal, setShowModal] = useAtom(showModalAtom);
   const [currentTodoItem, setCurrentTodoItem] = useAtom(currentTodoItemAtom);
-
-  const { mutate: updateMutate } = useUpdateTodo();
-  const { mutate: deleteMutate } = useDeleteTodo();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentTodoItem((prev) => ({
@@ -26,20 +24,27 @@ export default function TodoModal() {
   const onEditConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    updateMutate({
-      title: currentTodoItem?.title,
-      id: currentTodoItem.id,
-      isCompleted: false,
+
+    fetch("api/todo", {
+      method: "PUT",
+      body: JSON.stringify({
+        title: currentTodoItem?.title,
+        id: currentTodoItem.id,
+        isCompleted: false,
+      }),
+    }).then(() => {
+      router.refresh();
     });
   };
 
   const onDeleteConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    // deleteMutate(currentTodoItem.id);
     fetch("api/todo", {
       method: "DELETE",
       body: JSON.stringify(currentTodoItem.id),
+    }).then(() => {
+      router.refresh();
     });
   };
 

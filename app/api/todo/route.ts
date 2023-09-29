@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { TodoSchema, Todo } from "@/schema/todo";
 import { logger } from "@/utils/logger";
 
@@ -30,30 +31,30 @@ let todoList: Array<Todo> = [
   },
 ];
 
-export function GET(_: Request) {
+export function GET(request: NextRequest) {
   try {
     return NextResponse.json(TodoSchema.parse(todoList));
   } catch (error: any) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     logger.error(`[api error]: todo - ${error.message}`);
-    return NextResponse.json({ status: 500 });
+    return NextResponse.json("", { status: 500 });
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const newTodo = await request.json();
   todoList = [...todoList, newTodo];
-  return NextResponse.json({ status: 201 });
+  return NextResponse.json("", { status: 201 });
 }
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   const updatedTodo = (await request.json()) as Todo;
   todoList = todoList.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo));
-  return NextResponse.json({ status: 201 });
+  return NextResponse.json("", { status: 201 });
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const deleteId = (await request.json()) as Todo["id"];
   todoList = todoList.filter((todo) => todo.id !== deleteId);
-  return NextResponse.json({ status: 201 });
+  return NextResponse.json("", { status: 201 });
 }

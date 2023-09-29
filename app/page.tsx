@@ -1,5 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
+import { QueryClient } from "@tanstack/react-query";
 import { Todo } from "@/schema/todo";
 import TodoItem from "@/components/todo/item";
 import TodoInput from "@/components/todo/input";
@@ -7,9 +8,8 @@ import TodoModal from "./components/todo/modal";
 
 const getTodoData = async () => {
   const res = await fetch("http://localhost:3000/api/todo", {
-    next: { revalidate: Infinity },
+    next: { tags: ["todo"] },
   });
-
   return res.json() as Promise<Array<Todo>>;
 };
 
@@ -20,6 +20,9 @@ export default async function NextNext() {
   // }, []);
 
   const todoList = await getTodoData();
+  // const queryClient = new QueryClient();
+  // queryClient.setQueryData(["todo"], todoList);
+
   return (
     <>
       <Toaster />

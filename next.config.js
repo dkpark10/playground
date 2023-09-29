@@ -1,3 +1,4 @@
+const { version } = require('./package.json');
 const isRunBundleAnalyze = process.env.ANALYZE === "true";
 
 /** @type {import('next').NextConfig} */
@@ -12,6 +13,12 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
+    reactRoot: true,
+    runtime: "node",
+    serverComponents: true,
+  },
+  publicRuntimeConfig: {
+    version,
   },
 };
 

@@ -24,7 +24,6 @@ export default function TodoItem({ todo }: TodoItemProps) {
   return (
     <div className="flex p-2 gap-1 justify-between shadow-md w-full" key={todo.id}>
       <div className="flex items-center">
-        <input type="checkbox" />
         <div className="px-1">
           <p className="flex items-center overflow-hidden text-ellipsis h-8 w-64 whitespace-nowrap">{todo.title}</p>
         </div>

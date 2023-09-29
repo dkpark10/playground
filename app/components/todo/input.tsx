@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import { createTodo } from "@/actions/todo";
 
@@ -17,6 +18,7 @@ export default function TodoInput() {
     });
 
     inputRef.current.value = "";
+    toast.success("투두 생성 성공");
   };
 
   return (

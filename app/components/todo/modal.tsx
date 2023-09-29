@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { toast } from "react-hot-toast";
 import { showModalAtom, currentTodoItemAtom } from "@/store";
 import { useAtom } from "jotai";
 import ModalContainer from "@/components/modal-container";
@@ -17,20 +18,22 @@ export default function TodoModal() {
     }));
   };
 
-  const onEditConfirm = (e: React.FormEvent<HTMLFormElement>) => {
+  const onEditConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    updateTodo({
+    await updateTodo({
       title: currentTodoItem?.title,
       id: currentTodoItem.id,
       isCompleted: false,
     });
+    toast.success("투두 업데이트 성공");
   };
 
-  const onDeleteConfirm = (e: React.FormEvent<HTMLFormElement>) => {
+  const onDeleteConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    deleteTodo(currentTodoItem.id);
+    await deleteTodo(currentTodoItem.id);
+    toast.success("투두 삭제 성공");
   };
 
   const onCancel = () => {

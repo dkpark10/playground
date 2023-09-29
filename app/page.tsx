@@ -5,12 +5,14 @@ import { nextFetchClient } from "@/utils/next-fetch-client";
 import { Todo } from "@/schema/todo";
 import TodoItem from "@/components/todo/item";
 import TodoInput from "@/components/todo/input";
+import { revalidateTag } from "next/cache";
 import TodoModal from "./components/todo/modal";
 
 const getTodoData = async () => {
   const res = await nextFetchClient.get<Array<Todo>>("/api/todo", {
     next: { tags: ["todo"] },
   });
+  revalidateTag("todo");
   return res;
 };
 

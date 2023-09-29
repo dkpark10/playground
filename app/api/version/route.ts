@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 // eslint-disable-next-line import/extensions
 import { version } from "../../../package.json";
 
-export function GET(_: Request) {
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function GET(_: Request) {
   return NextResponse.json(version);
 }

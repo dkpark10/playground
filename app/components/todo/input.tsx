@@ -2,21 +2,21 @@
 
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useCreateTodo } from "@/hooks/use-create-todo";
+import { createTodo } from "@/actions/todo";
 
 export default function TodoInput() {
-  const { mutate: createMutate } = useCreateTodo();
-
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputRef.current || !inputRef.current.value) return;
-    createMutate({
+    await createTodo({
       title: inputRef.current?.value,
       isCompleted: false,
       id: uuidv4(),
     });
+
+    inputRef.current.value = "";
   };
 
   return (

@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:bundle": "cross-env ANALYZE=true next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "next lint",
     "create:mock": "node generate_mock.js",
     "cy:open": "cypress open"

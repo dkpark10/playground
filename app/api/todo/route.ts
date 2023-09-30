@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TodoSchema, Todo } from "@/schema/todo";
 import { logger } from "@/utils/logger";
-import { revalidateTag } from "next/cache";
 
 let todoList: Array<Todo> = [
   {

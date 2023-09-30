@@ -18,22 +18,32 @@ export default function TodoModal() {
     }));
   };
 
-  const onEditConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onEditConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    await updateTodo({
+    updateTodo({
       title: currentTodoItem?.title,
       id: currentTodoItem.id,
       isCompleted: false,
-    });
-    toast.success("투두 업데이트 성공");
+    })
+      .then(() => {
+        toast.success("투두 업데이트 성공");
+      })
+      .catch(() => {
+        toast.error("에러 실패");
+      });
   };
 
-  const onDeleteConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onDeleteConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowModal(false);
-    await deleteTodo(currentTodoItem.id);
-    toast.success("투두 삭제 성공");
+    deleteTodo(currentTodoItem.id)
+      .then(() => {
+        toast.success("투두 삭제 성공");
+      })
+      .catch(() => {
+        toast.error("에러 실패");
+      });
   };
 
   const onCancel = () => {

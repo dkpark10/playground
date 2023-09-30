@@ -8,17 +8,21 @@ import { createTodo } from "@/actions/todo";
 export default function TodoInput() {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputRef.current || !inputRef.current.value) return;
-    await createTodo({
+    createTodo({
       title: inputRef.current?.value,
       isCompleted: false,
       id: uuidv4(),
-    });
-
-    inputRef.current.value = "";
-    toast.success("투두 생성 성공");
+    })
+      .then(() => {
+        toast.success("투두 생성 성공");
+        (inputRef.current as HTMLInputElement).value = "";
+      })
+      .catch(() => {
+        toast.error("투두 생성 에러");
+      });
   };
 
   return (

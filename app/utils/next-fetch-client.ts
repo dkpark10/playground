@@ -3,7 +3,7 @@ import { logger } from "./logger";
 type METHOD = "get" | "post" | "put" | "patch" | "delete";
 
 type NextFetchClient = {
-  [key in METHOD]: <T = any>(url: string, option?: RequestInit) => Promise<T>;
+  [key in METHOD]: <T>(url: string, option?: RequestInit) => Promise<T>;
 };
 
 interface Error {

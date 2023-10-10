@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import GlobalProvider from "@/global-provider";
 import { PropsWithChildren } from "react";
 
 export const metadata: Metadata = {
@@ -8,12 +7,6 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1",
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
-  return (
-    <html lang="ko">
-      <GlobalProvider>
-        <body>{children}</body>
-      </GlobalProvider>
-    </html>
-  );
+export default function Random2Layout({ children }: PropsWithChildren) {
+  return <main>{children}</main>;
 }

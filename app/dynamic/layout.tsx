@@ -9,11 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {
-  return (
-    <html lang="ko">
-      <GlobalProvider>
-        <body>{children}</body>
-      </GlobalProvider>
-    </html>
-  );
+  return <main>{children}</main>;
 }

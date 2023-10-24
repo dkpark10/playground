@@ -16,9 +16,5 @@ export default function GlobalProvider({ children }: PropsWithChildren) {
       }),
   );
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <body>{children}</body>
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

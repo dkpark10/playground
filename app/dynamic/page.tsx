@@ -1,4 +1,5 @@
 import { nextFetchClient } from "@/utils/next-fetch-client";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,7 @@ export default async function NextNext() {
     <>
       <div>{ran1}</div>
       <div>{ran2}</div>
+      <Image width={100} height={100} src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png" alt="test" />
     </>
   );
 }

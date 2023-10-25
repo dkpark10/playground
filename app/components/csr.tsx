@@ -12,8 +12,20 @@ export default function CsrComponent() {
         src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png"
         alt="test"
       />
-      <img width={100} height={100} src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png" alt="test" />
-      <img width={100} height={100} src="api/random" alt="test" />
+      <img
+        width={100}
+        height={100}
+        src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png"
+        alt="test"
+      />
+      <img
+        width={100}
+        height={100}
+        src="api/test.png"
+        alt="test"
+        onLoad={() => console.log("load")}
+        onError={() => console.log("error")}
+      />
     </>
   );
 }

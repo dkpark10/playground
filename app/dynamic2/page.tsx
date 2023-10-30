@@ -3,6 +3,7 @@ import Image from "next/image";
 import ClientComponent from "@/components/csr";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 2;
 
 interface Random {
   results: Array<{
@@ -92,6 +93,7 @@ export default async function NextNext() {
 
   return (
     <>
+      <div>해당페이지는 revalidate 설정된 페이지 isr임</div>
       <div>해당 값은 로컬 next api에서 revalidate=2 설정된 값 {ran1}</div>
       <div>해당 값은 로컬 next api에서 revalidate 설정 안된 값 {ran2}</div>
 

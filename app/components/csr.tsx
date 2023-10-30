@@ -1,31 +1,19 @@
 "use client";
 
-import Image from "next/image";
+interface ClientComponentProps {
+  value1: string;
+  value2: string;
+  value3: string;
+  value4: string;
+}
 
-export default function CsrComponent() {
+export default function ClientComponent({ value1, value2, value3, value4 }: ClientComponentProps) {
   return (
-    <>
-      <Image
-        priority
-        width={100}
-        height={100}
-        src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png"
-        alt="test"
-      />
-      <img
-        width={100}
-        height={100}
-        src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png"
-        alt="test"
-      />
-      <img
-        width={100}
-        height={100}
-        src="api/test.png"
-        alt="test"
-        onLoad={() => console.log("load")}
-        onError={() => console.log("error")}
-      />
-    </>
+    <div className="border border-slate-400">
+      해당 값은 타서버 랜덤 api 호출 해서 클라이언트 컴포넌트에 주입된 값<div>{value1}</div>
+      <div>{value2}</div>
+      <div>{value3}</div>
+      <div>{value4}</div>
+    </div>
   );
 }

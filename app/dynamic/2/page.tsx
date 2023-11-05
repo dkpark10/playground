@@ -1,5 +1,4 @@
 import { nextFetchClient } from "@/utils/next-fetch-client";
-import Image from "next/image";
 import ClientComponent from "@/components/csr";
 
 export const dynamic = "force-dynamic";
@@ -93,11 +92,16 @@ export default async function NextNext() {
 
   return (
     <>
-      <div>해당페이지는 revalidate 설정된 페이지 isr임</div>
-      <div>해당 값은 로컬 next api에서 revalidate=2 설정된 값 {ran1}</div>
-      <div>해당 값은 로컬 next api에서 revalidate 설정 안된 값 {ran2}</div>
-
-      <Image width={100} height={100} src="https://shop.zumst.com/upload/best/2023/10/16/SZBC223417.png" alt="test" />
+      <h1>
+        해당페이지는 revalidate {revalidate} 설정된 페이지 <span className="text-red-600">isr</span>
+      </h1>
+      <div>{new Date().getTime()}</div>
+      <div>
+        해당 값은 로컬 next api에서 revalidate=2 설정된 값 <span className="text-red-600">{ran1}</span>
+      </div>
+      <div>
+        해당 값은 로컬 next api에서 revalidate 설정 안된 값 <span className="text-red-600">{ran2}</span>
+      </div>
 
       <ClientComponent
         value1={results[0].gender}
@@ -106,7 +110,7 @@ export default async function NextNext() {
         value4={results[0].name.last}
       />
 
-      <div>아래 영역은 다른 도메인 랜덤 api revalidate=2 설정된 데이터</div>
+      <div>아래 영역은 다른 서버 api revalidate=2 설정된 데이터</div>
       <ClientComponent
         value1={results2[0].gender}
         value2={results2[0].name.title}

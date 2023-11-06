@@ -1,7 +1,6 @@
 import { nextFetchClient } from "@/utils/next-fetch-client";
 import ClientComponent from "@/components/csr";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 2;
 
 interface Random {
@@ -75,14 +74,20 @@ const getRandomJsonData = async () => {
 };
 
 const getRandomJsonDataCache = async () => {
-  const result = await fetch("https://randomuser.me/api", { next: { revalidate: 2 } }).then(
+  const baseAt = new Date().toISOString().match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}/)?.[0] || "";
+
+  const result = await fetch(`https://randomuser.me/api?ran=${baseAt}`, { next: { revalidate: 2 } }).then(
     (res): Promise<Random> => res.json(),
   );
   return result;
 };
 
 const getTodoData = async () => {
-  return Promise.all([nextFetchClient.get<number>("/api/random"), nextFetchClient.get<number>("/api/random2")]);
+  const baseAt = new Date().toISOString().match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}/)?.[0] || "";
+  return Promise.all([
+    nextFetchClient.get<number>(`/api/random?ran=${baseAt}`),
+    nextFetchClient.get<number>("/api/random2"),
+  ]);
 };
 
 export default async function NextNext() {

@@ -8,7 +8,7 @@ declare namespace NodeJS {
 
 export namespace Editor {
   export interface CommonEditorProperties {
-    id: number;
+    id: string;
   }
 
   export interface ImageBlock extends CommonEditorProperties {

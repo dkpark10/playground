@@ -21,4 +21,10 @@ export namespace Editor {
   }
 
   export type Block = ImageBlock | TextBlock;
+
+  export interface CaretPosInfo extends Partial<Selection> {
+    isFirstLine: boolean;
+  }
+
+  export type EditorAction = "bold";
 }

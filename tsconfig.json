@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "noEmit": true,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,

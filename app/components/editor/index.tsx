@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useRef, useEffect } from "react";
 import TextEditorBlock from "@/components/editor/text-editor-block";
-import { TextEditorHandler } from "@/utils/editor";
+import { runTextEditorAction } from "@/utils/editor";
 import { v4 as uuidv4 } from "uuid";
 import type { Editor } from "types";
 
@@ -35,8 +35,7 @@ export default function EditorComponent() {
     const currentContentDom = textEditorBlockRefs.current.get(currentEditorBlockId);
     if (!currentContentDom) return;
 
-    const textEditorHandler = new TextEditorHandler(currentContentDom);
-    textEditorHandler.runTextAction("bold");
+    runTextEditorAction(currentContentDom, "bold");
   };
 
   useEffect(() => {

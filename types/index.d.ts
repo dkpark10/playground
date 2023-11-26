@@ -26,5 +26,9 @@ export namespace Editor {
     isFirstLine: boolean;
   }
 
-  export type EditorAction = "bold";
+  export type EditorAction = "bold" | "inclination" | "cancelLine";
+
+  export type ClassNameByEditorAction = {
+    [key in EditorAction]: string;
+  };
 }

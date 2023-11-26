@@ -10,9 +10,9 @@ export interface AbstractTextEditorHandlerProps {
 export abstract class AbstractTextEditorHandler {
   protected contentEditableDom: HTMLDivElement;
 
-  protected anchorNode: Node | null;
+  protected anchorNode: Node;
 
-  protected focusNode: Node | null;
+  protected focusNode: Node;
 
   protected anchorOffset: number;
 
@@ -37,8 +37,8 @@ export abstract class AbstractTextEditorHandler {
   }
 
   protected setCaretPosInfo(selection: Selection) {
-    this.anchorNode = selection.anchorNode;
-    this.focusNode = selection.focusNode;
+    this.anchorNode = selection.anchorNode as Node;
+    this.focusNode = selection.focusNode as Node;
     this.anchorOffset = selection.anchorOffset;
     this.focusOffset = selection.focusOffset;
   }

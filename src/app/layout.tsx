@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import GlobalProvider from "@/global-provider";
 import { PropsWithChildren } from "react";
+import GlobalProvider from "@/app/global-provider";
 
 export const metadata: Metadata = {
   title: "next next",

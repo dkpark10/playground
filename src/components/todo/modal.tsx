@@ -2,10 +2,10 @@
 
 import React from "react";
 import { toast } from "react-hot-toast";
-import { showModalAtom, currentTodoItemAtom } from "@/store";
 import { useAtom } from "jotai";
+import { showModalAtom, currentTodoItemAtom } from "@/store";
 import ModalContainer from "@/components/modal-container";
-import { deleteTodo, updateTodo } from "@/actions/todo";
+import { deleteTodo, updateTodo } from "@/app/actions/todo";
 
 export default function TodoModal() {
   const [showModal, setShowModal] = useAtom(showModalAtom);

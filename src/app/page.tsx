@@ -7,7 +7,7 @@ import TodoItem from "@/components/todo/item";
 import TodoInput from "@/components/todo/input";
 import { logger } from "@/utils/logger";
 import ErrorBoundary from "@/components/common/error-boundary";
-import TodoModal from "./components/todo/modal";
+import TodoModal from "@/components/todo/modal";
 
 const getTodoData = async () => {
   const res = await nextFetchClient.get<Array<Todo>>("/api/todo", {

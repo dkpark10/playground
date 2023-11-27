@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
-import { createTodo } from "@/actions/todo";
+import { createTodo } from "@/app/actions/todo";
 
 export default function TodoInput() {
   const inputRef = useRef<HTMLInputElement>(null);

@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./app/*"
+        "./src/*"
       ]
     },
     "plugins": [

@@ -1,7 +1,7 @@
 "use client";
 
-import { showModalAtom, currentTodoItemAtom } from "@/store";
 import { useSetAtom } from "jotai";
+import { showModalAtom, currentTodoItemAtom } from "@/store";
 import type { Todo } from "@/schema/todo";
 
 interface TodoItemProps {

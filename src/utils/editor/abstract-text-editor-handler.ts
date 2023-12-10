@@ -43,8 +43,6 @@ export abstract class AbstractTextEditorHandler {
     this.focusOffset = selection.focusOffset;
   }
 
-  protected abstract getRangedNodes(): Array<Node>;
-
   public runTextAction(action: Editor.EditorAction) {
     if (action === "bold") {
       this.runBold();
@@ -53,11 +51,9 @@ export abstract class AbstractTextEditorHandler {
 
   protected abstract runBold(): void;
 
-  protected createTextActionElement(textContent: string, action: Editor.EditorAction): HTMLSpanElement {
+  protected createTextActionElement(action: Editor.EditorAction): HTMLSpanElement {
     const wrapperElement = document.createElement("span");
     wrapperElement.className = this.classNameByTextAction[action];
-    wrapperElement.textContent = textContent;
-
     return wrapperElement;
   }
 }

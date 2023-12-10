@@ -5,9 +5,10 @@ import { TextEditorHandler } from "./text-editor-handler";
 
 export const runTextEditorAction = (contentEditableDom: HTMLDivElement, action: Editor.EditorAction) => {
   const selection = window.getSelection();
-  const range = selection?.getRangeAt(0);
+  if (!selection || !selection.anchorNode) return;
 
-  if (!selection || !range) return;
+  const range = selection?.getRangeAt(0);
+  if (!range) return;
 
   const isFirstLine = !!selection.anchorNode?.parentElement?.getAttribute("contentEditable");
 

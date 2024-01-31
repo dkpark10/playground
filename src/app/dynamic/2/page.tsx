@@ -20,6 +20,7 @@ const getTodoData = async () => {
 
 export default async function NextNext() {
   const baseAt = new Date().toISOString().match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}/)?.[0] || "";
+  console.log(baseAt);
 
   const [ran1, ran2] = await getTodoData();
   const results = await getRandomJsonData();

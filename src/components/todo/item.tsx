@@ -3,6 +3,8 @@
 import { useSetAtom } from "jotai";
 import { showModalAtom, currentTodoItemAtom } from "@/store";
 import type { Todo } from "@/schema/todo";
+import { useModal } from "@/hooks/use-modal";
+import TodoModal from '@/components/todo/modal';
 
 interface TodoItemProps {
   todo: Todo;
@@ -11,6 +13,8 @@ interface TodoItemProps {
 export default function TodoItem({ todo }: TodoItemProps) {
   const setShowModal = useSetAtom(showModalAtom);
   const setCurrentTodoItem = useSetAtom(currentTodoItemAtom);
+
+  const { open, close } = useModal();
 
   const onClickShowModal = (action: "update" | "delete") => () => {
     setShowModal(true);
@@ -33,14 +37,14 @@ export default function TodoItem({ todo }: TodoItemProps) {
         <button
           type="button"
           className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
-          onClick={onClickShowModal("update")}
+          onClick={() => open(<TodoModal />)}
         >
           수정
         </button>
         <button
           type="button"
           className="bg-red-600 rounded-md w-9 shadow-lg text-white"
-          onClick={onClickShowModal("delete")}
+          onClick={() => open(<TodoModal />)}
         >
           삭제
         </button>

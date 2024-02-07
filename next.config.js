@@ -9,7 +9,7 @@ const nextConfig = {
   },
   output: 'standalone',
   images: {
-    domains: ['shop.zumst.com', 'localhost'],
+    domains: ['shop.zumst.com', 'static.hubzum.zumst.com'],
   },
   experimental: {
     serverActions: true,

@@ -8,6 +8,7 @@ export const logger = winston.createLogger({
       format: "YYYY-MM-DD HH:mm:ss",
     }),
   ),
+  transports: [new winston.transports.Console()],
 });
 
 if (process.env.NODE_ENV !== "production") {

@@ -71,11 +71,13 @@ interface DynamicComponentProps {
   ran1: number;
   ran2: number;
   ranOtherServerApiResponse: RandomResponse["results"];
+  dynamic?: string;
 }
 
 export default function DynamicComponent({
   renderMode,
   revalidate,
+  dynamic,
   ran1,
   ran2,
   ranOtherServerApiResponse,
@@ -83,7 +85,8 @@ export default function DynamicComponent({
   return (
     <>
       <h1>
-        해당페이지는 revalidate {revalidate} 설정된 페이지 <span className="text-red-600">{renderMode}</span>
+        해당페이지는 revalidate {revalidate}, dynamic {dynamic} 설정된 페이지{" "}
+        <span className="text-red-600">{renderMode}</span>
       </h1>
       <div>{new Date().getTime()}</div>
       <div>
@@ -128,3 +131,7 @@ export default function DynamicComponent({
     </>
   );
 }
+
+DynamicComponent.defaultProps = {
+  dynamic: "",
+};

@@ -1,9 +1,11 @@
 import { logger } from "./logger";
 
-type METHOD = "get" | "post" | "put" | "patch" | "delete";
-
 type NextFetchClient = {
-  [key in METHOD]: <T>(url: string, option?: RequestInit) => Promise<T>;
+  get: <T>(url: string, option?: RequestInit) => Promise<T>;
+  post: <T>(url: string, option?: RequestInit) => Promise<T>;
+  put: <T>(url: string, option?: RequestInit) => Promise<T>;
+  patch: <T>(url: string, option?: RequestInit) => Promise<T>;
+  delete: <T>(url: string, option?: RequestInit) => Promise<T>;
 };
 
 interface Error {

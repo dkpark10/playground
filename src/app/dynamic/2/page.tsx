@@ -30,13 +30,16 @@ export default async function NextNext() {
   const results4 = await getRandomJsonData(baseAt, { next: { revalidate: 3 } });
 
   return (
-    <DynamicComponent
-      renderMode="isr"
-      dynamic="force-dynamic"
-      ran1={ran1}
-      ran2={ran2}
-      revalidate={revalidate}
-      ranOtherServerApiResponse={[results, results2, results3, results4]}
-    />
+    <>
+      <h1>서드파티 랜덤 api를 호출하는 isr 페이지</h1>
+      <DynamicComponent
+        renderMode="isr"
+        dynamic="force-dynamic"
+        ran1={ran1}
+        ran2={ran2}
+        revalidate={revalidate}
+        ranOtherServerApiResponse={[results, results2, results3, results4]}
+      />
+    </>
   );
 }

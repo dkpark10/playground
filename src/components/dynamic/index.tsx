@@ -70,7 +70,7 @@ interface DynamicComponentProps {
   revalidate: number | string;
   ran1: number;
   ran2: number;
-  ranOtherServerApiResponse: RandomResponse["results"];
+  ranOtherServerApiResponse?: RandomResponse["results"];
   dynamic?: string;
 }
 
@@ -98,40 +98,49 @@ export default function DynamicComponent({
 
       <br />
       <div>캐시 X 랜덤쿼리 X</div>
-      <ClientComponent
-        value1={ranOtherServerApiResponse[0].gender}
-        value2={ranOtherServerApiResponse[0].name.title}
-        value3={ranOtherServerApiResponse[0].name.first}
-        value4={ranOtherServerApiResponse[0].name.last}
-      />
+      {ranOtherServerApiResponse?.[0] && (
+        <ClientComponent
+          value1={ranOtherServerApiResponse[0].gender}
+          value2={ranOtherServerApiResponse[0].name.title}
+          value3={ranOtherServerApiResponse[0].name.first}
+          value4={ranOtherServerApiResponse[0].name.last}
+        />
+      )}
 
       <div>캐시 X 랜덤쿼리 O</div>
-      <ClientComponent
-        value1={ranOtherServerApiResponse[1].gender}
-        value2={ranOtherServerApiResponse[1].name.title}
-        value3={ranOtherServerApiResponse[1].name.first}
-        value4={ranOtherServerApiResponse[1].name.last}
-      />
+      {ranOtherServerApiResponse?.[1] && (
+        <ClientComponent
+          value1={ranOtherServerApiResponse[1].gender}
+          value2={ranOtherServerApiResponse[1].name.title}
+          value3={ranOtherServerApiResponse[1].name.first}
+          value4={ranOtherServerApiResponse[1].name.last}
+        />
+      )}
 
       <div>캐시 O 랜덤쿼리 X</div>
-      <ClientComponent
-        value1={ranOtherServerApiResponse[2].gender}
-        value2={ranOtherServerApiResponse[2].name.title}
-        value3={ranOtherServerApiResponse[2].name.first}
-        value4={ranOtherServerApiResponse[2].name.last}
-      />
+      {ranOtherServerApiResponse?.[2] && (
+        <ClientComponent
+          value1={ranOtherServerApiResponse[2].gender}
+          value2={ranOtherServerApiResponse[2].name.title}
+          value3={ranOtherServerApiResponse[2].name.first}
+          value4={ranOtherServerApiResponse[2].name.last}
+        />
+      )}
 
       <div>캐시 O 랜덤쿼리 O</div>
-      <ClientComponent
-        value1={ranOtherServerApiResponse[3].gender}
-        value2={ranOtherServerApiResponse[3].name.title}
-        value3={ranOtherServerApiResponse[3].name.first}
-        value4={ranOtherServerApiResponse[3].name.last}
-      />
+      {ranOtherServerApiResponse?.[3] && (
+        <ClientComponent
+          value1={ranOtherServerApiResponse[3].gender}
+          value2={ranOtherServerApiResponse[3].name.title}
+          value3={ranOtherServerApiResponse[3].name.first}
+          value4={ranOtherServerApiResponse[3].name.last}
+        />
+      )}
     </>
   );
 }
 
 DynamicComponent.defaultProps = {
   dynamic: "",
+  ranOtherServerApiResponse: undefined,
 };

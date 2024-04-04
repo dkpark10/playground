@@ -23,7 +23,6 @@ export default function App({ Component, pageProps }: AppProps) {
       }),
   );
 
-  console.log(pageProps);
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

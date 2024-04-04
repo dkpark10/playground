@@ -1,15 +1,33 @@
-import type { InferGetStaticPropsType } from "next";
+import Link from "next/link";
+import { QueryClient, useQuery, dehydrate } from "@tanstack/react-query";
 
-export const getStaticProps = () => {
+const tempFetch = () => {
   const value = Math.floor(Math.random() * 100);
+  return Promise.resolve(` random: ${value}`);
+};
+
+export const getStaticProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(["test-query"], tempFetch);
 
   return {
     props: {
-      value,
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };
 
-export default function PagePage({ value }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <div>ssg page{value}</div>;
+export default function PagePage() {
+  const { data: value } = useQuery(["test-query"], tempFetch);
+
+  return (
+    <main>
+      <Link href="/ssr" prefetch={false}>
+        ssr 링크입니다.
+      </Link>
+
+      <div>ssg page{value}</div>
+    </main>
+  );
 }

@@ -51,6 +51,7 @@
         ]
       }
     ],
+    "@typescript-eslint/dot-notation": "off", // 객체 속성을 가져올 때 닷으로 안가져와도 된다.
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-unsafe-call": "off",

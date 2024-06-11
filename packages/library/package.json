@@ -1,0 +1,39 @@
+{
+  "name": "heapq-ts",
+  "version": "1.3.2",
+  "main": "index.js",
+  "author": "dkpark100@gmail.com",
+  "types": "./index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc && vite build",
+    "prepare": "npm run build",
+    "start": "node ./build/index.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dkpark10/heapq-ts"
+  },
+  "keywords": [
+    "priority_queue",
+    "priority_q",
+    "heapq",
+    "heap"
+  ],
+  "description": "",
+  "devDependencies": {
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/jest": "^29.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^28.1.0",
+    "prettier": "^2.8.7",
+    "typescript": "^4.6.4",
+    "vite": "^5.2.13"
+  }
+}

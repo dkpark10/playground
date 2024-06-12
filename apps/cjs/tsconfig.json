@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES5",
+    "moduleResolution": "Node", // 컴파일러가 모듈을 어떻게 찾을지 전략
+    "resolveJsonModule": true,
+  },
+  "include": [
+    "./src/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+  ],
+}

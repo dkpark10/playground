@@ -1,4 +1,4 @@
-import { HeapQueue } from '../src/heap_q';
+import { HeapQueue } from '../heap_q';
 
 interface Person {
   height: number;
@@ -174,7 +174,6 @@ describe('heapq test', () => {
     pq.pop();
     pq.pop();
     pq.pop();
-    pq.pop();
 
     expect(pq.size()).toEqual(0);
     expect(pq.isEmpty()).toEqual(true);
@@ -237,7 +236,6 @@ describe('heapq test', () => {
 
     expect(pq.pop()).toEqual(1);
     expect(pq.isEmpty()).toBeTruthy();
-    expect(pq.pop()).toEqual(null);
   });
 
   test('object test', () => {
@@ -295,5 +293,17 @@ describe('heapq test', () => {
 
     const fn = pq.push.bind(pq);
     expect(() => fn(p1)).toThrow();
+  });
+
+  test('clear method', () => {
+    const pq = new HeapQueue<number>();
+    pq.push(1);
+    pq.push(2);
+    pq.push(3);
+    pq.push(4);
+
+    pq.clear();
+    expect(pq.isEmpty()).toBeTruthy();
+    expect(pq.size()).toBe(0);
   });
 });

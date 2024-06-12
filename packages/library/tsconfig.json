@@ -8,7 +8,7 @@
     "noImplicitReturns": true,
     "removeComments": true,
     "sourceMap": false,
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./dist",
     "strictPropertyInitialization": true,
     "declaration": true,
@@ -20,9 +20,11 @@
   },
   "exclude": [
     "node_modules",
-    "__test__",
+    "src/__test__",
+    "dist"
   ],
   "include": [
     "./src/**/*.ts",
   ]
 }
+

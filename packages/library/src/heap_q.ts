@@ -5,7 +5,7 @@ const isObject = (data: any): boolean => {
 export type Comparator<T> = boolean | ((a: T, b: T) => number);
 
 export class HeapQueue<T> {
-  private readonly list: T[] = [];
+  private list: T[] = [];
 
   private readonly comparator: Comparator<T>;
 
@@ -102,5 +102,9 @@ export class HeapQueue<T> {
   public top(): T {
     if (this.isEmpty()) throw new Error('Empty Queue');
     return this.list[0];
+  }
+
+  public clear() {
+    this.list = [];
   }
 }

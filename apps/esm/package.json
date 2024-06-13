@@ -10,7 +10,7 @@
     "start": "ts-node ./src/index.ts"
   },
   "dependencies": {
-    "heapq-ts": "file:../../packages/library/dist"
+    "heapq-ts": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

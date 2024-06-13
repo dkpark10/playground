@@ -1,5 +1,5 @@
 {
-  "name": "heapq-ts",
+  "name": "library",
   "version": "1.3.2",
   "description": "heapq-ts",
   "author": "dkpark100@gmail.com",
@@ -7,7 +7,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "vite build"
+    "build:es": "VITE_MODULE=es vite build",
+    "build:cjs": "VITE_MODULE=cjs vite build"
   },
   "license": "MIT",
   "repository": {
@@ -23,7 +24,8 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/es/index.js"
     }
   },
   "devDependencies": {
@@ -37,6 +39,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^28.1.0",
     "prettier": "^2.8.7",
+    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.6.4",
     "vite": "^5.2.13",
     "vite-plugin-dts": "^3.9.1"

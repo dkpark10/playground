@@ -8,7 +8,10 @@ const tempFetch = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(["test-query"], tempFetch);
+  await queryClient.prefetchQuery({
+    queryKey: ["test-query"],
+    queryFn:  tempFetch,
+  });
 
   return {
     props: {
@@ -18,7 +21,11 @@ export const getStaticProps = async () => {
 };
 
 export default function PagePage() {
-  const { data: value } = useQuery(["test-query"], tempFetch);
+  const { data: value } =  useQuery({
+    queryKey: ["test-query"],
+    queryFn:  tempFetch,
+  });
+  
   console.log(value);
 
   return (

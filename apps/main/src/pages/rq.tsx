@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Suspense } from "react";
 import { createQueryKeyStore } from "@lukemorales/query-key-factory";
@@ -13,8 +13,8 @@ const queryKeys = createQueryKeyStore({
 const fetchFn = async () => {
   const getRandomNumber = (min = 0, max = 3_000) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  
+  };
+
   const delay = getRandomNumber(100, 1_000);
   const { data } = await axios.get(`api/delay/${delay}`);
   return data;
@@ -31,50 +31,42 @@ const DynamicChildRoot = dynamic(() => Promise.resolve(ChildRoot), {
 function ChildRoot() {
   return (
     <main>
-      <Suspense fallback={<div>...child1 loading</div>}>
-        <Child1 />
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={1} />
       </Suspense>
-      <Suspense fallback={<div>...child2 loading</div>}>
-        <Child2 />
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={2} />
       </Suspense>
-      <Suspense fallback={<div>...child3 loading</div>}>
-        <Child3 />
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={3} />
+      </Suspense>
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={4} />
+      </Suspense>
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={5} />
+      </Suspense>
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={6} />
+      </Suspense>
+      <Suspense fallback={<div>...child loading</div>}>
+        <Child id={7} />
       </Suspense>
     </main>
   );
 }
 
-function Child1() {
-  console.log('123 child render');
-
-  const { data } = useQuery({
-    queryKey: queryKeys.child.detail(1).queryKey,
+const useQueryApiRandom = (id: number) => {
+  return useSuspenseQuery({
+    queryKey: queryKeys.child.detail(id).queryKey,
     queryFn: () => fetchFn(),
-    suspense: true,
   });
-
-  return <div>child1-{data}</div>;
 }
 
-function Child2() {
-  const { data } = useQuery({
-    queryKey: queryKeys.child.detail(1).queryKey,
-    // queryKey: ["child2"],
-    queryFn: () => fetchFn(),
-    suspense: true,
-  });
-
-  return <div>child2-{data}</div>;
-}
-
-function Child3() {
+function Child({ id }: { id: number; }) {
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: queryKeys.child.detail(3).queryKey,
-    queryFn: () => fetchFn(),
-    suspense: true,
-  });
+  const { data } = useQueryApiRandom(id)
 
   const mutate = useMutation({
     mutationFn: async () => {
@@ -82,7 +74,7 @@ function Child3() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.child.detail(1).queryKey });
+      queryClient.invalidateQueries({ queryKey: queryKeys.child.detail(id).queryKey });
     },
   });
 
@@ -91,7 +83,7 @@ function Child3() {
       <button type="button" onClick={() => mutate.mutate()}>
         click
       </button>
-      <div>child3-{data}</div>
+      <div>child{id}-{data}</div>
     </>
   );
 }

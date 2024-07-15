@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/extensions
 import type { AppProps } from "next/app";
 import { useState } from "react";
-import { QueryClient, QueryClientProvider, Hydrate } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
 import "./globals.css";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
@@ -26,9 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
+      <HydrationBoundary state={pageProps.dehydratedState}>
         <Component {...pageProps} />
-      </Hydrate>
+      </HydrationBoundary>
     </QueryClientProvider>
   );
 }

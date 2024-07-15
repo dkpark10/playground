@@ -7,4 +7,4 @@ pq.push(2);
 pq.push(3);
 
 // error
-pq.push('2');
+// pq.push('2');

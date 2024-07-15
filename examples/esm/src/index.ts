@@ -1,4 +1,4 @@
-import PriorityQueue from 'heapq-ts/es';
+import PriorityQueue from 'heapq-ts';
 
 const pq = new PriorityQueue<number>();
 pq.push(1);

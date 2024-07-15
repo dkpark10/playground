@@ -51,7 +51,6 @@ function Child1() {
     queryKey: queryKeys.child.detail(1).queryKey,
     queryFn: () => fetchFn(),
     suspense: true,
-    keepPreviousData: true,
   });
 
   return <div>child1-{data}</div>;

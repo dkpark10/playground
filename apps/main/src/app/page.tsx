@@ -8,10 +8,11 @@ import TodoInput from "@/components/todo/input";
 import { logger } from "@/utils/logger";
 import TodoModal from "@/components/todo/modal";
 
-const getTodoData = async () => {
+const getTodoData = async (): Promise<Array<Todo>> => {
   const res = await nextFetchClient.get<Array<Todo>>("/api/todo", {
     next: { tags: ["todo"] },
   });
+
   return res;
 };
 
@@ -37,9 +38,7 @@ export default async function NextNext() {
       <main>
         <TodoInput />
 
-        {todoList?.map((todo) => (
-          <TodoItem todo={todo} key={todo.id} />
-        ))}
+        {todoList?.map((todo) => <TodoItem todo={todo} key={todo.id} />)}
       </main>
     </>
   );

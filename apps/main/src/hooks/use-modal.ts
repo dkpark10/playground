@@ -11,7 +11,6 @@ export const useModal = () => {
   };
 
   const close = (Component: JSX.Element) => {
-    console.log(Component);
   };
 
   return {

@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const TodoItemSchema = z.object({
-  title: z.string().nonempty(),
+  title: z.string(),
   isCompleted: z.boolean(),
-  id: z.string().nonempty(),
+  id: z.string(),
 });
 
 export const TodoSchema = z.array(TodoItemSchema);

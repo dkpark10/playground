@@ -1,6 +1,6 @@
 {
-  "name": "apps",
-  "version": "1.0.0",
+  "name": "modules",
+  "version": "0.0.0",
   "private": true,
   "author": "dkpark10",
   "scripts": {

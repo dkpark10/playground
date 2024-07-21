@@ -11,7 +11,8 @@ export const createTodo = async (newTodo: Todo) => {
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();
 
-  return useMutation((newTodo: Todo) => createTodo(newTodo), {
+  return useMutation({
+    mutationFn: (newTodo: Todo) => createTodo(newTodo),
     onMutate: async (newTodo: Todo) => {
       await queryClient.cancelQueries({ queryKey: ["todo"] });
       const prevTodoList = queryClient.getQueryData<Array<Todo>>(["todo"]);
@@ -26,7 +27,7 @@ export const useCreateTodo = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries(["todo"]);
+      queryClient.invalidateQueries({ queryKey: ["todo"] });
       toast.success("투두 생성 성공");
     },
   });

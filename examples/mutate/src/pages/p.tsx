@@ -26,8 +26,6 @@ export default function PagePage() {
     queryFn:  tempFetch,
   });
   
-  console.log(value);
-
   return (
     <main>
       <div>

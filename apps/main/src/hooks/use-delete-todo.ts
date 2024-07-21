@@ -11,7 +11,9 @@ export const deleteTodo = async (deletedTodoId: Todo["id"]) => {
 export const useDeleteTodo = () => {
   const queryClient = useQueryClient();
 
-  return useMutation((deletedTodoId: Todo["id"]) => deleteTodo(deletedTodoId), {
+  return useMutation({
+    mutationFn: (deletedTodoId: Todo["id"]) => deleteTodo(deletedTodoId),
+
     onMutate: async (deletedTodoId: Todo["id"]) => {
       await queryClient.cancelQueries({ queryKey: ["todo"] });
       const prevTodoList = queryClient.getQueryData<Array<Todo>>(["todo"]);
@@ -27,7 +29,7 @@ export const useDeleteTodo = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries(["todo"]);
+      queryClient.invalidateQueries({ queryKey: ["todo"] });
       toast.success("게시글 삭제 성공");
     },
   });

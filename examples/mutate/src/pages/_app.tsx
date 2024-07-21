@@ -3,12 +3,6 @@
 import type { AppProps } from "next/app";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
-import "./globals.css";
-
-if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
-  // eslint-disable-next-line import/no-relative-packages
-  // import('../../../../mock');
-}
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(

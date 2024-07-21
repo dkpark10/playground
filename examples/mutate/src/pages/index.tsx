@@ -1,8 +1,13 @@
-import dynamic from "next/dynamic";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Suspense } from "react";
-import { createQueryKeyStore } from "@lukemorales/query-key-factory";
+import dynamic from 'next/dynamic';
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
+import axios from 'axios';
+import { Suspense } from 'react';
+import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 
 const queryKeys = createQueryKeyStore({
   child: {
@@ -34,7 +39,7 @@ function ChildRoot() {
       <Suspense fallback={<div>...child loading</div>}>
         <Child id={1} />
       </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
+      {/* <Suspense fallback={<div>...child loading</div>}>
         <Child id={2} />
       </Suspense>
       <Suspense fallback={<div>...child loading</div>}>
@@ -51,7 +56,7 @@ function ChildRoot() {
       </Suspense>
       <Suspense fallback={<div>...child loading</div>}>
         <Child id={7} />
-      </Suspense>
+      </Suspense> */}
     </main>
   );
 }
@@ -61,29 +66,69 @@ const useQueryApiRandom = (id: number) => {
     queryKey: queryKeys.child.detail(id).queryKey,
     queryFn: () => fetchFn(),
   });
-}
+};
 
-function Child({ id }: { id: number; }) {
+const useTempValue = () => {
   const queryClient = useQueryClient();
 
-  const { data } = useQueryApiRandom(id)
+  return useQuery<number | undefined>({
+    queryKey: ['temp'],
+    queryFn: () => {
+      const result = queryClient.getQueryData<number>(
+        queryKeys.child.detail(1).queryKey
+      );
+      return Promise.resolve(result);
+    },
+  });
+};
+
+function Child({ id }: { id: number }) {
+  const queryClient = useQueryClient();
+
+  const { data } = useQueryApiRandom(id);
+
+  const temp = useTempValue();
 
   const mutate = useMutation({
     mutationFn: async () => {
-      return await Promise.resolve();
+      return await Promise.reject('reject');
     },
 
+    onMutate: () => {},
+
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.child.detail(id).queryKey });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.child.detail(id).queryKey,
+      });
+      queryClient.invalidateQueries({ queryKey: ['temp'] });
+    },
+
+    onError: (value) => {
+      console.log('rejected value: ' + value);
     },
   });
 
   return (
     <>
       <button type="button" onClick={() => mutate.mutate()}>
-        click
+        mutate click
       </button>
-      <div>child{id}-{data}</div>
+      <button
+        type="button"
+        onClick={async () => {
+          try {
+            await mutate.mutateAsync();
+          } catch (error) {
+            console.log('rejected value: ' + error);
+          }
+        }}
+      >
+        mutateAsync click
+      </button>
+      <div>
+        child{id}-{data}
+      </div>
+      <section>{temp?.data ?? 0}</section>
     </>
   );
 }

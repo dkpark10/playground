@@ -13,13 +13,14 @@ const queryKeys = createQueryKeyStore({
   child: {
     detail: (idx: number) => [idx],
   },
+  temp: null,
 });
 
-const fetchFn = async () => {
-  const getRandomNumber = (min = 0, max = 3_000) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+const getRandomNumber = (min = 0, max = 3_000) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
+const fetchFn = async () => {
   const delay = getRandomNumber(100, 1_000);
   const { data } = await axios.get(`api/delay/${delay}`);
   return data;
@@ -39,24 +40,6 @@ function ChildRoot() {
       <Suspense fallback={<div>...child loading</div>}>
         <Child id={1} />
       </Suspense>
-      {/* <Suspense fallback={<div>...child loading</div>}>
-        <Child id={2} />
-      </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
-        <Child id={3} />
-      </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
-        <Child id={4} />
-      </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
-        <Child id={5} />
-      </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
-        <Child id={6} />
-      </Suspense>
-      <Suspense fallback={<div>...child loading</div>}>
-        <Child id={7} />
-      </Suspense> */}
     </main>
   );
 }
@@ -64,24 +47,26 @@ function ChildRoot() {
 const useQueryApiRandom = (id: number) => {
   return useSuspenseQuery({
     queryKey: queryKeys.child.detail(id).queryKey,
-    queryFn: () => fetchFn(),
-  });
-};
-
-const useTempValue = () => {
-  const queryClient = useQueryClient();
-
-  return useQuery<number | undefined>({
-    queryKey: ['temp'],
     queryFn: () => {
-      const result = queryClient.getQueryData<number>(
-        queryKeys.child.detail(1).queryKey
-      );
-      return Promise.resolve(result);
+      return fetchFn();
     },
   });
 };
 
+const useTempValue = () => {
+  return useQuery<number | undefined>({
+    queryKey: queryKeys.temp._def,
+    queryFn: () => {
+      return Promise.resolve(getRandomNumber(100, 1_000));
+    },
+  });
+};
+
+/**
+ * @desc mutate는 mutateFn에서 resolve된 값을 반환
+ * mutateAsync는 Promise 자체를 반환
+ * 에러 발생 시 쿼리 훅 내부 onError 뿐만 아니라 try catch로 error를 잡아야 함.
+ */
 function Child({ id }: { id: number }) {
   const queryClient = useQueryClient();
 
@@ -91,20 +76,25 @@ function Child({ id }: { id: number }) {
 
   const mutate = useMutation({
     mutationFn: async () => {
-      return await Promise.reject('reject');
+      await Promise.reject('reject');
     },
 
     onMutate: () => {},
 
-    onSuccess: () => {
+    onError: (a) => {
+      console.log('on error callback rejected value: ' + a);
+    },
+
+    onSettled: async () => {
+      console.log('on settled');
       queryClient.invalidateQueries({
         queryKey: queryKeys.child.detail(id).queryKey,
       });
-      queryClient.invalidateQueries({ queryKey: ['temp'] });
-    },
-
-    onError: (value) => {
-      console.log('rejected value: ' + value);
+      
+      /** @desc 쿼리 무효화 후 최신 데이터를 받고 싶다면 async await */
+      console.log(queryClient.getQueryData(queryKeys.temp._def));
+      await queryClient.invalidateQueries({ queryKey: queryKeys.temp._def });
+      console.log(queryClient.getQueryData(queryKeys.temp._def));
     },
   });
 
@@ -119,7 +109,7 @@ function Child({ id }: { id: number }) {
           try {
             await mutate.mutateAsync();
           } catch (error) {
-            console.log('rejected value: ' + error);
+            console.log('mutate async error rejected value: ' + error);
           }
         }}
       >
@@ -128,7 +118,7 @@ function Child({ id }: { id: number }) {
       <div>
         child{id}-{data}
       </div>
-      <section>{temp?.data ?? 0}</section>
+      <section>temp: {temp?.data ?? 0}</section>
     </>
   );
 }

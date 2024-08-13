@@ -65,7 +65,7 @@ const useTempValue = () => {
 /**
  * @desc mutate는 mutateFn에서 resolve된 값을 반환
  * mutateAsync는 Promise 자체를 반환
- * 에러 발생 시 쿼리 훅 내부 onError 뿐만 아니라 try catch로 error를 잡아야 함.
+ * mutateAsync는 에러 발생 시 쿼리 훅 내부 onError 뿐만 아니라 try catch로 error를 잡아야 함.
  */
 function Child({ id }: { id: number }) {
   const queryClient = useQueryClient();

@@ -1,16 +1,16 @@
-import { Toaster } from "react-hot-toast";
-import Link from "next/link";
-import { QueryClient } from "@tanstack/react-query";
-import { nextFetchClient } from "@/utils/next-fetch-client";
-import { Todo } from "@/schema/todo";
-import TodoItem from "@/components/todo/item";
-import TodoInput from "@/components/todo/input";
-import { logger } from "@/utils/logger";
-import TodoModal from "@/components/todo/modal";
+import { Toaster } from 'react-hot-toast';
+import Link from 'next/link';
+import { QueryClient } from '@tanstack/react-query';
+import { nextFetchClient } from '@/utils/next-fetch-client';
+import { Todo } from '@/schema/todo';
+import TodoItem from '@/components/todo/item';
+import TodoInput from '@/components/todo/input';
+import { logger } from '@/utils/logger';
+import TodoModal from '@/components/todo/modal';
 
 const getTodoData = async (): Promise<Array<Todo>> => {
-  const res = await nextFetchClient.get<Array<Todo>>("/api/todo", {
-    next: { tags: ["todo"] },
+  const res = await nextFetchClient.get<Array<Todo>>('/api/todo', {
+    next: { tags: ['todo'] },
   });
 
   return res;
@@ -18,12 +18,12 @@ const getTodoData = async (): Promise<Array<Todo>> => {
 
 export default async function NextNext() {
   logger.log(
-    "info",
-    `[RUNTIME_ENV]: ${process.env.NODE_ENV || ""} [BASE_URL]: ${process.env.NEXT_PUBLIC_BASE_URL || ""}`,
+    'info',
+    `[RUNTIME_ENV]: ${process.env.NODE_ENV || ''} [BASE_URL]: ${process.env.NEXT_PUBLIC_BASE_URL || ''}`,
   );
   const todoList = await getTodoData();
   const queryClient = new QueryClient();
-  queryClient.setQueryData(["todo"], todoList);
+  queryClient.setQueryData(['todo'], todoList);
 
   return (
     <>

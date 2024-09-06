@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface ClientComponentProps {
   value1: string;

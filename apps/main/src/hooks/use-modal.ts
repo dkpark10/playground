@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useContext } from "react";
+import { useContext } from 'react';
 import { ModalContext } from '@/components/modal/modal-provider';
 
 export const useModal = () => {
@@ -10,8 +10,7 @@ export const useModal = () => {
     modalContext?.open(Component);
   };
 
-  const close = (Component: JSX.Element) => {
-  };
+  const close = (Component: JSX.Element) => {};
 
   return {
     open,

@@ -1,6 +1,6 @@
-import DynamicComponent, { type RandomResponse } from "@/components/dynamic";
+import DynamicComponent, { type RandomResponse } from '@/components/dynamic';
 
-const getRandomJsonData = async (ranBaseAt = "", option?: RequestInit) => {
+const getRandomJsonData = async (ranBaseAt = '', option?: RequestInit) => {
   const result = await fetch(`https://randomuser.me/api?ran=${ranBaseAt}`, option).then(
     (res): Promise<RandomResponse> => res.json(),
   );
@@ -8,12 +8,12 @@ const getRandomJsonData = async (ranBaseAt = "", option?: RequestInit) => {
 };
 
 export default async function NextNext() {
-  const baseAt = new Date().toISOString().match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}/)?.[0] || "";
+  const baseAt = new Date().toISOString().match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}/)?.[0] || '';
   console.log(baseAt);
 
   const results = await getRandomJsonData();
   const results2 = await getRandomJsonData(baseAt);
-  const results3 = await getRandomJsonData("", { next: { revalidate: 5 } });
+  const results3 = await getRandomJsonData('', { next: { revalidate: 5 } });
   const results4 = await getRandomJsonData(baseAt, { next: { revalidate: 5 } });
 
   return (

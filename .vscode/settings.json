@@ -5,5 +5,5 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
 }

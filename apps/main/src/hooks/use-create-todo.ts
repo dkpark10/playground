@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
-import { fetchClient } from "@/utils";
-import type { Todo } from "@/schema/todo";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import { fetchClient } from '@/utils';
+import type { Todo } from '@/schema/todo';
 
 export const createTodo = async (newTodo: Todo) => {
-  const { data } = await fetchClient.post<Todo, Todo>("api/todo", newTodo);
+  const { data } = await fetchClient.post<Todo, Todo>('api/todo', newTodo);
   return data;
 };
 
@@ -14,21 +14,21 @@ export const useCreateTodo = () => {
   return useMutation({
     mutationFn: (newTodo: Todo) => createTodo(newTodo),
     onMutate: async (newTodo: Todo) => {
-      await queryClient.cancelQueries({ queryKey: ["todo"] });
-      const prevTodoList = queryClient.getQueryData<Array<Todo>>(["todo"]);
+      await queryClient.cancelQueries({ queryKey: ['todo'] });
+      const prevTodoList = queryClient.getQueryData<Array<Todo>>(['todo']);
 
       if (prevTodoList) {
-        queryClient.setQueryData(["todo"], [...prevTodoList, newTodo]);
+        queryClient.setQueryData(['todo'], [...prevTodoList, newTodo]);
       }
     },
 
     onError: () => {
-      toast.error("투두 생성 error");
+      toast.error('투두 생성 error');
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["todo"] });
-      toast.success("투두 생성 성공");
+      queryClient.invalidateQueries({ queryKey: ['todo'] });
+      toast.success('투두 생성 성공');
     },
   });
 };

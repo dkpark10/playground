@@ -1,4 +1,4 @@
-import DynamicComponent from "@/components/dynamic";
+import DynamicComponent from '@/components/dynamic';
 
 export default function NextNext() {
   return (

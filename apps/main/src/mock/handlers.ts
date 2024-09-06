@@ -1,32 +1,32 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { rest } from "msw";
-import { Todo } from "@/schema/todo";
+import { rest } from 'msw';
+import { Todo } from '@/schema/todo';
 
 const todoList = [
   {
-    title: "next 공부하기",
+    title: 'next 공부하기',
     isCompleted: false,
-    id: "todo-1",
+    id: 'todo-1',
   },
   {
-    title: "react query 공부하기",
+    title: 'react query 공부하기',
     isCompleted: true,
-    id: "todo-2",
+    id: 'todo-2',
   },
   {
-    title: "성공하기",
+    title: '성공하기',
     isCompleted: true,
-    id: "todo-3",
+    id: 'todo-3',
   },
   {
-    title: "부동산, 주식, 현금 다합쳐서 500억 이상 벌기",
+    title: '부동산, 주식, 현금 다합쳐서 500억 이상 벌기',
     isCompleted: false,
-    id: "todo-4",
+    id: 'todo-4',
   },
   {
-    title: "불로 불사 하기",
+    title: '불로 불사 하기',
     isCompleted: true,
-    id: "todo-5",
+    id: 'todo-5',
   },
 ];
 

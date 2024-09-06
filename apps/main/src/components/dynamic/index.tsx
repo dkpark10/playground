@@ -1,4 +1,4 @@
-import ClientComponent from "@/components/csr";
+import ClientComponent from '@/components/csr';
 
 export interface RandomResponse {
   results: Array<{
@@ -66,11 +66,11 @@ export interface RandomResponse {
 }
 
 interface DynamicComponentProps {
-  renderMode: "isr" | "ssg" | "ssr";
+  renderMode: 'isr' | 'ssg' | 'ssr';
   revalidate: number | string;
   ran1: number;
   ran2: number;
-  ranOtherServerApiResponse?: RandomResponse["results"];
+  ranOtherServerApiResponse?: RandomResponse['results'];
   dynamic?: string;
 }
 
@@ -85,7 +85,7 @@ export default function DynamicComponent({
   return (
     <>
       <h1>
-        해당페이지는 revalidate {revalidate}, dynamic {dynamic} 설정된 페이지{" "}
+        해당페이지는 revalidate {revalidate}, dynamic {dynamic} 설정된 페이지{' '}
         <span className="text-red-600">{renderMode}</span>
       </h1>
       <div>{new Date().getTime()}</div>
@@ -141,6 +141,6 @@ export default function DynamicComponent({
 }
 
 DynamicComponent.defaultProps = {
-  dynamic: "",
+  dynamic: '',
   ranOtherServerApiResponse: undefined,
 };

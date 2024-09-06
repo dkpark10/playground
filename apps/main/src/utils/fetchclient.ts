@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 export type Response<T> = AxiosResponse<T>;
 
@@ -18,8 +18,8 @@ export interface FetchClient {
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
-    "Content-type": "application/json",
-    Accept: "application/json",
+    'Content-type': 'application/json',
+    Accept: 'application/json',
   },
   withCredentials: true,
 });

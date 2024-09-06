@@ -1,10 +1,6 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "root": true,
+  "root": false,
+  // lint는 js만 해석 가능하기에 ts를 트랜스파일할 Parser가 필요
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -14,25 +10,31 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  // eslint-config 생략가능
   "extends": [
+    "../../.eslintrc.json",
     "next",
     "next/core-web-vitals",
     "prettier",
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
-    "plugin:react/recommended",
-    "plugin:storybook/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
+  // eslint-plugin 생략가능
   "plugins": [
     "react",
-    "@typescript-eslint",
-    "import"
+    "react-hooks",
+    "import",
+    "@typescript-eslint"
   ],
   "rules": {
+    // useState의 상태와 변이 함수 네이밍 일치 ex) [state, setState]
+    "react/hook-use-state": "error",
+
     "import/extensions": [
       "error",
       {

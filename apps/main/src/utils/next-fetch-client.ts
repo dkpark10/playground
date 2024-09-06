@@ -1,4 +1,4 @@
-import { logger } from "./logger";
+import { logger } from './logger';
 
 type NextFetchClient = {
   get: <T>(url: string, option?: RequestInit) => Promise<T>;
@@ -32,7 +32,7 @@ export const nextFetchClient: NextFetchClient = {
 
   post: async (url: string, option?: RequestInit) => {
     return fetch(`${process.env.NEXT_PUBLIC_BASE_URL as string}${url}`, {
-      method: "POST",
+      method: 'POST',
       ...option,
     })
       .then(ResponseHandler)
@@ -45,7 +45,7 @@ export const nextFetchClient: NextFetchClient = {
 
   put: async (url: string, option?: RequestInit) => {
     return fetch(`${process.env.NEXT_PUBLIC_BASE_URL as string}${url}`, {
-      method: "PUT",
+      method: 'PUT',
       ...option,
     })
       .then(ResponseHandler)
@@ -58,7 +58,7 @@ export const nextFetchClient: NextFetchClient = {
 
   patch: async (url: string, option?: RequestInit) => {
     return fetch(`${process.env.NEXT_PUBLIC_BASE_URL as string}${url}`, {
-      method: "PATCH",
+      method: 'PATCH',
       ...option,
     })
       .then(ResponseHandler)
@@ -71,7 +71,7 @@ export const nextFetchClient: NextFetchClient = {
 
   delete: async (url: string, option?: RequestInit) => {
     return fetch(`${process.env.NEXT_PUBLIC_BASE_URL as string}${url}`, {
-      method: "DELETE",
+      method: 'DELETE',
       ...option,
     })
       .then(ResponseHandler)

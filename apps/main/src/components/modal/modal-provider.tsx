@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, {
   useRef,
@@ -9,8 +9,8 @@ import React, {
   type ReactNode,
   type PropsWithChildren,
   Component,
-} from "react";
-import { createPortal } from "react-dom";
+} from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalContextParams {
   open: (reactNode: ReactNode) => void;
@@ -43,18 +43,18 @@ export default function ModalProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     setMounted(true);
-    if (typeof window !== "undefined") {
-      portalElement.current = document.getElementById("portal");
+    if (typeof window !== 'undefined') {
+      portalElement.current = document.getElementById('portal');
     }
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       {children}
       <ModalContext.Provider value={context}>
         {portalElement.current && mounted && createPortal(<></>, portalElement.current)}
       </ModalContext.Provider>
-    </React.Fragment>
+    </>
   );
 }
 

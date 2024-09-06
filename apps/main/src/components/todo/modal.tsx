@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import { toast } from "react-hot-toast";
-import { useAtom } from "jotai";
-import { showModalAtom, currentTodoItemAtom } from "@/store";
-import { deleteTodo, updateTodo } from "@/app/actions/todo";
+import React from 'react';
+import { toast } from 'react-hot-toast';
+import { useAtom } from 'jotai';
+import { showModalAtom, currentTodoItemAtom } from '@/store';
+import { deleteTodo, updateTodo } from '@/app/actions/todo';
 
 export default function TodoModal() {
   const [showModal, setShowModal] = useAtom(showModalAtom);
@@ -26,10 +26,10 @@ export default function TodoModal() {
       isCompleted: false,
     })
       .then(() => {
-        toast.success("투두 업데이트 성공");
+        toast.success('투두 업데이트 성공');
       })
       .catch(() => {
-        toast.error("에러 실패");
+        toast.error('에러 실패');
       });
   };
 
@@ -38,10 +38,10 @@ export default function TodoModal() {
     setShowModal(false);
     deleteTodo(currentTodoItem.id)
       .then(() => {
-        toast.success("투두 삭제 성공");
+        toast.success('투두 삭제 성공');
       })
       .catch(() => {
-        toast.error("에러 실패");
+        toast.error('에러 실패');
       });
   };
 
@@ -49,7 +49,7 @@ export default function TodoModal() {
     setShowModal(false);
   };
 
-  if (showModal && currentTodoItem?.action === "update") {
+  if (showModal && currentTodoItem?.action === 'update') {
     return (
       <form onSubmit={onEditConfirm}>
         <input
@@ -70,7 +70,7 @@ export default function TodoModal() {
     );
   }
 
-  if (showModal && currentTodoItem?.action === "delete") {
+  if (showModal && currentTodoItem?.action === 'delete') {
     return (
       <form onSubmit={onDeleteConfirm}>
         <div className="text-center">해당 할일을 삭제 ?</div>

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useSetAtom } from "jotai";
-import { showModalAtom, currentTodoItemAtom } from "@/store";
-import type { Todo } from "@/schema/todo";
-import { useModal } from "@/hooks/use-modal";
+import { useSetAtom } from 'jotai';
+import { showModalAtom, currentTodoItemAtom } from '@/store';
+import type { Todo } from '@/schema/todo';
+import { useModal } from '@/hooks/use-modal';
 import TodoModal from '@/components/todo/modal';
 
 interface TodoItemProps {
@@ -16,7 +16,7 @@ export default function TodoItem({ todo }: TodoItemProps) {
 
   const { open, close } = useModal();
 
-  const onClickShowModal = (action: "update" | "delete") => () => {
+  const onClickShowModal = (action: 'update' | 'delete') => () => {
     setShowModal(true);
     setCurrentTodoItem({
       id: todo.id,
@@ -29,7 +29,9 @@ export default function TodoItem({ todo }: TodoItemProps) {
     <div className="flex p-2 gap-1 justify-between shadow-md w-full" key={todo.id}>
       <div className="flex items-center">
         <div className="px-1">
-          <p className="flex items-center overflow-hidden text-ellipsis h-8 w-64 whitespace-nowrap">{todo.title}</p>
+          <p className="flex items-center overflow-hidden text-ellipsis h-8 w-64 whitespace-nowrap">
+            {todo.title}
+          </p>
         </div>
       </div>
 

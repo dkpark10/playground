@@ -24,14 +24,13 @@
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "prettier": "1.19.1"
+    "cross-env": "^7.0.3"
   },
   "scripts": {
     "start": "concurrently \"pnpm run server:dev\" \"pnpm run bundler:dev\"",
     "start:prod": "concurrently \"pnpm run server:prod\" \"pnpm run bundler:prod\"",
     "server:dev": "cross-env NODE_ENV=development nodemon -- server/server.js",
-    "server:prod": "cross-env NODE_ENV=production nodemon -- server/server.js",
+    "server:prod": "cross-env NODE_ENVw=production nodemon -- server/server.js",
     "bundler:dev": "cross-env NODE_ENV=development nodemon -- scripts/build.js",
     "bundler:prod": "cross-env NODE_ENV=production nodemon -- scripts/build.js"
   },

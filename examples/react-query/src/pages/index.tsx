@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import {
   useMutation,
   useQuery,
@@ -6,6 +5,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import axios from 'axios';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 

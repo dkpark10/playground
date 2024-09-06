@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-console */
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;

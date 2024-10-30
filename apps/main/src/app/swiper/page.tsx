@@ -1,5 +1,5 @@
 import SwiperWrapper from '@/components/swiper/wrapper';
-import Content from '@/components/swiper/lcp-content';
+import Content from '@/components/swiper/content';
 
 interface SwiperContentProps {
   albumId: number;
@@ -10,7 +10,7 @@ interface SwiperContentProps {
 }
 
 const getData = async (): Promise<SwiperContentProps[]> => {
-  const arr = Array.from({ length: 4 }, (_, idx) => idx + 1);
+  const arr = Array.from({ length: 10 }, (_, idx) => idx + 1);
 
   const data: SwiperContentProps[] = await Promise.all(
     arr.map((i) => fetch(`https://jsonplaceholder.typicode.com/photos/${i}`).then((res) => res.json())),
@@ -22,12 +22,19 @@ const getData = async (): Promise<SwiperContentProps[]> => {
 export default async function SwiperPage() {
   const data = await getData();
 
+  const top = data.slice(0, 4);
+  const rest = data.slice(4);
+
   return (
-    <SwiperWrapper>
-      {data.map((d) => (
+    <>
+      <SwiperWrapper>
+        {top.map((d) => (
+          <Content key={d.id} preload title={d.title} url={d.url} data-img-url={d.url} />
+        ))}
+      </SwiperWrapper>
+      {rest.map((d) => (
         <Content key={d.id} title={d.title} url={d.url} data-img-url={d.url} />
       ))}
-      <div>123</div>
-    </SwiperWrapper>
+    </>
   );
 }

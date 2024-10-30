@@ -1,5 +1,5 @@
 const { version } = require("./package.json");
-const isRunBundleAnalyze = process.env.ANALYZE === "true";
+const isRunBundleAnalyze = process.env.ENABLE_BUNDLE_ANALYZER === "enabled";
 
 const mapModuleIds = (fn) => (compiler) => {
   const { context } = compiler.options;
@@ -32,4 +32,4 @@ const nextConfig = {
   },
 };
 
-module.exports = isRunBundleAnalyze ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;
+module.exports = true ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;

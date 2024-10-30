@@ -1,5 +1,5 @@
-import type { Todo } from '@/schema/todo';
 import { atom } from 'jotai';
+import type { Todo } from '@/schema/todo';
 
 export const showModalAtom = atom(false);
 

@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
-    "nextnext"
+    "nextnext",
+    "swiper"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.bracketPairColorization.enabled": true,

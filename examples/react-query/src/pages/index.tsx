@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 
@@ -121,6 +122,7 @@ function Child({ id }: { id: number }) {
 
   return (
     <>
+      <Link href='ssr' prefetch={false}>링크</Link>
       <button type="button" onClick={() => mutate.mutate()}>
         mutate click
       </button>

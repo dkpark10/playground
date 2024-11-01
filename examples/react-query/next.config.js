@@ -32,4 +32,4 @@ const nextConfig = {
   },
 };
 
-module.exports = true ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;
+module.exports = isRunBundleAnalyze ? require("@next/bundle-analyzer")()(nextConfig) : nextConfig;

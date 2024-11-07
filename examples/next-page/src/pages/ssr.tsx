@@ -13,5 +13,5 @@ export const getServerSideProps: GetServerSideProps<{ data: number }> = async ()
 
 export default function SsrPage({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   console.log('123 cl', data);
-  return <div>{data}</div>;
+  return <div>ssr- {data}</div>;
 }

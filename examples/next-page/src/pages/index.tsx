@@ -27,7 +27,21 @@ const fetchFn = async () => {
 };
 
 export default function RqPage() {
-  return <DynamicChildRoot />;
+  // return <DynamicChildRoot />;
+  return (
+    <>
+      <div>
+        <Link href="ssg" prefetch={false}>
+          ssg page
+        </Link>
+      </div>
+      <div>
+        <Link href="ssr" prefetch={false}>
+          ssr page
+        </Link>
+      </div>
+    </>
+  );
 }
 
 const DynamicChildRoot = dynamic(() => Promise.resolve(ChildRoot), {

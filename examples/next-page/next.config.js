@@ -27,7 +27,8 @@ const nextConfig = {
   publicRuntimeConfig: {
     version,
   },
-  webpack: (config, options) => {
+  webpack: (config, ...rest) => {
+    console.log(config);
     return config;
   },
 };

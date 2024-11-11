@@ -27,9 +27,9 @@ const fetchFn = async () => {
 };
 
 export default function RqPage() {
-  // return <DynamicChildRoot />;
   return (
     <>
+      <DynamicChildRoot />
       <div>
         <Link href="ssg" prefetch={false}>
           ssg page
@@ -104,6 +104,11 @@ function Child({ id }: { id: number }) {
   const { data } = useQueryApiRandom(id);
 
   const temp = useTempValue();
+  console.log('isFetched', temp.isFetched);
+  console.log('isFetching', temp.isFetching);
+  console.log('isLoading', temp.isLoading);
+  console.log('isPending', temp.isPending);
+  console.log('isPaused', temp.isPaused);
 
   const mutate = useMutation({
     mutationFn: async () => {

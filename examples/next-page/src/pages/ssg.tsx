@@ -1,4 +1,6 @@
+import React from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Stats from '@/components/stats';
 
 export const getStaticProps: GetServerSideProps<{ data: number }> = async () => {
   const data = await Promise.resolve(1);
@@ -13,6 +15,20 @@ export const getStaticProps: GetServerSideProps<{ data: number }> = async () => 
 };
 
 export default function SsgPage({ data }: InferGetServerSidePropsType<typeof getStaticProps>) {
-  console.log('123 cl', data);
-  return <div>ssg- {data}</div>;
+  return (
+    <React.Fragment>
+      <div>ssg- {data}</div>
+      <Stats
+        event={['click']}
+        properties={(e: MouseEvent) => ({
+          x: e.clientX,
+          y: e.clientY,
+        })}
+      >
+        <button type="button" onClick={() => console.log(123)}>
+          click
+        </button>
+      </Stats>
+    </React.Fragment>
+  );
 }

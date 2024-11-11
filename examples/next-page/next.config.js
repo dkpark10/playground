@@ -28,7 +28,6 @@ const nextConfig = {
     version,
   },
   webpack: (config, ...rest) => {
-    console.log(config);
     return config;
   },
 };

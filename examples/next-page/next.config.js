@@ -17,7 +17,6 @@ const nextConfig = {
   compiler: {
     emotion: true,
   },
-  transpilePackages: ['next-img-lib'],
   webpack: (config) => {
     return config;
   },

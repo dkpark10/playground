@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -12,7 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "declaration": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "outDir": "dist",
     "jsxImportSource": "@emotion/react",
     "paths": {

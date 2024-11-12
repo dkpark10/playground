@@ -10,14 +10,17 @@
     "start": "next start -p 8080"
   },
   "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@lukemorales/query-key-factory": "^1.3.4",
     "@next/font": "13.1.6",
     "@tanstack/react-query": "^5.51.1",
     "axios": "^1.3.4",
     "next": "^13.4.9",
+    "next-img-lib": "workspace:*",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "next-img-lib": "workspace:*"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.2.4",

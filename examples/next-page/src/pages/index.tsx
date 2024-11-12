@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Suspense } from 'react';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 import NextImage from 'next-img-lib';
@@ -31,7 +32,21 @@ export default function RqPage() {
   return (
     <>
       <DynamicChildRoot />
-      <NextImage src="weather.png" alt="날씨 이미지" backgroundColor="red" borderRadius="md" />
+      <NextImage
+        src="/weather.png"
+        width={400}
+        height={400}
+        alt="날씨 이미지"
+        backgroundColor="red"
+        borderRadius="md"
+      />
+      <Image
+        src="/weather.png"
+        width={400}
+        height={400}
+        alt="날씨 이미지"
+        css={{ border: '1px solid red' }}
+      />
       <div>
         <Link href="ssg" prefetch={false}>
           ssg page

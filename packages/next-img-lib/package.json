@@ -4,21 +4,22 @@
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       },
       "import": {
-        "types": "./dist/index.d.mts",
+        "types": "./dist/index.d.js",
         "default": "./dist/index.mjs"
       }
     }
   },
   "scripts": {
     "dev": "next dev",
-    "build": "rimraf dist && tsup ./src/index.tsx --format cjs,esm --dts --minify"
+    "build": "rimraf dist && tsup index.tsx --format cjs,esm --dts --minify"
   },
   "devDependencies": {
     "@emotion/react": "^11.13.3",
@@ -28,8 +29,8 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "next": "^13",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react": "^18",
+    "react-dom": "^18",
     "rimraf": "^3.0.2",
     "tsup": "^8.3.5",
     "typescript": "^5"

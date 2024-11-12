@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "declaration": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "outDir": "dist",
     "jsxImportSource": "@emotion/react",
     "paths": {

@@ -13,7 +13,6 @@
     "isolatedModules": true,
     "declaration": true,
     "jsx": "react-jsx",
-    "incremental": true,
     "outDir": "dist",
     "jsxImportSource": "@emotion/react",
     "paths": {

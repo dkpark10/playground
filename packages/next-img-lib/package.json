@@ -2,9 +2,23 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "tsup"
+    "build": "rimraf dist && tsup ./src/index.tsx --format cjs,esm --dts --minify"
   },
   "devDependencies": {
     "@emotion/react": "^11.13.3",
@@ -16,7 +30,13 @@
     "next": "^13",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "rimraf": "^3.0.2",
     "tsup": "^8.3.5",
     "typescript": "^5"
+  },
+  "peerDependencies": {
+    "next": ">=13",
+    "react": ">=18",
+    "react-dom": ">=18"
   }
 }

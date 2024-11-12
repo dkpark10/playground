@@ -18,9 +18,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   output: "standalone",
-  images: {
-    domains: ["shop.zumst.com", "static.hubzum.zumst.com"],
-  },
   experimental: {
     serverActions: true,
   },

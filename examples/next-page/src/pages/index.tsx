@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
+import NextImage from 'next-img-lib';
 
 const queryKeys = createQueryKeyStore({
   child: {
@@ -30,6 +31,7 @@ export default function RqPage() {
   return (
     <>
       <DynamicChildRoot />
+      <NextImage src="weather.png" alt="날씨 이미지" backgroundColor="red" borderRadius="md" />
       <div>
         <Link href="ssg" prefetch={false}>
           ssg page

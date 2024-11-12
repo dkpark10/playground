@@ -19,7 +19,6 @@ const Sidebar = lazy(() => import("./Sidebar" /* webpackPrefetch: true */));
 const Post = lazy(() => import("./Post" /* webpackPrefetch: true */));
 
 export default function App({ assets }) {
-  console.log(assets);
   return (
     <Html assets={assets} title="Hello">
       <Suspense fallback={<Spinner />}>

@@ -32,7 +32,7 @@ const generateId = (() => {
 })();
 
 export const useModalList = () => {
-  return useSyncExternalStore(subscribe, () => modalState);
+  return useSyncExternalStore(subscribe, () => modalState, () => modalState);
 }
 
 export const useModal = () => {

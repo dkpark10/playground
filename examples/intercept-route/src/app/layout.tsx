@@ -13,7 +13,6 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children, modal }: RootLayoutProps & PropsWithChildren) {
-  console.log('123', modal);
   return (
     <html lang="ko">
       <body>

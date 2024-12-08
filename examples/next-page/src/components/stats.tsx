@@ -19,10 +19,8 @@ export default function Stats({ event, properties, children }: StatsProps & Prop
 
   const sendStat = (e: Event) => {
     if (typeof properties === 'function') {
-      console.log(properties(e));
       return;
     }
-    console.log(properties);
   };
 
   useEffect(() => {

@@ -1,1 +1,1 @@
-export * from './time';
+export const TODO_SERVER_TAG = 'todo-tag';

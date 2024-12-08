@@ -6,7 +6,7 @@ import { Todo } from '@/schema/todo';
 import TodoItem from '@/components/todo/item';
 import TodoInput from '@/components/todo/input';
 import { logger } from '@/utils/logger';
-import TodoModal from '@/components/todo/modal';
+// import TodoModal from '@/components/todo/modal';
 
 const getTodoData = async (): Promise<Array<Todo>> => {
   const res = await nextFetchClient.get<Array<Todo>>('/api/todo', {
@@ -23,13 +23,14 @@ export default async function NextNext() {
   );
   const todoList = await getTodoData();
   const queryClient = new QueryClient();
+
   queryClient.setQueryData(['todo'], todoList);
 
   return (
     <>
       <Toaster />
 
-      <TodoModal />
+      {/* <TodoModal /> */}
 
       <Link href="/static">
         <header className="text-center text-2xl py-2">Next Next</header>

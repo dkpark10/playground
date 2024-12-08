@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { deleteTodo, updateTodo } from '@/app/actions/todo';
 import { toast } from 'react-hot-toast';
+import { deleteTodo, updateTodo } from '@/app/actions/todo';
 import type { Todo } from '@/schema/todo';
 
 interface ModalProps {
@@ -34,8 +34,8 @@ function UpdateTodoModal({ todo, close }: ModalProps) {
   };
 
   return (
-    <form 
-      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
+    <form
+      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       onSubmit={onEditConfirm}
     >
       <input
@@ -53,7 +53,7 @@ function UpdateTodoModal({ todo, close }: ModalProps) {
         </button>
       </div>
     </form>
-  ); 
+  );
 }
 
 function DeleteTodoModal({ todo, close }: ModalProps) {
@@ -70,8 +70,8 @@ function DeleteTodoModal({ todo, close }: ModalProps) {
   };
 
   return (
-    <form 
-      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
+    <form
+      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       onSubmit={onDeleteConfirm}
     >
       <div className="text-center">해당 할일을 삭제 ?</div>
@@ -88,6 +88,6 @@ function DeleteTodoModal({ todo, close }: ModalProps) {
 }
 
 export const TodoModals = {
-  update: UpdateTodoModal,
-  delete: DeleteTodoModal,
+  Update: UpdateTodoModal,
+  Delete: DeleteTodoModal,
 };

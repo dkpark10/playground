@@ -33,7 +33,9 @@ export default async function NextNext() {
       <main>
         <TodoInput />
 
-        {todoList.map((todo) => <TodoItem todo={todo} key={todo.id} />)}
+        {todoList.map((todo) => (
+          <TodoItem todo={todo} key={todo.id} />
+        ))}
       </main>
     </>
   );

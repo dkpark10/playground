@@ -30,11 +30,11 @@ let todoList: Array<Todo> = [
   },
 ];
 
-export async function GET(_: NextRequest) {
+export async function GET() {
   try {
     return NextResponse.json(TodoSchema.parse(todoList));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     logger.error(`[api error]: todo - ${error.message}`);
     return NextResponse.json('', { status: 500 });
   }

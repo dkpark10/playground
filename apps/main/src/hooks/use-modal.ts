@@ -1,12 +1,12 @@
 'use client';
 
-import { type ReactNode, useSyncExternalStore } from "react";
+import { type ReactNode, useSyncExternalStore } from 'react';
 
 type ModalState = {
   id: number;
-  component: ({ close }: { close: () => void; }) => ReactNode;
+  component: ({ close }: { close: () => void }) => ReactNode;
   close: () => void;
-}
+};
 
 const listeners = new Set<() => void>();
 
@@ -16,24 +16,29 @@ let modalState: Array<ModalState> = [];
 const setModalState = (nextState: Array<ModalState>) => {
   modalState = nextState;
   listeners.forEach((listener) => listener());
-}
+};
 
 const subscribe = (listener: () => void) => {
   listeners.add(listener);
 
   return () => {
     listeners.delete(listener);
-  }
-}
+  };
+};
 
 const generateId = (() => {
   let id = 0;
+  // eslint-disable-next-line no-plusplus
   return () => id++;
 })();
 
 export const useModalList = () => {
-  return useSyncExternalStore(subscribe, () => modalState, () => modalState);
-}
+  return useSyncExternalStore(
+    subscribe,
+    () => modalState,
+    () => modalState,
+  );
+};
 
 export const useModal = () => {
   const open = (component: ModalState['component']) => {
@@ -44,9 +49,9 @@ export const useModal = () => {
       setModalState([...modalState]);
     };
 
-    modalState.push({ id: modalId, component, close })
+    modalState.push({ id: modalId, component, close });
     setModalState([...modalState]);
   };
 
   return { open };
-}
+};

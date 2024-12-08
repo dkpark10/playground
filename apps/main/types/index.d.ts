@@ -12,12 +12,12 @@ export namespace Editor {
   }
 
   export interface ImageBlock extends CommonEditorProperties {
-    type: "image";
+    type: 'image';
     src: string;
   }
 
   export interface TextBlock extends CommonEditorProperties {
-    type: "text";
+    type: 'text';
   }
 
   export type Block = ImageBlock | TextBlock;
@@ -26,7 +26,7 @@ export namespace Editor {
     isFirstLine: boolean;
   }
 
-  export type EditorAction = "bold" | "inclination" | "cancelLine";
+  export type EditorAction = 'bold' | 'inclination' | 'cancelLine';
 
   export type ClassNameByEditorAction = {
     [key in EditorAction]: string;

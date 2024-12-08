@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/next/tsconfig.json",
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -39,8 +38,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "@types",
-    "graffiti.js",
+    "types",
     ".next/types/**/*.ts"
   ],
   "exclude": [

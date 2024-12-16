@@ -11,7 +11,7 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const modal = useModal();
+  const { open, close } = useModal();
 
   return (
     <div className="flex p-2 gap-1 justify-between shadow-md w-full" key={todo.id}>
@@ -28,18 +28,14 @@ export default function TodoItem({ todo }: TodoItemProps) {
           type="button"
           className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
           onClick={() => {
-            modal.open(({ close, visible }) => (
-              <TodoModals.Update visible={visible} todo={todo} close={close} />
-            ));
+            open(({ visible }) => <TodoModals.Update visible={visible} todo={todo} close={close} />);
           }}
         >
           수정
         </button>
         <button
           onClick={() => {
-            modal.open(({ close, visible }) => (
-              <TodoModals.Delete visible={visible} todo={todo} close={close} />
-            ));
+            open(({ visible }) => <TodoModals.Delete visible={visible} todo={todo} close={close} />);
           }}
           type="button"
           className="bg-red-600 rounded-md w-9 shadow-lg text-white"

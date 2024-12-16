@@ -1,11 +1,10 @@
 'use client';
 
-import { type ReactNode, useSyncExternalStore } from 'react';
+import { type ReactNode, useSyncExternalStore, useRef } from 'react';
 
 type ModalState = {
   id: number;
-  component: ({ close, visible }: { close: () => void; visible: boolean }) => ReactNode;
-  close: () => void;
+  component: ({ visible }: { visible: boolean }) => ReactNode;
   visible: boolean;
 };
 
@@ -42,31 +41,33 @@ export const useModalList = () => {
 };
 
 export const useModal = () => {
+  const modalId = useRef(-1);
+
   const open = (component: ModalState['component']) => {
-    const modalId = generateId();
+    modalId.current = generateId();
 
-    const close = () => {
-      modalState = modalState.map((modal) => {
-        if (modal.id === modalId) {
-          return {
-            ...modal,
-            visible: false,
-          };
-        }
-        return modal;
-      });
-
-      setModalState([...modalState]);
-
-      setTimeout(() => {
-        modalState = modalState.filter((modal) => modal.id !== modalId);
-        setModalState([...modalState]);
-      }, 200);
-    };
-
-    modalState.push({ id: modalId, component, close, visible: true });
+    modalState.push({ id: modalId.current, component, visible: true });
     setModalState([...modalState]);
   };
 
-  return { open };
+  const close = () => {
+    modalState = modalState.map((modal) => {
+      if (modal.id === modalId.current) {
+        return {
+          ...modal,
+          visible: false,
+        };
+      }
+      return modal;
+    });
+
+    setModalState([...modalState]);
+
+    setTimeout(() => {
+      modalState = modalState.filter((modal) => modal.id !== modalId.current);
+      setModalState([...modalState]);
+    }, 200);
+  };
+
+  return { open, close };
 };

@@ -26,7 +26,7 @@ export default async function NextNext() {
     <>
       <Toaster />
 
-      <Link href="/static">
+      <Link href="/ssg">
         <header className="text-center text-2xl py-2">Next Next</header>
       </Link>
 

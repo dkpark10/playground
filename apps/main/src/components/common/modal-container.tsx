@@ -12,7 +12,7 @@ export default function ModalContainer() {
       {modalList.map((modal) =>
         createPortal(
           <div role="alert" data-modalid={modal.id} key={modal.id}>
-            {modal.component({ close: modal.close })}
+            {modal.component({ close: modal.close, visible: modal.visible })}
           </div>,
           document.getElementById('portal')!,
         ),

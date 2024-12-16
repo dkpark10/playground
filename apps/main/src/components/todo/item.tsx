@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react/no-unstable-nested-components */
+
 import { useModal } from '@/hooks/use-modal';
 import { TodoModals } from '@/components/todo/modal';
 import type { Todo } from '@/schema/todo';
@@ -26,14 +28,18 @@ export default function TodoItem({ todo }: TodoItemProps) {
           type="button"
           className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
           onClick={() => {
-            modal.open(({ close }) => <TodoModals.Update todo={todo} close={close} />);
+            modal.open(({ close, visible }) => (
+              <TodoModals.Update visible={visible} todo={todo} close={close} />
+            ));
           }}
         >
           수정
         </button>
         <button
           onClick={() => {
-            modal.open(({ close }) => <TodoModals.Delete todo={todo} close={close} />);
+            modal.open(({ close, visible }) => (
+              <TodoModals.Delete visible={visible} todo={todo} close={close} />
+            ));
           }}
           type="button"
           className="bg-red-600 rounded-md w-9 shadow-lg text-white"

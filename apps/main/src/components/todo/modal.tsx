@@ -8,9 +8,10 @@ import type { Todo } from '@/schema/todo';
 interface ModalProps {
   todo: Todo;
   close: () => void;
+  visible: boolean;
 }
 
-function UpdateTodoModal({ todo, close }: ModalProps) {
+function UpdateTodoModal({ todo, close, visible }: ModalProps) {
   const [todoTitle, setTodoTitle] = useState(todo.title);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ function UpdateTodoModal({ todo, close }: ModalProps) {
 
   return (
     <form
-      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
       onSubmit={onEditConfirm}
     >
       <input
@@ -56,7 +57,7 @@ function UpdateTodoModal({ todo, close }: ModalProps) {
   );
 }
 
-function DeleteTodoModal({ todo, close }: ModalProps) {
+function DeleteTodoModal({ todo, close, visible }: ModalProps) {
   const onDeleteConfirm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     deleteTodo(todo.id)
@@ -71,7 +72,7 @@ function DeleteTodoModal({ todo, close }: ModalProps) {
 
   return (
     <form
-      className="shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
       onSubmit={onDeleteConfirm}
     >
       <div className="text-center">해당 할일을 삭제 ?</div>

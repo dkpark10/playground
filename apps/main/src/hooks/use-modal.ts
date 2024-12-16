@@ -4,8 +4,9 @@ import { type ReactNode, useSyncExternalStore } from 'react';
 
 type ModalState = {
   id: number;
-  component: ({ close }: { close: () => void }) => ReactNode;
+  component: ({ close, visible }: { close: () => void; visible: boolean }) => ReactNode;
   close: () => void;
+  visible: boolean;
 };
 
 const listeners = new Set<() => void>();
@@ -45,11 +46,25 @@ export const useModal = () => {
     const modalId = generateId();
 
     const close = () => {
-      modalState = modalState.filter((modal) => modal.id !== modalId);
+      modalState = modalState.map((modal) => {
+        if (modal.id === modalId) {
+          return {
+            ...modal,
+            visible: false,
+          };
+        }
+        return modal;
+      });
+
       setModalState([...modalState]);
+
+      setTimeout(() => {
+        modalState = modalState.filter((modal) => modal.id !== modalId);
+        setModalState([...modalState]);
+      }, 200);
     };
 
-    modalState.push({ id: modalId, component, close });
+    modalState.push({ id: modalId, component, close, visible: true });
     setModalState([...modalState]);
   };
 

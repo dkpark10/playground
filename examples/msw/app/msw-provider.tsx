@@ -32,5 +32,5 @@ export function MSWProvider({ children }: PropsWithChildren) {
 
 function MSWProviderWrapper({ children }: PropsWithChildren) {
   use(mockingEnabledPromise);
-  return children;
+  return <>{children}</>;
 }

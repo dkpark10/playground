@@ -5,6 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function ToastPage() {
   const click = () => {
+    toast.success(
+      "This toast is super big. I don't think anyone could eat it in one bite.\n\nIt's larger than you expected. You eat it but it does not seem to get smaller",
+      {
+        duration: Infinity,
+      },
+    );
+    toast.success('strawberry toast', {
+      duration: Infinity,
+    });
     // toast.success(<div style={{ border: '1px solid red', width: 560 }}>asdsd</div>, {
     //   duration: Infinity,
     //   position: 'bottom-left',
@@ -15,14 +24,14 @@ export default function ToastPage() {
     // toast.success('ee', { duration: 3_000, position: 'top-right' });
     // toast.success('ff', { duration: 3_000, position: 'top-left' });
 
-    toast.promise(
-      new Promise((resolve) => setTimeout(resolve, 3000)),
-       {
-         loading: 'Saving...',
-         success: <b>Settings saved! asdasdasdasdsdas</b>,
-         error: <b>Could not save.</b>,
-       }
-     );
+    // toast.promise(
+    //   new Promise((resolve) => setTimeout(resolve, 3000)),
+    //    {
+    //      loading: 'Saving...',
+    //      success: <b>Settings saved! asdasdasdasdsdas</b>,
+    //      error: <b>Could not save.</b>,
+    //    }
+    //  );
   };
 
   const click2 = () => {

@@ -36,7 +36,9 @@ function UpdateTodoModal({ todo, close, visible }: ModalProps) {
 
   return (
     <form
-      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} 
+        shadow-xl p-6 w-[360px] rounded bg-white
+      `}
       onSubmit={onEditConfirm}
     >
       <input
@@ -72,7 +74,9 @@ function DeleteTodoModal({ todo, close, visible }: ModalProps) {
 
   return (
     <form
-      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} shadow-xl p-6 w-[360px] rounded absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+      className={`${visible ? 'animate-fade-in' : 'animate-fade-out'} 
+        shadow-xl p-6 w-[360px] rounded bg-white
+      `}
       onSubmit={onDeleteConfirm}
     >
       <div className="text-center">해당 할일을 삭제 ?</div>

@@ -57,6 +57,9 @@ importers:
       cheerio:
         specifier: 1.0.0-rc.12
         version: 1.0.0-rc.12
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       codemirror:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.2.3)
@@ -173,7 +176,7 @@ importers:
         specifier: ^7.3.3
         version: 7.3.4(postcss@8.4.49)(typescript@5.4.2)(webpack@5.97.1)
       sass:
-        specifier: ^1.63.6
+        specifier: ^1.82.0
         version: 1.82.0
       ts-node:
         specifier: ^10.9.1

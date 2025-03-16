@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { useModal } from '@/hooks/use-modal';
 import { TodoModals } from '@/components/todo/modal';
 import type { Todo } from '@/schema/todo';
+import Toast from '@/components/todo/toast-temp';
 
 interface TodoItemProps {
   todo: Todo;
@@ -31,18 +32,29 @@ export default function TodoItem({ todo }: TodoItemProps) {
           type="button"
           className="bg-teal-300 rounded-md w-9 shadow-lg text-white"
           onClick={() => {
-            open(({ visible }) => <TodoModals.Update visible={visible} todo={todo} close={close} />, {
-              center: true,
-            });
+            open(({ visible, id }) => <Toast isVisible={visible} close={() => close(id)} />);
+            open(
+              ({ visible, id }) => (
+                <TodoModals.Update visible={visible} todo={todo} close={() => close(id)} />
+              ),
+              {
+                center: true,
+              },
+            );
           }}
         >
           수정
         </button>
         <button
           onClick={() => {
-            open(({ visible }) => <TodoModals.Delete visible={visible} todo={todo} close={close} />, {
-              center: true,
-            });
+            open(
+              ({ visible, id }) => (
+                <TodoModals.Delete visible={visible} todo={todo} close={() => close(id)} />
+              ),
+              {
+                center: true,
+              },
+            );
           }}
           type="button"
           className="bg-red-600 rounded-md w-9 shadow-lg text-white"

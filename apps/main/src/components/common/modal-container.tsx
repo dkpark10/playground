@@ -9,8 +9,6 @@ interface ModalProps extends PropsWithChildren {
 }
 
 function Modal({ children, modalState }: ModalProps) {
-  const [y, x] = modalState.options?.target?.offset || [0, 0];
-
   if (modalState.options?.center) {
     return createPortal(
       <div
@@ -23,10 +21,13 @@ function Modal({ children, modalState }: ModalProps) {
     );
   }
 
+  const [y, x] = modalState.options?.target?.offset || [0, 0];
+
   return createPortal(
     <div
       style={{
-        transform: `translate(${x}px, ${y}px)`,
+        top: y,
+        left: x,
       }}
       className="z-[9999] absolute"
       role="alert"
@@ -43,8 +44,8 @@ export default function ModalContainer() {
   return (
     <>
       {modalList.map((modal) => (
-        <Modal modalState={modal} key={modal.id}>
-          {modal.component({ visible: modal.visible })}
+        <Modal data-modalid={modal.id} modalState={modal} key={modal.id}>
+          {modal.component({ visible: modal.visible, id: modal.id })}
         </Modal>
       ))}
     </>

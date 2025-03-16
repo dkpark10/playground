@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useSyncExternalStore, useRef } from 'react';
+import { type ReactNode, useSyncExternalStore } from 'react';
 
 interface ModalOption {
   // 뷰포트 기준 가운데 정렬
@@ -13,7 +13,7 @@ interface ModalOption {
 
 export type ModalState = {
   id: number;
-  component: ({ visible }: { visible: boolean }) => ReactNode;
+  component: ({ visible, id }: { visible: boolean; id: number }) => ReactNode;
   visible: boolean;
   options?: ModalOption;
 };
@@ -51,18 +51,14 @@ export const useModalList = () => {
 };
 
 export const useModal = () => {
-  const modalId = useRef(-1);
-
   const open = (component: ModalState['component'], options?: ModalOption) => {
-    modalId.current = generateId();
-
-    modalState.push({ id: modalId.current, component, visible: true, options });
+    modalState.push({ id: generateId(), component, visible: true, options });
     setModalState([...modalState]);
   };
 
-  const close = () => {
+  const close = (id: ModalState['id']) => {
     modalState = modalState.map((modal) => {
-      if (modal.id === modalId.current) {
+      if (modal.id === id) {
         return {
           ...modal,
           visible: false,
@@ -74,7 +70,7 @@ export const useModal = () => {
     setModalState([...modalState]);
 
     setTimeout(() => {
-      modalState = modalState.filter((modal) => modal.id !== modalId.current);
+      modalState = modalState.filter((modal) => modal.id !== id);
       setModalState([...modalState]);
     }, 200);
   };

@@ -1,7 +1,6 @@
 import { createServer } from 'http';
 import { parse } from 'url';
 import next from 'next';
-// import express from 'express';
 
 const port = parseInt('8080');
 const dev = process.env.NODE_ENV !== 'production';
@@ -25,7 +24,6 @@ app.prepare().then(() => {
       } else if (pathname === '/b') {
         await app.render(req, res, '/b', query);
       } else {
-        // console.log(await app.renderToHTML(req, res, '/'));
         await handle(req, res, parsedUrl);
       }
     } catch (err) {

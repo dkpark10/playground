@@ -11,7 +11,7 @@ function AlyacAdManager(adRefreshCallback) {
   /** @desc 비활성화된 시간 */
   let inActivateTime = null;
   /** @desc 마지막 광로 로드 시간 */
-  let lastestReloadTime = null;
+  let lastestReloadTime = new Date().getTime();
   /** @desc 비활성화 상태에서 다음 광고 리프레시 호출까지 남은 시간 */
   let remainingTime = null;
 
@@ -56,20 +56,22 @@ function AlyacAdManager(adRefreshCallback) {
     }
     this.status = 'active';
     activateTime = new Date().getTime();
-    this.printLogs();
 
     /** @desc 활성화 시 마지막 광고 리로드 시간이 1시간 이후라면 즉시 리로드 */
-    if (lastestReloadTime && activateTime - lastestReloadTime >= ONE_HOUR) {
+    if (activateTime - lastestReloadTime >= ONE_HOUR) {
       startSetTimerAd(0);
+      this.printLogs();
       return;
     }
 
     if (remainingTime !== null) {
       startSetTimerAd(remainingTime);
+      this.printLogs();
       return;
     }
 
     startSetTimerAd();
+    this.printLogs();
   };
 
   this.reloadInactive = () => {
@@ -187,7 +189,7 @@ describe('광고 테트스', () => {
     expect(adRefreshCallback).toHaveBeenCalledTimes(1);
 
     adManager.reloadInactive();
-    vi.advanceTimersByTime(60 * 60 * 1000);
+    vi.advanceTimersByTime(1000 * 60 * 60);
 
     adManager.reloadActive();
     vi.advanceTimersByTime(0);
@@ -197,6 +199,18 @@ describe('광고 테트스', () => {
       vi.advanceTimersByTime(TEST_DELAY);
       expect(adRefreshCallback).toHaveBeenCalledTimes(i + 3);
     }
+  });
+
+  test('초기 어떠한 상태변화 없이 비활성화 상태에서 한시간 경과 후 활성화할 시 즉시 새고로침이 되어야 한다.', () => {
+    const adRefreshCallback = vi.fn();
+
+    const adManager = new AlyacAdManager(adRefreshCallback);
+    vi.spyOn(adManager, 'getAdReloadTime').mockReturnValue(TEST_DELAY);
+    vi.advanceTimersByTime(1000 * 60 * 60);
+    adManager.reloadActive();
+    vi.advanceTimersByTime(0);
+
+    expect(adRefreshCallback).toHaveBeenCalledTimes(1);
   });
 
   test('상태 변경에 따른 로그함수를 매번 출력해야 한다.', () => {

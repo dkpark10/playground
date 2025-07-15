@@ -9,7 +9,7 @@ function AlyacAdManager(adRefreshCallback) {
   /** @desc 활성화된 시간 */
   let activateTime = null;
   /** @desc 비활성화된 시간 */
-  let inActivateTime = null;
+  let inActivateTime = new Date().getTime();
   /** @desc 마지막 광로 로드 시간 */
   let lastestReloadTime = new Date().getTime();
   /** @desc 비활성화 상태에서 다음 광고 리프레시 호출까지 남은 시간 */
@@ -18,8 +18,7 @@ function AlyacAdManager(adRefreshCallback) {
   const maxTime = 20;
   const minTime = 20;
 
-  const ONE_HOUR = 60 * 60 * 1000; // 1시간
-  const ONE_MINUTE = 60 * 1000; // 1분
+  const REFRESH_LIMIT = 60 * 1000;
 
   const emitter = new EventTarget();
   const EVNET_NAME = 'onEndAdRefresh';
@@ -28,7 +27,7 @@ function AlyacAdManager(adRefreshCallback) {
   this.getAdReloadTime = () => {
     return (Math.ceil(Math.random() * maxTime) + minTime) * 1000;
   };
-  this.adReloadTimeCycle = null;
+  this.adReloadTimeCycle = this.getAdReloadTime();
 
   const startSetTimerAd = (delay) => {
     this.adReloadTimeCycle = this.getAdReloadTime();
@@ -58,20 +57,20 @@ function AlyacAdManager(adRefreshCallback) {
     activateTime = new Date().getTime();
 
     /** @desc 활성화 시 마지막 광고 리로드 시간이 1시간 이후라면 즉시 리로드 */
-    if (activateTime - lastestReloadTime >= ONE_HOUR) {
-      startSetTimerAd(0);
+    if (activateTime - lastestReloadTime >= REFRESH_LIMIT) {
       this.printLogs();
+      startSetTimerAd(0);
       return;
     }
 
     if (remainingTime !== null) {
-      startSetTimerAd(remainingTime);
       this.printLogs();
+      startSetTimerAd(remainingTime);
       return;
     }
 
-    startSetTimerAd();
     this.printLogs();
+    startSetTimerAd();
   };
 
   this.reloadInactive = () => {
@@ -89,22 +88,22 @@ function AlyacAdManager(adRefreshCallback) {
   this.printLogs = () => {
     console.group('=== AlyacAdManager === time info');
     console.info('현재 상태: ', this.status);
-    console.info('새로고침 주기: ', this.adReloadTimeCycle);
-    console.info('마지막 새로고침: ', new Date(lastestReloadTime).toString());
-    console.info('비활성화시 새로고침 남은시간: ', remainingTime);
-    if (remainingTime == 0) {
-      console.info('다음 새로고침 시간: ', new Date(lastestReloadTime + this.adReloadTimeCycle).toString());
-      console.info(
-        '실시간 새로고침 남은시간: ',
-        lastestReloadTime + this.adReloadTimeCycle - new Date().getTime()
-      );
-    } else {
-      if (activateTime - lastestReloadTime >= ONE_MINUTE) {
-        console.info('=== 바로 새로고침 ===');
-      } else {
-        console.info('다음 새로고침 시간: ', new Date(activateTime + remainingTime).toString());
-        console.info('실시간 새로고침 남은시간: ', activateTime + remainingTime - new Date().getTime());
-      }
+    console.info('새로고침 주기: ', (this.adReloadTimeCycle / 1000) + '초');
+    console.info('마지막 새로고침: ', new Date(lastestReloadTime).toLocaleString());
+
+    const refreshRemainingTimeLog = lastestReloadTime + this.adReloadTimeCycle - new Date().getTime();
+    if (this.status === 'inActive') {
+      console.info('비활성화시 새로고침 남은시간: ', refreshRemainingTimeLog <= 0 ? 0 : (refreshRemainingTimeLog / 1000) + '초');
+    }
+
+    if (activateTime - lastestReloadTime >= REFRESH_LIMIT) {
+      console.info('=== 바로 새로고침 ===');
+    }
+
+    console.info('다음 새로고침 시간: ', new Date(lastestReloadTime + this.adReloadTimeCycle).toLocaleString());
+
+    if (this.status === 'active') {
+      console.info('실시간 새로고침 남은시간: ', refreshRemainingTimeLog <= 0 ? 0 : (refreshRemainingTimeLog / 1000) + '초');
     }
     console.groupEnd();
   };
@@ -135,7 +134,7 @@ describe('광고 테트스', () => {
     expect(adManager.status).toBe('active');
 
     vi.advanceTimersByTime(100);
-    expect(adRefreshCallback).not.toHaveBeenCalled();
+    expect(adRefreshCallback).toHaveBeenCalledTimes(0);
 
     vi.advanceTimersByTime(TEST_DELAY - 100);
     expect(adRefreshCallback).toHaveBeenCalledTimes(1);

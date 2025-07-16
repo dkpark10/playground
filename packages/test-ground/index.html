@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <title>ad</title>
+</head>
+
+<body>
+  <script type="module">
+    import { AlyacAdManager } from './src/ad.mjs';
+    window.alyacAdManager = new AlyacAdManager(() => {
+      console.log('ad refresh');
+    });
+
+    window.alyacAdManager.init();
+  </script>
+</body>
+
+</html>

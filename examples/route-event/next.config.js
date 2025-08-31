@@ -5,7 +5,7 @@ const nextConfig = {
   },
 
   output: "standalone",
-  
+
   webpack: (config) => {
     return config;
   },

@@ -1,0 +1,20 @@
+{
+  "name": "test-ground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@unicode/unicode-15.0.0": "^1.6.10",
+    "@vitejs/plugin-react": "^4.6.0",
+    "jsdom": "^26.1.0",
+    "unicodedata": "^0.1.1",
+    "vitest": "^1.2.2"
+  }
+}

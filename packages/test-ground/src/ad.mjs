@@ -11,8 +11,9 @@ export function AlyacAdManager(adRefreshCallback) {
   /** @desc 비활성화 상태에서 다음 광고 리프레시 호출까지 남은 시간 */
   let remainingTime = null;
 
-  const maxTime = 5;
-  const minTime = 5;
+  const maxTime = 4;
+  const minTime = 4;
+
   const REFRESH_LIMIT = 60 * 1000;
 
   const emitter = new EventTarget();
@@ -22,6 +23,7 @@ export function AlyacAdManager(adRefreshCallback) {
   this.getAdReloadTime = () => {
     return (Math.ceil(Math.random() * maxTime) + minTime) * 1000;
   };
+  this.adReloadTimeCycle = null;
 
   const startSetTimerAd = (delay) => {
     this.adReloadTimeCycle = this.getAdReloadTime();
@@ -52,19 +54,19 @@ export function AlyacAdManager(adRefreshCallback) {
 
     /** @desc 활성화 시 마지막 광고 리로드 시간이 1시간 이후라면 즉시 리로드 */
     if (activateTime - lastestReloadTime >= REFRESH_LIMIT) {
-      startSetTimerAd(0);
       this.printLogs();
+      startSetTimerAd(0);
       return;
     }
 
     if (remainingTime !== null) {
-      startSetTimerAd(remainingTime);
       this.printLogs();
+      startSetTimerAd(remainingTime);
       return;
     }
 
-    startSetTimerAd();
     this.printLogs();
+    startSetTimerAd();
   };
 
   this.reloadInactive = () => {
@@ -81,22 +83,12 @@ export function AlyacAdManager(adRefreshCallback) {
 
   this.printLogs = () => {
     console.group('=== AlyacAdManager === time info');
-
     console.info('현재 상태: ', this.status);
-
-    const adReloadTimeCycleLog = !this.adReloadTimeCycle
-      ? '활성화 상태가 한번도 되지 않았습니다.'
-      : this.adReloadTimeCycle / 1000 + '초';
-    console.info('새로고침 주기: ', adReloadTimeCycleLog);
-
+    console.info('새로고침 주기: ', !this.adReloadTimeCycle ? '활성화 상태가 한번도 되지 않았습니다.' : (this.adReloadTimeCycle / 1000) + '초');
     console.info('마지막 새로고침: ', new Date(lastestReloadTime).toLocaleString());
 
     if (this.status === 'inActive') {
-      const inactiveTimeLog = !this.adReloadTimeCycle
-        ? '활성화 상태가 한번도 되지 않았습니다.'
-        : (this.adReloadTimeCycle - (inActivateTime - lastestReloadTime)) / 1000 + '초';
-
-      console.info('비활성화시 새로고침 남은시간: ', inactiveTimeLog);
+      console.info('비활성화시 새로고침 남은시간: ', (this.adReloadTimeCycle - (inActivateTime - lastestReloadTime)) / 1000 + '초');
     }
 
     if (activateTime - lastestReloadTime >= REFRESH_LIMIT) {
@@ -104,20 +96,11 @@ export function AlyacAdManager(adRefreshCallback) {
     }
 
     if (this.status === 'active') {
-      console.info(
-        '다음 새로고침 시간: ',
-        new Date(lastestReloadTime + this.adReloadTimeCycle).toLocaleString(),
-      );
+      console.info('다음 새로고침 시간: ', new Date(lastestReloadTime + this.adReloadTimeCycle).toLocaleString());
 
-      /** @desc 활성화 시간이 마지막 리로드보다 저 긴 경우 즉 첫 활성화 시점 */
-      const realTimeReamainLog =
-        activateTime > lastestReloadTime
-          ? this.adReloadTimeCycle -
-            (inActivateTime - lastestReloadTime) -
-            (new Date().getTime() - activateTime)
-          : this.adReloadTimeCycle - (new Date().getTime() - lastestReloadTime);
-
-      console.info('실시간 새로고침 남은시간: ', realTimeReamainLog / 1000 + '초');
+      const temp1 = this.adReloadTimeCycle - (activateTime - lastestReloadTime);
+      const temp2 = temp1 - (new Date().getTime() - activateTime);
+      console.info('실시간 새로고침 남은시간: ', temp2 / 1000 + '초');
     }
     console.groupEnd();
   };

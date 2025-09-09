@@ -1,13 +1,15 @@
 'use client';
 
-import { type PropsWithChildren, createContext, useEffect, useRef } from 'react';
+import { type PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export const ReferrerContext = createContext<{
-  setReferrer: (referrer: string) => void;
   getReferrer: () => string;
 } | null>(null);
 
 export function ReferrerProvider({ children }: PropsWithChildren) {
+  const router = useRouter();
+
   const currentUrl = useRef<string | URL | null | undefined>('');
 
   const referrer = useRef<string[]>([]);
@@ -17,7 +19,7 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
   });
 
   const getReferrer = useRef(() => {
-    if (referrer.current.length <= 0) return document.referrer;
+    if (referrer.current.length <= 0) return '';
     return referrer.current.slice(-1)[0];
   });
 
@@ -41,15 +43,18 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
       currentUrl.current = window.location.origin + (url as string);
       orgReplaceState(data, unused, url);
     };
-  }, []);
+
+    return () => {
+      window.history.pushState = orgPushState;
+      window.history.replaceState = orgReplaceState;
+    }
+  }, [router]);
 
   return (
     <ReferrerContext.Provider
       value={{
-        setReferrer: setReferrer.current,
         getReferrer: getReferrer.current,
-      }
-      }
+      }}
     >
       {children}
     </ReferrerContext.Provider>

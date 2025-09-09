@@ -10,7 +10,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "noEmit": true,
     "strictPropertyInitialization": false,
@@ -24,14 +23,14 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
+      ]
     },
     "plugins": [
       {
-        "name": "next",
+        "name": "next"
       },
       {
-        "name": "typescript-plugin-css-modules",
+        "name": "typescript-plugin-css-modules"
       }
     ]
   },
@@ -41,5 +40,5 @@
     "**/*.tsx",
     "@types",
     ".next/types/**/*.ts"
-  ],
+  ]
 }

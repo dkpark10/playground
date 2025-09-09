@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
+import { ReferrerProvider } from '@/components/referrer-provider';
 
 export const metadata: Metadata = {
   title: 'next next',
@@ -13,7 +14,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="ko">
       <body>
         <div id="portal" />
-        {children}
+        <ReferrerProvider>
+          {children}
+        </ReferrerProvider>
       </body>
     </html>
   );

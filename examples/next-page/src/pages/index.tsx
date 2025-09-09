@@ -10,7 +10,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
-import NextImage from 'next-img-lib';
 
 const queryKeys = createQueryKeyStore({
   child: {
@@ -32,13 +31,11 @@ export default function RqPage() {
   return (
     <>
       <DynamicChildRoot />
-      <NextImage
+      <Image
         src="/weather.png"
         width={400}
         height={400}
         alt="날씨 이미지"
-        backgroundColor="red"
-        borderRadius="md"
       />
       <Image
         src="/weather.png"

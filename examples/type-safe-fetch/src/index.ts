@@ -1,15 +1,17 @@
-import { ApiClient } from './lib';
+import { FetchClient } from './lib';
 
 (async function () {
-  const response = await new ApiClient<'search', string>()
+  const response = await new FetchClient<'search', string>()
     .setUrl('search')
+    .setParameter(123)
     .setQuery('order', 'ascent')
-    .retrieve();
+    .setQuery('start', 1)
+    .getUrl();
 
-  response;
+  console.log(response);
 
-  await new ApiClient<'search', string>()
-    .setUrl('search')
-    .setQuery('invalid', 0)
-    .retrieve();
+  // await new ApiClient<'search', string>()
+  //   .setUrl('search')
+  //   .setQuery('invalid', 0)
+  //   .retrieve();
 })();

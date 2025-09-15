@@ -1,7 +1,7 @@
 import { Client, type Response } from './client';
 import type { Method, QueryParams, EndPoint } from './endpoint';
 
-export class ApiClient<
+export class FetchClient<
   Url extends EndPoint,
   Data extends any = any,
   Body extends Record<string, any> = any,
@@ -33,9 +33,16 @@ export class ApiClient<
     return this;
   }
 
-  public setQuery<K extends keyof QueryParams[Url]>(
+  public setParameter<K extends QueryParams[Url]['pathParameter']>(pathParameter: K) {
+    if (!this.url) throw new Error('url이 설정되어 있지 않습니다.');
+
+    this.url.pathname += ('/' + pathParameter);
+    return this;
+  };
+
+  public setQuery<K extends keyof QueryParams[Url]['queryString']>(
     key: K,
-    value: QueryParams[Url][typeof key]
+    value: QueryParams[Url]['queryString'][typeof key]
   ) {
     if (!this.url) throw new Error('url이 설정되어 있지 않습니다.');
 
@@ -46,6 +53,10 @@ export class ApiClient<
   public setBody(body: Body) {
     this.body = body;
     return this;
+  }
+
+  public getUrl() {
+    return this.url;
   }
 
   public async retrieve(): Promise<Response<Data>> {

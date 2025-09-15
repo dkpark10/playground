@@ -16,12 +16,40 @@ export type EndPoint = 'search';
 export type QueryParams = {
   [Key in EndPoint]: Key extends 'search'
   ? {
-    keyword: string;
-    start: number;
-    end: number;
-    order: 'ascent' | 'descend'
+    pathParameter: number;
+    queryString: {
+      keyword: string;
+      start: number;
+      end: number;
+      order: 'ascent' | 'descend'
+    }
   }
   : {
     [key: string]: any;
   };
 };
+
+// export type QueryParams<M extends Method> = {
+//   [Key in EndPoint]: Key extends 'search'
+//   ?
+//   {
+//     [Mkey in M]: Mkey extends 'get' ?
+//     {
+//       pathParameter: number;
+//       queryString: {
+//         keyword: string;
+//         start: number;
+//         end: number;
+//         order: 'ascent' | 'descend'
+//       }
+//     } :
+//     Mkey extends 'delete' ?
+//     {
+//       pathParameter: string;
+//       queryString?: {}
+//     } : never;
+//   }
+//   : {
+//     [key: string]: any;
+//   };
+// };

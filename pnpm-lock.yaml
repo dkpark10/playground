@@ -71,7 +71,7 @@ importers:
         version: 10.4.3
       next:
         specifier: ^15.2.0
-        version: 15.2.2(@babel/core@7.14.3)(@playwright/test@1.51.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.85.1)
+        version: 15.2.2(@babel/core@7.26.10)(@playwright/test@1.51.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.85.1)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -377,7 +377,7 @@ importers:
         version: 1.6.10
       '@vitejs/plugin-react':
         specifier: ^4.6.0
-        version: 4.6.0(vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(yaml@2.7.0))
+        version: 4.6.0(vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(tsx@4.20.5)(yaml@2.7.0))
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
@@ -457,6 +457,28 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.0
         version: 18.2.0
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
+  examples/type-safe-fetch:
+    dependencies:
+      axios:
+        specifier: ^1.3.4
+        version: 1.8.3
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.17.24
+      nodemon:
+        specifier: ^2.0.6
+        version: 2.0.22
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.2(@types/node@20.17.24)(typescript@5.9.2)
+      tsx:
+        specifier: ^4.20.5
+        version: 4.20.5
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
@@ -6494,6 +6516,11 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
+  tsx@4.20.5:
+    resolution: {integrity: sha512-+wKjMNU9w/EaQayHXb7WA7ZaHY6hN8WgfvHNQ3t1PnU91/7O8TcTnIhCDYTZwnt8JsO9IBqZ30Ln1r7pPF52Aw==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
@@ -9552,7 +9579,7 @@ snapshots:
   '@unrs/rspack-resolver-binding-win32-x64-msvc@1.1.2':
     optional: true
 
-  '@vitejs/plugin-react@4.6.0(vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(yaml@2.7.0))':
+  '@vitejs/plugin-react@4.6.0(vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(tsx@4.20.5)(yaml@2.7.0))':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.0)
@@ -9560,7 +9587,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.19
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(yaml@2.7.0)
+      vite: 7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(tsx@4.20.5)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -12778,7 +12805,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.2.2(@babel/core@7.14.3)(@playwright/test@1.51.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.85.1):
+  next@15.2.2(@babel/core@7.26.10)(@playwright/test@1.51.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.85.1):
     dependencies:
       '@next/env': 15.2.2
       '@swc/counter': 0.1.3
@@ -12788,7 +12815,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.14.3)(babel-plugin-macros@3.1.0)(react@18.2.0)
+      styled-jsx: 5.1.6(@babel/core@7.26.10)(babel-plugin-macros@3.1.0)(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.2.2
       '@next/swc-darwin-x64': 15.2.2
@@ -13978,12 +14005,12 @@ snapshots:
       client-only: 0.0.1
       react: 18.2.0
 
-  styled-jsx@5.1.6(@babel/core@7.14.3)(babel-plugin-macros@3.1.0)(react@18.2.0):
+  styled-jsx@5.1.6(@babel/core@7.26.10)(babel-plugin-macros@3.1.0)(react@18.2.0):
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
     optionalDependencies:
-      '@babel/core': 7.14.3
+      '@babel/core': 7.26.10
       babel-plugin-macros: 3.1.0
 
   styled-jsx@5.1.6(react@18.3.1):
@@ -14246,6 +14273,13 @@ snapshots:
     dependencies:
       tslib: 1.14.1
       typescript: 5.9.2
+
+  tsx@4.20.5:
+    dependencies:
+      esbuild: 0.25.1
+      get-tsconfig: 4.10.0
+    optionalDependencies:
+      fsevents: 2.3.3
 
   tunnel-agent@0.6.0:
     dependencies:
@@ -14521,7 +14555,7 @@ snapshots:
       stylus: 0.62.0
       terser: 5.39.0
 
-  vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(yaml@2.7.0):
+  vite@7.0.4(@types/node@22.13.10)(jiti@1.21.7)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0)(tsx@4.20.5)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.1
       fdir: 6.4.6(picomatch@4.0.2)
@@ -14537,6 +14571,7 @@ snapshots:
       sass: 1.85.1
       stylus: 0.62.0
       terser: 5.39.0
+      tsx: 4.20.5
       yaml: 2.7.0
 
   vitest@1.6.1(@types/node@22.13.10)(jsdom@26.1.0)(less@4.2.2)(sass@1.85.1)(stylus@0.62.0)(terser@5.39.0):

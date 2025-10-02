@@ -1,8 +1,14 @@
-import { expect, test } from 'vitest';
+import { vi, beforeEach, describe, expect, test } from 'vitest';
 
-test('until', async () => {
-  let a = false;
+beforeEach(() => {
+  vi.useFakeTimers();
+});
 
+afterEach(() => {
+  vi.useRealTimers();
+});
+
+describe('until', () => {
   const until = (callback, timeout = 5000, interval = 500) => {
     const startTime = Date.now();
 
@@ -11,7 +17,7 @@ test('until', async () => {
         if (callback()) {
           resolve(true);
         } else if (Date.now() - startTime > timeout) {
-          reject(new Error('until: timeout exceeded'));
+          reject(new Error('시간 초과'));
         } else {
           setTimeout(() => {
             checkExpression(resolve, reject);
@@ -25,13 +31,31 @@ test('until', async () => {
     return new Promise(checkExpression);
   };
 
-  setTimeout(() => {
-    a = true;
-  }, 1_000);
+  test('resolve', async () => {
+    let a = false;
 
-  const result = await until(() => {
-    return a;
+    setTimeout(() => {
+      a = true;
+    }, 2_000);
+
+    vi.advanceTimersByTime(2_000);
+
+    const result = await until(() => {
+      return a;
+    });
+
+    expect(result).toBeTruthy();
   });
 
-  expect(result).toBeTruthy();
+  test('reject', async () => {
+    let a = false;
+
+    await until(() => {
+      vi.advanceTimersByTime(10_000);
+      return a;
+    }).catch((err) => {
+      expect(err).toBeInstanceOf(Error);
+      expect(err.message).toBe('시간 초과');
+    });
+  });
 });

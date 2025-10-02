@@ -1,20 +1,28 @@
 'use client';
 
-import Link from 'next/link'
-import { useParams } from "next/navigation";
+import { use } from 'react';
+import Link from 'next/link';
+import { useReferrer } from '@/hooks/use-referrer';
 
-export default async function DynamicSlugPage() {
-  const params = useParams<{ slug: string }>();
+interface DynamicSlugPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  const nextSlug = Number(params?.slug) + 1;
-  const prevSlug = Number(params?.slug) - 1;
+export default function DynamicSlugPage({ params }: DynamicSlugPageProps) {
+  const { slug } = use(params);
+
+  const nextSlug = Number(slug) + 1;
+  const prevSlug = Number(slug) - 1;
+
+  useReferrer();
 
   return (
     <>
       <h1>app router</h1>
-      <Link href={`/dynamic/${nextSlug}`}>다음 페이지 {nextSlug}</Link>
-      <div>slug: {params?.slug}</div>
-      <Link href={`/dynamic/${prevSlug}`}>이전 페이지 {prevSlug}</Link>
+      <div>{}</div>
+      <Link href={`/dynamic/${nextSlug}`}>다음{nextSlug}</Link>
+      <div>slug: {slug}</div>
+      <Link href={`/dynamic/${prevSlug}`}>이전{prevSlug}</Link>
     </>
-  )
+  );
 }

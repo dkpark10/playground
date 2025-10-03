@@ -1,0 +1,21 @@
+{
+  "name": "type-safe-fetch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "ts-node-esm src/index.ts",
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20",
+    "nodemon": "^2.0.6",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

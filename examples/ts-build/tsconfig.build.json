@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.commonjs.es5.json" },
+    { "path": "./tsconfig.commonjs.es6.json" },
+    { "path": "./tsconfig.esnext.es5.json" },
+    { "path": "./tsconfig.esnext.es6.json" },
+  ]
+}

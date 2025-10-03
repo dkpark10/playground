@@ -1,0 +1,1 @@
+export const addPromise = (a: number, b: number) => new Promise((resolve) => resolve(a + b));

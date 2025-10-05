@@ -41,8 +41,4 @@
     "types",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "cypress",
-    "cypress.config.ts",
-  ]
 }

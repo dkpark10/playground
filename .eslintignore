@@ -1,9 +1,0 @@
-*.config.*
-jest.*"
-cypress
-examples/cjs/*
-examples/esm/*
-examples/react-query/*
-examples/react-stream/*
-*.test.*
-packages/test-ground/*

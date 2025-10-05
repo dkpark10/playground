@@ -1,7 +1,12 @@
 {
-  "root": false,
+  "root": true,
   // lint는 js만 해석 가능하기에 ts를 트랜스파일할 Parser가 필요
   "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -10,9 +15,8 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  // eslint-config 생략가능
+  // eslint-config prefix 생략가능
   "extends": [
-    "../../.eslintrc.json",
     "prettier",
     "airbnb",
     "airbnb-typescript",
@@ -61,6 +65,5 @@
     "@typescript-eslint/no-misused-promises": "off",
     "react/require-default-props": "off", // default prop type 설정 여부
     "react/no-unstable-nested-components": "warn"
-
   }
 }

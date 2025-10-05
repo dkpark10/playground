@@ -8,5 +8,6 @@ export default function ClientPage() {
     <>
       <Client />
       <NonUseClient />
-    </>)
+    </>
+  );
 }

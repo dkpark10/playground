@@ -39,5 +39,7 @@ function getClientFileList() {
   }
 }
 
+module.exports = getClientFileList;
+
 /** @desc 린트 파일 검사 경로를 위한 log 출력 */
 console.log(getClientFileList().join(' '));

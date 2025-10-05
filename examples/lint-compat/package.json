@@ -1,0 +1,30 @@
+{
+  "name": "app-default",
+  "version": "0.0.0",
+  "private": true,
+  "author": "dkpark10",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:bundle": "cross-env ANALYZE=true next build",
+    "start": "next start -p 8080",
+    "lint": "next lint",
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
+    "test": "vitest --run",
+    "test:e2e": "npx playwright test",
+    "test:e2e:ui": "npx playwright test --ui"
+  },
+  "dependencies": {
+    "@next/font": "13.1.6",
+    "next": "^14",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "dependency-tree": "^11.1.1",
+    "glob": "^11.0.2"
+  }
+}

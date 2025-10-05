@@ -1,10 +1,18 @@
 const getClientFileList = require('./get-client-files');
 
+/** 
+ * @description lint overrides 파일 목록에는 상대 경로가 들어가야 한다
+ *   'Users/mac/Desktop/playground/examples/lint-compat/src/components/non-use-client.tsx',
+ *   '/src/components/non-use-client.tsx',
+ */
 const clientFileList = getClientFileList().map(
   /** @param {string} clientFile @returns {string} */
-  (clientFile) => clientFile[0] === '/' ? clientFile.slice(1) : clientFile)
-
-console.log(clientFileList);
+  (clientFile) => {
+    return clientFile.replace(__dirname, '');
+  }).map(
+    /** @param {string} clientFile @returns {string} */
+    (clientFile) => clientFile[0] === '/' ? clientFile.slice(1) : clientFile
+  )
 
 module.exports =
 {
@@ -28,7 +36,7 @@ module.exports =
   "ignorePatterns": [".eslintrc.js", "get-client-files.js"],
   "overrides": [
     {
-      "files": [...clientFileList],
+      "files": [...clientFileList, 'src/hooks/**'],
       "plugins": ["compat"],
       "extends": ["plugin:compat/recommended"],
     }

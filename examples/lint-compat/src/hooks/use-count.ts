@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export const useCount = () => {
   const [count, setCount] = useState(0);
@@ -10,6 +10,11 @@ export const useCount = () => {
   const decrease = () => {
     setCount(count - 1);
   }
+
+  useEffect(() => {
+    new IntersectionObserver((_) => {
+    });
+  }, []);
 
   return {
     count,

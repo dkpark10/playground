@@ -16,6 +16,10 @@ export const useCount = () => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(count);
+  }, []);
+
   return {
     count,
     increase, decrease

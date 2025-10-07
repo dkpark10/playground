@@ -1,4 +1,4 @@
-{
+module.exports = {
   "root": true,
   // lint는 js만 해석 가능하기에 ts를 트랜스파일할 Parser가 필요
   "parser": "@typescript-eslint/parser",

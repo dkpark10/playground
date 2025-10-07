@@ -26,6 +26,7 @@ function getClientFileList() {
               /s?.css/.test(path) ||
               /constants/.test(path)
             ),
+          /** @description path alias를 사용할 경우 경로를 매칭하지 못하므로 tsconfig 경로 추가 */
           tsConfig: require('./tsconfig.json'),
         });
 

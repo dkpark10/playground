@@ -6,6 +6,7 @@ import { useCount } from "@/hooks/use-count"
 
 export default function ClientPage() {
   const { count } = useCount();
+  new IntersectionObserver(() => {;});
   return (
     <>
       <span>{count}</span>

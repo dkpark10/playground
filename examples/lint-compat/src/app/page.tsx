@@ -1,12 +1,12 @@
 import Client from "@/components/client";
 
-export default async function NextNext() {
+export default async function ServerPage() {
   new IntersectionObserver((_) => {
   });
 
   return (
     <>
-      <div>next default app page</div>
+      <div>server page</div>
       <Client />
     </>)
 }

@@ -1,4 +1,5 @@
 /Users/mac/Desktop/playground/examples/lint-compat/src/app/client/page.tsx:9:3 — IntersectionObserver is not supported in Safari 12 [compat/compat]
+/Users/mac/Desktop/playground/examples/lint-compat/src/components/non-use-client.tsx:2:3 — IntersectionObserver is not supported in Safari 12 [compat/compat]
 /Users/mac/Desktop/playground/examples/lint-compat/src/hooks/use-count.ts:15:5 — IntersectionObserver is not supported in Safari 12 [compat/compat]
 /Users/mac/Desktop/playground/examples/lint-compat/src/hooks/use-intersect.ts:5:5 — IntersectionObserver is not supported in Safari 12 [compat/compat]
 

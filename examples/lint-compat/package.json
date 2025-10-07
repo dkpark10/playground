@@ -1,5 +1,5 @@
 {
-  "name": "app-default",
+  "name": "lint-compat",
   "version": "0.0.0",
   "private": true,
   "author": "dkpark10",
@@ -10,7 +10,8 @@
     "start": "next start -p 8080",
     "lint": "next lint",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
-    "lint:output": "next lint -f ./formatter.js -o ./compat.txt",
+    "lint:compat": "next lint -f ./formatter.js",
+    "lint:compat:output": "pnpm run lint:compat -o ./compat.txt",
     "test": "vitest --run",
     "test:e2e": "npx playwright test",
     "test:e2e:ui": "npx playwright test --ui"

@@ -10,6 +10,7 @@
     "start": "next start -p 8080",
     "lint": "next lint",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
+    "lint:output": "next lint -f ./formatter.js -o ./compat.txt",
     "test": "vitest --run",
     "test:e2e": "npx playwright test",
     "test:e2e:ui": "npx playwright test --ui"

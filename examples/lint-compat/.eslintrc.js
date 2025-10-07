@@ -46,7 +46,7 @@ module.exports =
 
   plugins: ["react", "import", "unused-imports"],
 
-  ignorePatterns: [".eslintrc.js", "get-client-files.js"],
+  ignorePatterns: [".eslintrc.js", "get-client-files.js", "formatter.js"],
 
   "rules": {
     "import/no-unresolved": "off",

@@ -1,20 +1,12 @@
 'use client';
 
-<<<<<<<< HEAD:examples/route-event/src/hooks/use-referrer.ts
 import { useRouter } from 'next/navigation';
-import { createContext, useEffect, useRef } from 'react';
+import { createContext, useEffect, useRef, type PropsWithChildren } from 'react';
 
 // export const ReferrerContext = createContext<{
 //   setReferrer: (referrer: string) => void;
 //   getReferrer: () => string;
 // } | null>(null);
-
-export const useReferrer = () => {
-  const router = useRouter();
-
-========
-import { type PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
-import { useRouter } from "next/navigation";
 
 export const ReferrerContext = createContext<{
   getReferrer: () => string;
@@ -23,7 +15,6 @@ export const ReferrerContext = createContext<{
 export function ReferrerProvider({ children }: PropsWithChildren) {
   const router = useRouter();
 
->>>>>>>> 454cfff221e9b96fc91611db20eace213f1ce3b7:examples/route-event/src/components/referrer-provider.tsx
   const currentUrl = useRef<string | URL | null | undefined>('');
 
   const referrer = useRef<string[]>([]);
@@ -57,19 +48,11 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
       currentUrl.current = window.location.origin + (url as string);
       orgReplaceState(data, unused, url);
     };
-<<<<<<<< HEAD:examples/route-event/src/hooks/use-referrer.ts
 
     return () => {
       window.history.pushState = orgPushState;
       window.history.replaceState = orgReplaceState;
     };
-  }, [router]);
-========
-
-    return () => {
-      window.history.pushState = orgPushState;
-      window.history.replaceState = orgReplaceState;
-    }
   }, [router]);
 
   return (
@@ -81,5 +64,4 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
       {children}
     </ReferrerContext.Provider>
   );
->>>>>>>> 454cfff221e9b96fc91611db20eace213f1ce3b7:examples/route-event/src/components/referrer-provider.tsx
 }

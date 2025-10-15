@@ -2,15 +2,15 @@
 const nextConfig = {
   async headers() {
     return [
-      {
-        source: "/(.*)", // 모든 라우트
-        headers: [
-          {
-            key: "Referrer-Policy",
-            value: "no-referrer",
-          },
-        ],
-      },
+      // {
+      //   source: "/(.*)", // 모든 라우트
+      //   headers: [
+      //     {
+      //       key: "Referrer-Policy",
+      //       value: "no-referrer",
+      //     },
+      //   ],
+      // },
     ];
   },
 

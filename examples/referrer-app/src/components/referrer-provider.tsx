@@ -3,27 +3,22 @@
 import { useRouter } from 'next/navigation';
 import { createContext, useEffect, useRef, type PropsWithChildren } from 'react';
 
-// export const ReferrerContext = createContext<{
-//   setReferrer: (referrer: string) => void;
-//   getReferrer: () => string;
-// } | null>(null);
-
 export const ReferrerContext = createContext<{
-  getReferrer: () => string;
+  getReferer: () => string;
 } | null>(null);
 
-export function ReferrerProvider({ children }: PropsWithChildren) {
+export function RefererProvider({ children }: PropsWithChildren) {
   const router = useRouter();
 
   const currentUrl = useRef<string | URL | null | undefined>('');
 
   const referrer = useRef<string[]>([]);
 
-  const setReferrer = useRef((value: string) => {
+  const setReferer = useRef((value: string) => {
     referrer.current.push(value);
   });
 
-  const getReferrer = useRef(() => {
+  const getReferer = useRef(() => {
     if (referrer.current.length <= 0) return '';
     return referrer.current.slice(-1)[0];
   });
@@ -34,7 +29,7 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
     const orgReplaceState = window.history.replaceState.bind(window.history);
 
     window.history.pushState = function pushState(data: any, unused: string, url?: string | URL | null) {
-      setReferrer.current(window.location.href);
+      setReferer.current(window.location.href);
       currentUrl.current = window.location.origin + (url as string);
       orgPushState(data, unused, url);
     };
@@ -58,7 +53,7 @@ export function ReferrerProvider({ children }: PropsWithChildren) {
   return (
     <ReferrerContext.Provider
       value={{
-        getReferrer: getReferrer.current,
+        getReferer: getReferer.current,
       }}
     >
       {children}

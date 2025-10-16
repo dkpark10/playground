@@ -5,3 +5,4 @@ export const useSafeContext = <T>(context: Context<T>): NonNullable<T> => {
   if (!result) throw new Error('context not provided');
   return result;
 }
+

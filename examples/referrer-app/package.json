@@ -9,7 +9,9 @@
     "build:bundle": "cross-env ANALYZE=true next build",
     "start": "next start -p 8080",
     "lint": "next lint",
-    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'"
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
+    "test:e2e": "npx playwright test",
+    "test:e2e:ui": "npx playwright test --ui"
   },
   "dependencies": {
     "@next/font": "13.1.6",
@@ -18,6 +20,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.0",
     "@types/node": "^20",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

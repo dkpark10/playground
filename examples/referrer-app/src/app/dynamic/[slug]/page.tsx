@@ -16,9 +16,9 @@ export default async function DynamicSlugPage({ params }: DynamicSlugPageProps) 
     <>
       <h1>app router</h1>
       <PageView />
-      <Link href={`/dynamic/${nextSlug}`}>다음{nextSlug}</Link>
+      <Link href={`/dynamic/${nextSlug}`}>다음 {nextSlug}</Link>
       <div>slug: {slug}</div>
-      <Link href={`/dynamic/${prevSlug}`}>이전{prevSlug}</Link>
+      <Link href={`/dynamic/${prevSlug}`}>이전 {prevSlug}</Link>
 
       <div>
         <ClickStat>

@@ -8,12 +8,12 @@ import { useQueryReferer } from '@/hooks/use-query-referrer';
 
 export default function PageView() {
   const { getReferer } = useSafeContext(ReferrerContext);
-  getReferer;
   const referrer = useQueryReferer();
+  referrer;
 
   useEffect(() => {
     statService.send({
-      referrer,
+      referrer: getReferer(),
     });
   }, []);
 

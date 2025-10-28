@@ -11,13 +11,12 @@ export default function ClickStat({ children }: PropsWithChildren) {
 
   const elementRef = useRef<HTMLElement>(null);
   const referrer = useQueryReferer();
+  referrer;
 
   useEffect(() => {
     const handler = () => {
-      getReferer;
       statService.send({
-        // referrer: getReferrer(),
-        referrer,
+        referrer: getReferer(),
       });
     };
 

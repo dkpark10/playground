@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
-import { RefererProvider } from '@/components/referrer-provider';
+import { RefererProvider } from '@/components/referer-provider';
 import GlobalProvider from '@/components/provider';
 
 export const metadata: Metadata = {

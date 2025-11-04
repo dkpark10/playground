@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { createContext, useEffect, useRef, type PropsWithChildren } from 'react';
 
-export const ReferrerContext = createContext<{
+export const RefererContext = createContext<{
   getReferer: () => string;
 } | null>(null);
 
@@ -12,15 +12,11 @@ export function RefererProvider({ children }: PropsWithChildren) {
 
   const currentUrl = useRef<string | URL | null | undefined>('');
 
-  const referrer = useRef<string[]>([]);
-
-  const setReferer = useRef((value: string) => {
-    referrer.current.push(value);
-  });
+  const referer = useRef<string[]>([]);
 
   const getReferer = useRef(() => {
-    if (referrer.current.length <= 0) return '';
-    return referrer.current.slice(-1)[0];
+    if (referer.current.length <= 0) return '';
+    return referer.current.slice(-1)[0];
   });
 
   useEffect(() => {
@@ -29,7 +25,7 @@ export function RefererProvider({ children }: PropsWithChildren) {
     const orgReplaceState = window.history.replaceState.bind(window.history);
 
     window.history.pushState = function pushState(data: any, unused: string, url?: string | URL | null) {
-      setReferer.current(window.location.href);
+      referer.current.push(window.location.href);
       currentUrl.current = window.location.origin + (url as string);
       orgPushState(data, unused, url);
     };
@@ -39,7 +35,7 @@ export function RefererProvider({ children }: PropsWithChildren) {
       unused: string,
       url?: string | URL | null,
     ) {
-      referrer.current[referrer.current.length - 1] = currentUrl.current as string;
+      referer.current[referer.current.length - 1] = currentUrl.current as string;
       currentUrl.current = window.location.origin + (url as string);
       orgReplaceState(data, unused, url);
     };
@@ -51,12 +47,12 @@ export function RefererProvider({ children }: PropsWithChildren) {
   }, [router]);
 
   return (
-    <ReferrerContext.Provider
+    <RefererContext.Provider
       value={{
         getReferer: getReferer.current,
       }}
     >
       {children}
-    </ReferrerContext.Provider>
+    </RefererContext.Provider>
   );
 }

@@ -2,21 +2,22 @@
 
 import React, { PropsWithChildren, useEffect, useRef } from 'react';
 import { useSafeContext } from '@/hooks/use-safe-context';
-import { ReferrerContext } from '@/components/referrer-provider';
+import { RefererContext } from '@/components/referer-provider';
 import { statService } from '@/lib/stat-service';
-import { useQueryReferer } from '@/hooks/use-query-referrer';
+import { useQueryReferer } from '@/hooks/use-query-referer';
 
 export default function ClickStat({ children }: PropsWithChildren) {
-  const { getReferer } = useSafeContext(ReferrerContext);
+  const { getReferer } = useSafeContext(RefererContext);
 
   const elementRef = useRef<HTMLElement>(null);
-  const referrer = useQueryReferer();
-  referrer;
+  const referer = useQueryReferer();
+  referer;
 
   useEffect(() => {
     const handler = () => {
+      alert(getReferer());
       statService.send({
-        referrer: getReferer(),
+        referer: getReferer(),
       });
     };
 

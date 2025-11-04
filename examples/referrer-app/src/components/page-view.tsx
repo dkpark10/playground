@@ -2,18 +2,18 @@
 
 import { useEffect } from 'react';
 import { useSafeContext } from '@/hooks/use-safe-context';
-import { ReferrerContext } from '@/components/referrer-provider';
+import { RefererContext } from '@/components/referer-provider';
 import { statService } from '@/lib/stat-service';
-import { useQueryReferer } from '@/hooks/use-query-referrer';
+import { useQueryReferer } from '@/hooks/use-query-referer';
 
 export default function PageView() {
-  const { getReferer } = useSafeContext(ReferrerContext);
-  const referrer = useQueryReferer();
-  referrer;
+  const { getReferer } = useSafeContext(RefererContext);
+  const referer = useQueryReferer();
+  referer;
 
   useEffect(() => {
     statService.send({
-      referrer: getReferer(),
+      referer: getReferer(),
     });
   }, []);
 

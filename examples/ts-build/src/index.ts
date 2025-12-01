@@ -1,5 +1,7 @@
 import { add } from './add';
-import { addPromise } from './add-promise';
+import { addPromise, Status } from './add-promise';
+
+console.log(Status.completed);
 
 export const calculator = {
   add,

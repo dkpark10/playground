@@ -1,0 +1,10 @@
+.item_container {
+  display: flex;
+  padding: 3px 0px;
+}
+
+.item_container button {
+  border-color: coral;
+  background-color: white;
+  cursor: pointer;
+}

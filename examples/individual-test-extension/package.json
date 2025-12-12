@@ -1,0 +1,39 @@
+{
+  "name": "reward-test-extension",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:injected": "vite build --config vite.config.injected.ts",
+    "build": "tsc && pnpm run build:injected && vite build",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@mswjs/interceptors": "^0.40.0",
+    "msw": "^2.12.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/chrome": "^0.1.27",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@types/webextension-polyfill": "^0.10.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "jsdom": "^26.0.0",
+    "typescript": "~5.6.3",
+    "vite": "^5.0.0",
+    "vite-plugin-web-extension": "^4.0.0",
+    "vitest": "^4.0.7",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "packageManager": "pnpm@9.15.5",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

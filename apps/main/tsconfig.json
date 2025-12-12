@@ -23,14 +23,14 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
+      ]
     },
     "plugins": [
       {
-        "name": "next",
+        "name": "next"
       },
       {
-        "name": "typescript-plugin-css-modules",
+        "name": "typescript-plugin-css-modules"
       }
     ]
   },
@@ -41,4 +41,7 @@
     "types",
     ".next/types/**/*.ts"
   ],
+  "exclude": [
+    "node_modules"
+  ]
 }

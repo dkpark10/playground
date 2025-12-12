@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  width: 120px;
+  height: 200px;
+}
+
+body {
+  border-radius: 4px;
+  background-color: white;
+}
